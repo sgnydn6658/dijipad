@@ -182,7 +182,8 @@ aside{
 .menu-section:nth-child(3) .menu-cat{color:#4dabf7!important}
 .menu-section:nth-child(4) .menu-cat{color:#9775fa!important}
 .menu-section:nth-child(5) .menu-cat{color:#38d9a9!important}
-.menu-section:nth-child(6) .menu-cat{color:#adb5bd!important}
+.menu-section:nth-child(6) .menu-cat{color:#f783ac!important}
+.menu-section:nth-child(7) .menu-cat{color:#adb5bd!important}
 
 .tools{
   display:flex;
@@ -824,7 +825,7 @@ html *,svg text,svg tspan{font-family:var(--ui-font)!important}
 
 <script>
 const stage=document.querySelector('#stage'),menu=document.querySelector('#menu');let selected=null,z=1,serial=0;
-const groups={'Sayı ve İşlem':[['nl','Sayı doğrusu'],['unit','Birim blok'],['ten','Onluk çubuk'],['hundred','Yüzlük blok'],['thousand','Binlik blok'],['counter','Sayma pulları'],['abacus','Abaküs']], 'Kesirler':[['fraction','Kesir kartı'],['circle','Kesir dairesi'],['bars','Kesir çubukları'],['circlecards','Kesir daireleri kartları'],['percent','Yüzde karesi']], 'Zaman':[['clock','Gerçek saat'],['timer','Kronometre']], 'Geometri ve Ölçme':[['ruler','Cetvel'],['setsquare','Gönye'],['protractor','Açı ölçer'],['compass','Pergel'],['geo','Geoboard'],['tangram','Tangram'],['coordinate','Koordinat'],['shapes','Geometrik cisimler']], 'Veri ve Olasılık':[['dice','Zar'],['coin','Madeni para'],['spinner','Çark'],['graph','Sütun grafiği'],['piegraph','Daire grafiği'],['linegraph','Çizgi grafiği'],['areagraph','Alan grafiği'],['tallytable','Çetele tablosu'],['frequencytable','Sıklık tablosu']]};
+const groups={'Sayı ve İşlem':[['nl','Sayı doğrusu'],['unit','Birim blok'],['ten','Onluk çubuk'],['hundred','Yüzlük blok'],['thousand','Binlik blok'],['counter','Sayma pulları'],['abacus','Abaküs']], 'Kesirler':[['fraction','Kesir kartı'],['circle','Kesir dairesi'],['bars','Kesir çubukları'],['circlecards','Kesir daireleri kartları'],['percent','Yüzde karesi']], 'Zaman':[['clock','Gerçek saat'],['timer','Kronometre']], 'Geometri ve Ölçme':[['ruler','Cetvel'],['setsquare','Gönye'],['protractor','Açı ölçer'],['compass','Pergel'],['geo','Geoboard'],['tangram','Tangram'],['coordinate','Koordinat'],['shapes','Geometrik cisimler']], 'Veri ve Olasılık':[['dice','Zar'],['coin','Madeni para'],['spinner','Çark'],['graph','Sütun grafiği'],['piegraph','Daire grafiği'],['linegraph','Çizgi grafiği'],['areagraph','Alan grafiği'],['tallytable','Çetele tablosu'],['frequencytable','Sıklık tablosu']],'Cebir':[['algtiles','Cebir Karoları'],['balance','Denge Ölçeği'],['funcmachine','Fonksiyon Makineleri'],['coordtable','Koordinat Eksenleri ve Tablolar'],['sliders','Değişken Kaydırıcılar']]};
 const names=Object.fromEntries(Object.values(groups).flat());
 let openSection=null;
 for(const [title,tools] of Object.entries(groups)){
@@ -1070,6 +1071,11 @@ var areaBox=null,areaBoxTmp=null,settingsOwner=null,mergingNow=false,blockSelect
 const blockDims={1:[1,1,1],10:[1,1,10],100:[1,10,10],1000:[10,10,10]},blockTypes={1:'unit',10:'ten',100:'hundred',1000:'thousand'};
 function solidDims(v){return blockDims[v]||(v%100===0?[v/100,10,10]:v%10===0?[v/10,1,10]:[v,1,1])}
 function setup(w,type){
+ if(type==='algtiles'){setupAlgTiles(w);return}
+ if(type==='balance'){setupBalance(w);return}
+ if(type==='funcmachine'){setupFuncMachine(w);return}
+ if(type==='coordtable'){setupCoordTable(w);return}
+ if(type==='sliders'){setupSliders(w);return}
  if(type==='circlecard'){setupKC(w);return}
  if(['setsquare','protractor','compass'].includes(type)){setupGeometryInstrument(w,type);return}
  if(type==='shapes'){setupShapes(w);return}
@@ -1852,4 +1858,191 @@ function setupGeometryInstrument(w,type){
 /* --- reklam yazısı sidebar'a sığsın --- */
 (function(){const el=document.querySelector('.sidebar-ad .ad-name');if(!el)return;function fit(){const box=el.parentElement;let fs=13;el.style.fontSize=fs+'px';const max=box.clientWidth-20;while(fs>7&&el.scrollWidth>max){fs-=.5;el.style.fontSize=fs+'px'}}
  fit();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);window.addEventListener('resize',fit)})();
+
+/* ===== CEBİR SEKMESİ (eklenti) ===== */
+(function(){
+const nf=v=>String(Number((+v).toFixed(3))).replace('.',',').replace('-','−');
+const nfv=v=>isFinite(v)?nf(v):'tanımsız';
+const poly=t=>{let o='';for(const[v,l]of t){if(!v)continue;const m=Math.abs(v);o+=(o?(v<0?' − ':' + '):(v<0?'−':''))+((m===1&&l)?'':nf(m))+l}return o||'0'};
+function parse(src){try{
+ const raw=String(src||'').toLowerCase().replace(/\s+/g,'').replace(/,/g,'.').replace(/[−–]/g,'-').replace(/[×·]/g,'*').replace(/÷/g,'/').replace(/²/g,'^2').replace(/³/g,'^3').match(/\d*\.?\d+|abs|sqrt|[xabc]|[-+*\/^()]|./g)||[];
+ if(!raw.length)return null;const tk=[];
+ for(const t of raw){const p=tk[tk.length-1];if(p&&/^(\d|\.|\)|[xabc]$)/.test(p)&&/^(\d|\.|[xabc]$|\(|abs|sqrt)/.test(t))tk.push('*');tk.push(t)}
+ let i=0;const pk=()=>tk[i],nx=()=>tk[i++];
+ const ex=()=>{let l=tm();while(pk()==='+'||pk()==='-'){const o=nx(),r=tm(),a=l;l=o==='+'?V=>a(V)+r(V):V=>a(V)-r(V)}return l};
+ const tm=()=>{let l=un();while(pk()==='*'||pk()==='/'){const o=nx(),r=un(),a=l;l=o==='*'?V=>a(V)*r(V):V=>a(V)/r(V)}return l};
+ const un=()=>{if(pk()==='-'){nx();const u=un();return V=>-u(V)}if(pk()==='+'){nx();return un()}return pw()};
+ const pw=()=>{const a=at();if(pk()==='^'){nx();const e=un();return V=>Math.pow(a(V),e(V))}return a};
+ const at=()=>{const t=nx();if(t===undefined)throw 0;if(/^[\d.]/.test(t)){const n=parseFloat(t);if(isNaN(n))throw 0;return()=>n}
+  if(t.length===1&&'xabc'.includes(t))return V=>V[t];
+  if(t==='('){const e=ex();if(nx()!==')')throw 0;return e}
+  if(t==='abs'||t==='sqrt'){if(nx()!=='(')throw 0;const e=ex();if(nx()!==')')throw 0;return t==='abs'?V=>Math.abs(e(V)):V=>Math.sqrt(e(V))}throw 0};
+ const f=ex();if(i<tk.length)throw 0;return f}catch(_){return null}}
+function grid(R,SZ,P){const c=(SZ-2*P)/(2*R),X=x=>SZ/2+x*c,Y=y=>SZ/2-y*c,st=R<=10?1:5,id='cc'+(++serial);
+ let h=`<defs><clipPath id="${id}"><rect x="${P-4}" y="${P-4}" width="${SZ-2*P+8}" height="${SZ-2*P+8}"/></clipPath></defs><rect x="1" y="1" width="${SZ-2}" height="${SZ-2}" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>`;
+ for(let i=-R;i<=R;i++)h+=`<path d="M${X(i)} ${Y(-R)}V${Y(R)}M${X(-R)} ${Y(i)}H${X(R)}" stroke="${i%st?'#eaf0f8':'#d6e2f3'}"/>`;
+ h+=`<path d="M${X(-R)-6} ${Y(0)}H${X(R)+8}M${X(0)} ${Y(-R)+6}V${Y(R)-8}" stroke="#334155" stroke-width="2"/><text x="${X(R)+3}" y="${Y(0)-6}" font-size="12" font-style="italic" fill="#334155">x</text><text x="${X(0)+6}" y="${Y(R)-1}" font-size="12" font-style="italic" fill="#334155">y</text>`;
+ for(let i=-R;i<=R;i+=st)if(i)h+=`<text x="${X(i)}" y="${Y(0)+14}" font-size="10" fill="#475569" text-anchor="middle">${i}</text><text x="${X(0)-5}" y="${Y(i)+3}" font-size="10" fill="#475569" text-anchor="end">${i}</text>`;
+ return{X,Y,c,id,h}}
+function curve(fn,vars,R,G,col){let d='',pen=false;for(let i=0;i<=300;i++){const x=-R+2*R*i/300;let y;try{y=fn({...vars,x})}catch(_){y=NaN}if(!isFinite(y)||Math.abs(y)>R*6){pen=false;continue}d+=(pen?'L':'M')+G.X(x).toFixed(1)+' '+G.Y(y).toFixed(1);pen=true}
+ return `<path d="${d}" fill="none" stroke="${col}" stroke-width="3" stroke-linejoin="round" clip-path="url(#${G.id})" pointer-events="none"/>`}
+
+/* ---------- 1) CEBİR KAROLARI ---------- */
+window.setupAlgTiles=function(w){
+ const s=w.state;s.tiles=Array.isArray(s.tiles)?s.tiles:[];s.sel=s.sel??null;
+ const btn=(a,t,c)=>`<button data-a="${a}" style="border-color:${c};font-weight:700">${t}</button>`;
+ const B=manipBase(w,btn('x2','+ x²','#3b82f6')+btn('x','+ x','#22c55e')+btn('1','+ 1','#eab308')+btn('-x2','− x²','#dc2626')+btn('-x','− x','#ef4444')+btn('-1','− 1','#f97316')+'<span class="sep"></span><button class="t-flip">+/− Çevir</button><button class="t-rot">Döndür</button><button class="t-dup">Kopyala</button><button class="t-del">Sil</button><span class="sep"></span><button class="t-zero">Sıfır çiftlerini sadeleştir</button><button class="t-clr">Temizle</button><span class="t-read manip-hint" style="font-weight:700;font-size:15px"></span>');
+ const W=680,H=420,U=28,L=90,PC={x2:'#3b82f6',x:'#22c55e','1':'#facc15'},NC={x2:'#dc2626',x:'#ef4444','1':'#f97316'};
+ w.style.width=W+'px';B.svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+ const D=t=>t.t==='x2'?[L,L]:t.t==='x'?(t.r?[L,U]:[U,L]):[U,U];
+ const clamp=t=>{const[a,b]=D(t);t.x=Math.max(0,Math.min(W-a,t.x));t.y=Math.max(0,Math.min(H-b,t.y))};
+ function draw(){let h=`<rect x="1" y="1" width="${W-2}" height="${H-2}" rx="14" fill="#fbfaf6" stroke="#cbd5e1" stroke-width="2"/>`;
+  s.tiles.forEach((t,i)=>{const[a,b]=D(t),sel=i===s.sel;h+=`<g data-i="${i}" style="cursor:grab"><rect x="${t.x}" y="${t.y}" width="${a}" height="${b}" rx="3" fill="${(t.n?NC:PC)[t.t]}" stroke="${sel?'#1e293b':'#fff'}" stroke-width="${sel?3:1.5}"/><text x="${t.x+a/2}" y="${t.y+b/2+5}" text-anchor="middle" font-size="${t.t==='1'?13:16}" font-weight="700" fill="${t.t==='1'&&!t.n?'#422006':'#fff'}" pointer-events="none">${t.n?'−':''}${t.t==='x2'?'x²':t.t}</text></g>`});
+  B.g.innerHTML=h;const c={x2:0,x:0,1:0};s.tiles.forEach(t=>c[t.t]+=t.n?-1:1);B.q('.t-read').textContent=s.tiles.length?poly([[c.x2,'x²'],[c.x,'x'],[c[1],'']]):'Karo ekleyin · sürükleyin · çift dokunun: işaret değiştir'}
+ const cur=()=>s.tiles[s.sel];
+ B.bar.onclick=e=>{const b=e.target.closest('button');if(!b)return;const n=s.tiles.length;
+  if(b.dataset.a){const k=b.dataset.a,neg=k[0]==='-';if(n<80){const t={t:neg?k.slice(1):k,n:neg,x:30+(n*37)%560,y:30+(n*23)%300,r:false};clamp(t);s.tiles.push(t);s.sel=s.tiles.length-1}}
+  else if(b.classList.contains('t-flip')){if(cur())cur().n=!cur().n}
+  else if(b.classList.contains('t-rot')){const t=cur();if(t&&t.t==='x'){t.r=!t.r;clamp(t)}}
+  else if(b.classList.contains('t-dup')){const t=cur();if(t&&n<80){const c={...t,x:t.x+14,y:t.y+14};clamp(c);s.tiles.push(c);s.sel=s.tiles.length-1}}
+  else if(b.classList.contains('t-del')){if(cur()){s.tiles.splice(s.sel,1);s.sel=null}}
+  else if(b.classList.contains('t-zero')){for(const k of['x2','x','1'])for(;;){const p=s.tiles.findIndex(t=>t.t===k&&!t.n),q=s.tiles.findIndex(t=>t.t===k&&t.n);if(p<0||q<0)break;const hi=Math.max(p,q),lo=Math.min(p,q);s.tiles.splice(hi,1);s.tiles.splice(lo,1)}s.sel=null}
+  else if(b.classList.contains('t-clr')){s.tiles=[];s.sel=null}
+  draw()};
+ let drag=null,lastT=null,lastAt=0;
+ B.svg.onpointerdown=e=>{if(!e.isPrimary||e.button!==0)return;const g=e.target.closest('[data-i]');if(!g)return;e.preventDefault();e.stopPropagation();select(w);
+  const t=s.tiles[+g.dataset.i],p=manipPt(B.svg,e);s.tiles.splice(s.tiles.indexOf(t),1);s.tiles.push(t);s.sel=s.tiles.length-1;
+  if(lastT===t&&Date.now()-lastAt<400){t.n=!t.n;lastT=null;draw();return}lastT=t;lastAt=Date.now();
+  drag={id:e.pointerId,t,ox:p.x-t.x,oy:p.y-t.y,sx:p.x,sy:p.y,mv:false};try{B.svg.setPointerCapture(e.pointerId)}catch(_){}draw()};
+ B.svg.onpointermove=e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();const p=manipPt(B.svg,e);if(!drag.mv&&Math.hypot(p.x-drag.sx,p.y-drag.sy)<4)return;drag.mv=true;lastT=null;
+  drag.t.x=Math.round((p.x-drag.ox)/7)*7;drag.t.y=Math.round((p.y-drag.oy)/7)*7;clamp(drag.t);draw()};
+ B.svg.onpointerup=B.svg.onpointercancel=e=>{if(!drag)return;try{B.svg.releasePointerCapture(e.pointerId)}catch(_){}drag=null};
+ draw()};
+
+/* ---------- 2) DENGE ÖLÇEĞİ ---------- */
+window.setupBalance=function(w){
+ const s=w.state;if(!s.L){s.x=3;s.L=[{t:'x',s:1},{t:'x',s:1},{t:'u',s:1}];s.R=Array.from({length:7},()=>({t:'u',s:1}))}
+ const grp=(sd,l)=>`<span class="s3-lab">${l}</span>`+[['x','+x'],['-x','−x'],['u','+1'],['-u','−1']].map(([k,t])=>`<button data-side="${sd}" data-k="${k}">${t}</button>`).join('');
+ const B=manipBase(w,grp('L','Sol')+'<span class="sep"></span>'+grp('R','Sağ')+'<span class="sep"></span>'+grp('B','İkisine')+'<span class="sep"></span><button class="b-simp">Sadeleştir</button><select class="b-n">'+[2,3,4,5,6].map(n=>`<option>${n}</option>`).join('')+'</select><button class="b-div">Böl ÷</button><button class="b-rnd">Rastgele denklem</button><span class="s3-lab">x =</span><input class="b-x" type="number" step="1" style="width:62px" title="Gizli x değeri (terazi bu değere göre eğilir)"><span class="manip-hint">Karoya dokun: kaldır</span>');
+ w.style.width='620px';B.svg.setAttribute('viewBox','0 0 620 400');
+ const COL={x1:'#3b82f6','x-1':'#dc2626',u1:'#facc15','u-1':'#f97316'};
+ const val=a=>a.reduce((v,i)=>v+(i.t==='x'?s.x:1)*i.s,0),net=a=>a.reduce((n,i)=>(n[i.t]+=i.s,n),{x:0,u:0});
+ const eq=a=>{const n=net(a);return poly([[n.x,'x'],[n.u,'']])};
+ const srt=a=>a.sort((p,q)=>(p.t===q.t?0:p.t==='x'?-1:1)||q.s-p.s);
+ const mk=n=>{const o=[];for(const[k,v]of[['x',n.x],['u',n.u]])for(let i=0;i<Math.abs(v);i++)o.push({t:k,s:v<0?-1:1});return o};
+ function draw(ang){const PX=310,PY=130,HL=220,a=ang*Math.PI/180,cs=Math.cos(a),sn=Math.sin(a);
+  let h='<rect x="1" y="1" width="618" height="398" rx="14" fill="#fbfaf6" stroke="#cbd5e1" stroke-width="2"/><path d="M250 380h120l-18-22h-84z" fill="#64748b"/><rect x="302" y="'+PY+'" width="16" height="232" rx="4" fill="#94a3b8"/>';
+  h+=`<g transform="rotate(${ang} ${PX} ${PY})"><rect x="${PX-HL-8}" y="${PY-7}" width="${2*HL+16}" height="14" rx="7" fill="#475569"/></g><circle cx="${PX}" cy="${PY}" r="11" fill="#1e293b"/><circle cx="${PX}" cy="${PY}" r="4" fill="#cbd5e1"/>`;
+  for(const[ex,ey,sd]of[[PX-HL*cs,PY-HL*sn,'L'],[PX+HL*cs,PY+HL*sn,'R']]){const py=ey+125;
+   h+=`<path d="M${ex} ${ey}L${ex-85} ${py}M${ex} ${ey}L${ex+85} ${py}" stroke="#64748b" stroke-width="2"/><circle cx="${ex}" cy="${ey}" r="5" fill="#1e293b"/><rect x="${ex-95}" y="${py}" width="190" height="9" rx="4.5" fill="#475569"/>`;
+   const rows=[];let cr=null,xx=0;s[sd].forEach((it,i)=>{const z=it.t==='x'?38:24;if(!cr||xx+z>178){cr={h:0,a:[]};rows.push(cr);xx=0}cr.a.push([it,i,xx,z]);cr.h=Math.max(cr.h,z);xx+=z+4});
+   let yb=py;for(const r of rows){yb-=r.h+3;for(const[it,i,x0,z]of r.a){const X0=ex-90+x0,Y0=yb+r.h-z;
+    h+=`<g data-side="${sd}" data-i="${i}" style="cursor:pointer"><rect x="${X0}" y="${Y0}" width="${z}" height="${z}" rx="4" fill="${COL[it.t+it.s]}" stroke="#fff" stroke-width="1.5"/><text x="${X0+z/2}" y="${Y0+z/2+5}" text-anchor="middle" font-size="${it.t==='x'?17:12}" font-weight="700" fill="${it.t==='u'&&it.s>0?'#422006':'#fff'}" pointer-events="none">${it.s<0?'−':''}${it.t==='x'?'x':'1'}</text></g>`}}}
+  const d=val(s.L)-val(s.R),nL=net(s.L),nR=net(s.R);let msg=d===0?'Terazi dengede':d>0?'Sol kefe ağır':'Sağ kefe ağır';
+  if(d===0){if(nL.x===1&&nL.u===0&&nR.x===0)msg+=' · x = '+nf(nR.u)+' ✓';else if(nR.x===1&&nR.u===0&&nL.x===0)msg+=' · x = '+nf(nL.u)+' ✓'}
+  h+=`<text x="310" y="40" font-size="26" font-weight="700" text-anchor="middle" fill="#1e293b">${eq(s.L)} = ${eq(s.R)}</text><text x="310" y="66" font-size="14" text-anchor="middle" fill="${d===0?'#15803d':'#b45309'}">${msg}</text>`;
+  B.g.innerHTML=h}
+ let cur=0,raf=0;const tgt=()=>-Math.max(-16,Math.min(16,(val(s.L)-val(s.R))*2.5));
+ const frame=()=>{const t=tgt();cur+=(t-cur)*.18;if(Math.abs(t-cur)<.05)cur=t;draw(cur);if(cur!==t&&w.isConnected)raf=requestAnimationFrame(frame)};
+ const upd=()=>{srt(s.L);srt(s.R);B.q('.b-x').value=s.x;cancelAnimationFrame(raf);frame()};
+ B.bar.onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.k){const k=b.dataset.k;for(const sd of b.dataset.side==='B'?['L','R']:[b.dataset.side])if(s[sd].length<40)s[sd].push({t:k.replace('-',''),s:k[0]==='-'?-1:1})}
+  else if(b.classList.contains('b-simp')){s.L=mk(net(s.L));s.R=mk(net(s.R))}
+  else if(b.classList.contains('b-div')){const n=+B.q('.b-n').value,a=net(s.L),c=net(s.R);if([a.x,a.u,c.x,c.u].every(v=>v%n===0)){s.L=mk({x:a.x/n,u:a.u/n});s.R=mk({x:c.x/n,u:c.u/n})}else B.q('.manip-hint').textContent='Her iki taraf '+n+' ile bölünemiyor. Önce sadeleştirin.'}
+  else if(b.classList.contains('b-rnd')){const r=m=>1+Math.floor(Math.random()*m),X=r(9),a=2+r(2)-1,c=Math.floor(Math.random()*a),bb=r(6);s.x=X;s.L=mk({x:a,u:bb});s.R=mk({x:c,u:(a-c)*X+bb})}
+  else return;upd()};
+ B.q('.b-x').onchange=e=>{s.x=Math.round(+e.target.value)||0;upd()};
+ B.svg.onclick=e=>{const g=e.target.closest('[data-side]');if(!g)return;select(w);s[g.dataset.side].splice(+g.dataset.i,1);upd()};
+ cur=tgt();upd()};
+
+/* ---------- 3) FONKSİYON MAKİNELERİ ---------- */
+window.setupFuncMachine=function(w){
+ const s=w.state;s.ops=Array.isArray(s.ops)&&s.ops.length?s.ops:[{k:'+',n:3},{k:'×',n:2}];s.rows=Array.isArray(s.rows)?s.rows:[];s.hide=!!s.hide;s.inp=s.inp??2;
+ const OPS=['+','−','×','÷','^'],MW=110,GAP=40,X0=130,cy=100;
+ const ap=(o,v)=>o.k==='+'?v+o.n:o.k==='−'?v-o.n:o.k==='×'?v*o.n:o.k==='÷'?(o.n===0?NaN:v/o.n):Math.pow(v,o.n);
+ const run=v=>s.ops.reduce((a,o)=>(a.push(ap(o,a[a.length-1])),a),[v]);
+ const lab=o=>o.k==='^'?'x^'+nf(o.n):o.k+' '+nf(o.n);
+ const form=()=>{let e='x',lo=false;for(const o of s.ops){if(o.k==='+'||o.k==='−'){e+=' '+o.k+' '+nf(o.n);lo=true}else if(o.k==='^'){e=(e==='x'?e:'('+e+')')+'^'+nf(o.n);lo=false}else{e=(lo?'('+e+')':e)+' '+o.k+' '+nf(o.n);lo=false}}return 'f(x) = '+e};
+ const B=manipBase(w,'');const tb=document.createElement('div');tb.style.cssText='background:#fff;border:1px solid #cbd5e1;border-radius:10px;padding:8px;margin-top:6px;overflow-x:auto;color:#172233';B.art.insertBefore(tb,B.bar);
+ const TD='style="border:1px solid #cbd5e1;padding:4px 10px;text-align:center;min-width:46px"';
+ const tab=()=>{tb.innerHTML=s.rows.length?`<table style="border-collapse:collapse;font-size:14px"><tr><th ${TD}>Girdi</th>${s.rows.map(r=>`<td ${TD}>${nf(r.i)}</td>`).join('')}</tr><tr><th ${TD}>Çıktı</th>${s.rows.map(r=>`<td ${TD}>${nfv(r.o)}</td>`).join('')}</tr></table>`:'<span style="color:#64748b;font-size:13px">Bir sayı girip «Çalıştır»a basın; sonuçlar tabloya yazılır.</span>'};
+ function draw(t,vals,go){const N=s.ops.length,W=X0+N*(MW+GAP)+80,H=200;B.svg.setAttribute('viewBox',`0 0 ${W} ${H}`);w.style.width=W+'px';
+  const last=s.rows[s.rows.length-1],pill=(x,l,v)=>`<rect x="${x}" y="${cy-22}" width="64" height="44" rx="12" fill="#fff" stroke="#6366f1" stroke-width="2.5"/><text x="${x+32}" y="${cy+6}" text-anchor="middle" font-size="${String(v).length>5?12:17}" font-weight="700" fill="#1e293b">${v}</text><text x="${x+32}" y="${cy-30}" text-anchor="middle" font-size="12" fill="#64748b">${l}</text>`;
+  let h=`<rect x="1" y="1" width="${W-2}" height="${H-2}" rx="14" fill="#fbfaf6" stroke="#cbd5e1" stroke-width="2"/><rect x="20" y="${cy+52}" width="${W-40}" height="10" rx="5" fill="#cbd5e1"/>`+pill(24,'Girdi',nfv(go?vals[0]:s.inp))+pill(W-88,'Çıktı',last?nfv(last.o):'?');
+  const bx=56+(W-112)*(t||0);let stg=0;
+  s.ops.forEach((o,i)=>{const mx=X0+i*(MW+GAP),rot=go?t*720*(i%2?-1:1):0;if(mx+MW/2<bx)stg++;
+   h+=`<path d="M${mx-GAP+6} ${cy}h${GAP-12}m-6 -5l6 5l-6 5" stroke="#94a3b8" stroke-width="2.5" fill="none"/><rect x="${mx}" y="${cy-55}" width="${MW}" height="100" rx="14" fill="${['#6366f1','#0ea5e9','#10b981','#f59e0b'][i%4]}"/><rect x="${mx+10}" y="${cy-38}" width="${MW-20}" height="38" rx="8" fill="#0f172a"/><text x="${mx+MW/2}" y="${cy-13}" text-anchor="middle" font-size="19" font-weight="700" fill="#fde68a">${s.hide?'?':lab(o)}</text>`+[mx+30,mx+MW-30].map((gx,j)=>`<g transform="rotate(${rot*(j?-1:1)} ${gx} ${cy+24})"><circle cx="${gx}" cy="${cy+24}" r="11" fill="none" stroke="#fde68a" stroke-width="5" stroke-dasharray="4.3 3"/><circle cx="${gx}" cy="${cy+24}" r="4" fill="#fde68a"/></g>`).join('')});
+  if(go)h+=`<circle cx="${bx}" cy="${cy}" r="20" fill="#f59e0b" stroke="#fff" stroke-width="3"/><text x="${bx}" y="${cy+5}" text-anchor="middle" font-size="${String(nfv(vals[stg])).length>4?11:15}" font-weight="700" fill="#fff">${nfv(vals[stg])}</text>`;
+  B.g.innerHTML=h}
+ let busy=false;
+ function go(v){if(busy||!isFinite(v))return;const vals=run(v),t0=performance.now(),dur=900+s.ops.length*450;busy=true;
+  const fr=now=>{const t=Math.min(1,(now-t0)/dur);draw(t,vals,true);if(t<1&&w.isConnected)requestAnimationFrame(fr);else{busy=false;s.inp=v;s.rows.push({i:v,o:vals[vals.length-1]});if(s.rows.length>14)s.rows.shift();draw();tab()}};requestAnimationFrame(fr)}
+ function upd(){B.q('.m-hide').textContent=s.hide?'Kuralı göster':'Kuralı gizle';B.q('.m-form').textContent=s.hide?'Kural gizli: girdilerle çıktıları inceleyip kuralı bulun.':form();draw();tab()}
+ function bar(){B.bar.innerHTML=s.ops.map((o,i)=>`<span class="fm-m"><select data-i="${i}" data-f="k">${OPS.map(k=>`<option value="${k}"${k===o.k?' selected':''}>${k==='^'?'üs':k}</option>`).join('')}</select><input data-i="${i}" data-f="n" type="number" step="any" value="${o.n}" style="width:62px"></span>`).join('')+'<button class="m-add">+ Makine</button><button class="m-del">− Makine</button><span class="sep"></span><button class="m-hide"></button><button class="m-rnd">Rastgele kural</button><span class="sep"></span><span class="s3-lab">Girdi</span><input class="m-in" type="number" step="any" value="'+s.inp+'" style="width:70px"><button class="m-run">Çalıştır</button><button class="m-clr">Tabloyu temizle</button><span class="manip-hint m-form" style="flex-basis:100%"></span>';upd()}
+ const edit=e=>{const t=e.target,f=t.dataset.f;if(!f)return;const o=s.ops[+t.dataset.i];o[f]=f==='n'?(parseFloat(t.value)||0):t.value;upd()};B.bar.oninput=edit;B.bar.onchange=edit;
+ B.bar.onkeydown=e=>{if(e.key==='Enter'&&e.target.classList.contains('m-in'))go(parseFloat(e.target.value))};
+ B.bar.onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.classList.contains('m-add')){if(s.ops.length<4){s.ops.push({k:'+',n:1});bar()}}
+  else if(b.classList.contains('m-del')){if(s.ops.length>1){s.ops.pop();bar()}}
+  else if(b.classList.contains('m-hide')){s.hide=!s.hide;upd()}
+  else if(b.classList.contains('m-rnd')){const n=1+Math.floor(Math.random()*2),K=['+','−','×'];s.ops=Array.from({length:n},()=>({k:K[Math.floor(Math.random()*3)],n:1+Math.floor(Math.random()*9)}));s.rows=[];bar()}
+  else if(b.classList.contains('m-run'))go(parseFloat(B.q('.m-in').value));
+  else if(b.classList.contains('m-clr')){s.rows=[];upd()}};
+ bar()};
+
+/* ---------- 4) KOORDİNAT EKSENLERİ VE TABLOLAR ---------- */
+window.setupCoordTable=function(w){
+ const s=w.state;s.R=s.R||10;s.pts=Array.isArray(s.pts)?s.pts:[];s.fn=s.fn??'';s.join=!!s.join;
+ const SZ=440,P=30,B=manipBase(w,'<span class="s3-lab">y =</span><input class="ct-fn" placeholder="örn. 2x+1" style="width:130px"><button class="ct-fill">Tabloyu doldur</button><span class="sep"></span><select class="ct-r"><option value="5">−5 … 5</option><option value="10">−10 … 10</option><option value="20">−20 … 20</option></select><button class="ct-join">Noktaları birleştir</button><button class="ct-clr">Temizle</button><span class="manip-hint">Izgaraya dokun: nokta ekle · sürükle: taşı · tablodan değer değiştir</span>');
+ const wrap=document.createElement('div');wrap.style.cssText='display:flex;gap:10px;align-items:flex-start';B.art.insertBefore(wrap,B.bar);wrap.append(B.svg);B.svg.style.flex='1 1 auto';B.svg.style.minWidth='0';
+ const tb=document.createElement('div');tb.style.cssText=`width:200px;flex:none;max-height:${SZ}px;overflow:auto;background:#fff;border:1px solid #cbd5e1;border-radius:10px;padding:6px;color:#172233`;wrap.append(tb);
+ w.style.width=(SZ+230)+'px';B.svg.setAttribute('viewBox',`0 0 ${SZ} ${SZ}`);B.q('.ct-fn').value=s.fn;B.q('.ct-r').value=String(s.R);
+ const snap=p=>{const G=grid(s.R,SZ,P);return{x:Math.max(-s.R,Math.min(s.R,Math.round((p.x-SZ/2)/G.c))),y:Math.max(-s.R,Math.min(s.R,Math.round((SZ/2-p.y)/G.c)))}};
+ function plane(){const G=grid(s.R,SZ,P);let h=G.h;const fn=parse(s.fn);if(fn)h+=curve(fn,{a:0,b:0,c:0},s.R,G,'#6366f1');
+  if(s.join&&s.pts.length>1){const q=[...s.pts].sort((a,b)=>a.x-b.x);h+=`<polyline points="${q.map(p=>G.X(p.x)+','+G.Y(p.y)).join(' ')}" fill="none" stroke="#f59e0b" stroke-width="2.5" pointer-events="none" clip-path="url(#${G.id})"/>`}
+  h+=`<rect data-act="plane" x="${P-8}" y="${P-8}" width="${SZ-2*P+16}" height="${SZ-2*P+16}" fill="transparent" style="cursor:crosshair"/>`;
+  s.pts.forEach((p,i)=>{h+=`<g data-i="${i}" style="cursor:grab"><circle cx="${G.X(p.x)}" cy="${G.Y(p.y)}" r="14" fill="transparent"/><circle cx="${G.X(p.x)}" cy="${G.Y(p.y)}" r="5.5" fill="#dc2626" stroke="#fff" stroke-width="1.5"/><text x="${G.X(p.x)+8}" y="${G.Y(p.y)-8}" font-size="11" font-weight="600" fill="#1e293b" stroke="#fff" stroke-width="3" paint-order="stroke" pointer-events="none">(${nf(p.x)}; ${nf(p.y)})</text></g>`});
+  B.g.innerHTML=h;B.q('.ct-join').classList.toggle('on',s.join)}
+ const IS='style="width:64px;padding:3px 6px;height:28px"';
+ function table(){tb.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr 24px;gap:4px;align-items:center;font-size:12px;font-weight:700;text-align:center"><span>x</span><span>y</span><span></span>${s.pts.map((p,i)=>`<input data-i="${i}" data-k="x" ${IS} value="${nf(p.x)}"><input data-i="${i}" data-k="y" ${IS} value="${nf(p.y)}"><button data-del="${i}" style="padding:0;min-height:24px;width:24px">×</button>`).join('')}</div><button class="ct-add" style="margin-top:6px;width:100%">+ Satır</button>`}
+ tb.oninput=e=>{const k=e.target.dataset.k;if(!k)return;const v=parseFloat(String(e.target.value).replace(',','.').replace('−','-'));if(isFinite(v)){s.pts[+e.target.dataset.i][k]=v;plane()}};
+ tb.onclick=e=>{const d=e.target.closest('[data-del]'),a=e.target.closest('.ct-add');if(d){s.pts.splice(+d.dataset.del,1);plane();table()}else if(a&&s.pts.length<30){const fn=parse(s.fn),x=s.pts.length?s.pts[s.pts.length-1].x+1:0,y=fn?fn({x,a:0,b:0,c:0}):0;s.pts.push({x,y:isFinite(y)?Math.round(y*100)/100:0});plane();table()}};
+ let drag=null;
+ B.svg.onpointerdown=e=>{if(!e.isPrimary||e.button!==0)return;const t=e.target.closest('[data-i],[data-act]');if(!t)return;e.preventDefault();e.stopPropagation();select(w);const p=manipPt(B.svg,e);
+  drag=t.dataset.i!==undefined?{id:e.pointerId,i:+t.dataset.i,sx:p.x,sy:p.y,mv:false}:{id:e.pointerId,pl:true};try{B.svg.setPointerCapture(e.pointerId)}catch(_){}};
+ B.svg.onpointermove=e=>{if(!drag||drag.pl||drag.id!==e.pointerId)return;e.preventDefault();const p=manipPt(B.svg,e);if(!drag.mv&&Math.hypot(p.x-drag.sx,p.y-drag.sy)<5)return;drag.mv=true;Object.assign(s.pts[drag.i],snap(p));plane();table()};
+ B.svg.onpointerup=e=>{if(!drag||drag.id!==e.pointerId)return;const d=drag;drag=null;try{B.svg.releasePointerCapture(e.pointerId)}catch(_){}
+  if(d.pl&&s.pts.length<30){const q=snap(manipPt(B.svg,e));if(!s.pts.some(p=>p.x===q.x&&p.y===q.y)){s.pts.push(q);plane();table()}}};
+ B.svg.onpointercancel=()=>{drag=null};
+ B.q('.ct-fn').oninput=e=>{s.fn=e.target.value;plane()};
+ B.q('.ct-r').onchange=e=>{s.R=+e.target.value;plane()};
+ B.q('.ct-join').onclick=()=>{s.join=!s.join;plane()};
+ B.q('.ct-clr').onclick=()=>{s.pts=[];plane();table()};
+ B.q('.ct-fill').onclick=()=>{const fn=parse(s.fn);if(!fn){B.q('.manip-hint').textContent='Önce geçerli bir kural yazın (örn. 2x+1, x^2-3).';return}s.pts=[];for(let x=-5;x<=5;x++){const y=fn({x,a:0,b:0,c:0});if(isFinite(y))s.pts.push({x,y:Math.round(y*100)/100})}plane();table()};
+ plane();table()};
+
+/* ---------- 5) DEĞİŞKEN KAYDIRICILAR ---------- */
+window.setupSliders=function(w){
+ const s=w.state;s.mode=s.mode||'quad';s.a=s.a??1;s.b=s.b??0;s.c=s.c??0;s.expr=s.expr||'a*x^2+b*x+c';s.R=s.R||10;
+ const SZ=460,P=30,EX={lin:'a*x+b',quad:'a*x^2+b*x+c',abs:'a*abs(x-b)+c'};
+ const sl=p=>`<label class="s3-lab" style="display:inline-flex;align-items:center;gap:6px;font-size:14px" data-row="${p}">${p}<input class="s3-range" type="range" min="-10" max="10" step="0.1" data-p="${p}" value="${s[p]}"><output style="min-width:38px;font-weight:700"></output><button data-play="${p}" title="Otomatik değiştir">▶</button></label>`;
+ const B=manipBase(w,'<select class="sl-m"><option value="lin">y = ax + b</option><option value="quad">y = ax² + bx + c</option><option value="abs">y = a|x − b| + c</option><option value="custom">Özel ifade</option></select><input class="sl-e" style="width:170px" placeholder="a*x^2+b*x+c"><select class="sl-r"><option value="5">−5 … 5</option><option value="10">−10 … 10</option><option value="20">−20 … 20</option></select><span style="flex-basis:100%"></span>'+sl('a')+sl('b')+sl('c'));
+ w.style.width=SZ+'px';B.svg.setAttribute('viewBox',`0 0 ${SZ} ${SZ}`);
+ B.q('.sl-m').value=s.mode;B.q('.sl-r').value=String(s.R);B.q('.sl-e').value=s.expr;
+ const k=a=>a===1?'':a===-1?'−':nf(a),sg=n=>n<0?'− '+nf(-n):'+ '+nf(n);
+ const label=()=>{const{a,b,c}=s;return s.mode==='lin'?`y = ${k(a)}x ${sg(b)}`:s.mode==='quad'?`y = ${k(a)}x² ${sg(b)}x ${sg(c)}`:s.mode==='abs'?`y = ${k(a)}|x ${sg(-b)}| ${sg(c)}`:'y = '+s.expr};
+ const used=()=>s.mode==='custom'?['a','b','c'].filter(p=>s.expr.toLowerCase().includes(p.replace('b','b'))&&true):s.mode==='lin'?['a','b']:['a','b','c'];
+ function draw(){const G=grid(s.R,SZ,P),ex=s.mode==='custom'?s.expr:EX[s.mode],fn=parse(ex);let h=G.h;
+  if(fn)h+=curve(fn,{a:s.a,b:s.b,c:s.c},s.R,G,'#7c3aed');
+  h+=`<text x="${SZ/2}" y="22" text-anchor="middle" font-size="17" font-weight="700" fill="${fn?'#4c1d95':'#dc2626'}" stroke="#fff" stroke-width="4" paint-order="stroke">${fn?label():'İfade anlaşılamadı'}</text>`;
+  B.g.innerHTML=h;B.q('.sl-e').style.display=s.mode==='custom'?'':'none';const u=used();
+  for(const p of['a','b','c']){const r=B.q(`[data-row="${p}"]`);r.style.opacity=u.includes(p)?1:.35;r.querySelector('output').textContent=nf(s[p]);r.querySelector('input').value=s[p]}}
+ let play=null,raf=0;
+ function loop(now){if(!play||!w.isConnected)return;const t=(now-play.t0)/1000;s[play.p]=Math.round((5*Math.sin(t*1.1+play.ph))*10)/10;draw();raf=requestAnimationFrame(loop)}
+ const stop=()=>{play=null;cancelAnimationFrame(raf);B.bar.querySelectorAll('[data-play]').forEach(b=>b.classList.remove('on'))};
+ B.bar.oninput=e=>{const p=e.target.dataset.p;if(p){if(play)stop();s[p]=parseFloat(e.target.value);draw()}else if(e.target.classList.contains('sl-e')){s.expr=e.target.value;draw()}};
+ B.bar.onchange=e=>{if(e.target.classList.contains('sl-m')){s.mode=e.target.value;draw()}else if(e.target.classList.contains('sl-r')){s.R=+e.target.value;draw()}};
+ B.bar.onclick=e=>{const b=e.target.closest('[data-play]');if(!b)return;const p=b.dataset.play,same=play&&play.p===p;stop();if(!same){play={p,t0:performance.now(),ph:Math.asin(Math.max(-1,Math.min(1,s[p]/5)))};b.classList.add('on');raf=requestAnimationFrame(loop)}};
+ draw()};
+})();
 </script></html>
