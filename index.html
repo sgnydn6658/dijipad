@@ -179,10 +179,10 @@ aside{
 .cat-chevron{transform:rotate(90deg);opacity:.9}
 .menu-section:nth-child(1) .menu-cat{color:#ff6b6b!important}
 .menu-section:nth-child(2) .menu-cat{color:#fcc419!important}
-.menu-section:nth-child(3) .menu-cat{color:#4dabf7!important}
+.menu-section:nth-child(3) .menu-cat{color:#f783ac!important}
 .menu-section:nth-child(4) .menu-cat{color:#9775fa!important}
 .menu-section:nth-child(5) .menu-cat{color:#38d9a9!important}
-.menu-section:nth-child(6) .menu-cat{color:#f783ac!important}
+.menu-section:nth-child(6) .menu-cat{color:#4dabf7!important}
 .menu-section:nth-child(7) .menu-cat{color:#ffa94d!important}
 .tools .sub-h{font-weight:650!important;color:#e8e6f0!important;background:rgba(255,255,255,.05)!important;margin-top:2px}
 .sub-box{display:flex;flex-direction:column;gap:2px;padding-left:10px}.sub-box[hidden]{display:none!important}
@@ -675,7 +675,7 @@ main{
 #penDock #penColor::-webkit-color-swatch-wrapper{padding:0}#penDock #penColor::-webkit-color-swatch{border:2px solid rgba(255,255,255,.55);border-radius:50%}
 #penDock .pen-size-wrap{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);display:none;align-items:center;gap:8px;padding:9px 13px;background:#34313f;border-radius:14px;box-shadow:0 4px 14px #0004}
 #penDock.show-size .pen-size-wrap{display:flex}#penDock .pen-size-wrap button{width:28px;height:28px;min-width:28px;color:#fff;font-size:20px;padding:0}#penDock .pen-size-wrap input[type=range]{width:100px;accent-color:#eee}#penDock .size-val{font-size:12px;color:#eee;min-width:16px;text-align:center}
-.tool-menu-wrap{position:relative;display:flex;align-items:center}#lineMenu{position:absolute;bottom:66px;left:50%;transform:translateX(-50%);min-width:145px;padding:5px;background:#34313f;border:1px solid #ffffff25;border-radius:12px;box-shadow:0 5px 18px #0005;display:flex;flex-direction:column;gap:3px}#lineMenu[hidden]{display:none}#lineMenu button{border:0;background:transparent;color:#f5f3fa;text-align:left;padding:9px 12px;border-radius:8px;white-space:nowrap;font-size:13px}#lineMenu button:hover,#lineMenu button:active{background:#ffffff25}
+.tool-menu-wrap{position:relative;display:flex;align-items:center}#lineMenu{position:absolute;bottom:66px;left:50%;transform:translateX(-50%);min-width:145px;padding:5px;background:#34313f;border:1px solid #ffffff25;border-radius:12px;box-shadow:0 5px 18px #0005;display:flex;flex-direction:column;gap:3px}#lineMenu[hidden]{display:none}#lineMenu button{border:0;background:transparent;color:#f5f3fa;text-align:left;padding:9px 12px;border-radius:8px;white-space:nowrap;font-size:13px}#lineMenu button:hover,#lineMenu button:active{background:#ffffff25}#lineMenu .angle-row{display:flex;align-items:center;gap:4px}#lineMenu .angle-row button{flex:1}#lineMenu .angle-row input{width:58px;min-width:0;height:32px;padding:2px 6px;border-radius:8px;border:1px solid #ffffff40;background:#24212e;color:#fff;font-size:14px;font-weight:700;text-align:center}#lineMenu .angle-row span{color:#f5f3fa;font-weight:700;padding-right:4px}
 #stage.pen-mode{cursor:crosshair}#stage.erase-mode{cursor:cell}#stage.shape-mode{cursor:crosshair}
 @media(max-width:600px){#penDock{gap:1px;padding-left:6px;padding-right:6px;bottom:7px}#penDock .tool-btn{width:40px;min-width:40px}#penDock #penColor{width:27px;height:27px;min-width:27px}}
 #stage.pen-mode{cursor:crosshair}
@@ -760,6 +760,17 @@ html *,svg text,svg tspan{font-family:var(--ui-font)!important}
 .kc-custom .kc-add{width:100%!important;min-height:32px!important;margin:0!important;padding:6px!important;background:#2563eb!important;color:#fff!important;border:1px solid #1d4ed8!important;font:bold 12px Arial!important;opacity:1!important}
 .kc-ghost{position:fixed!important;width:208px!important;height:208px!important;pointer-events:none!important;z-index:2147483647!important;opacity:1!important}.kc-ghost svg{display:block;width:100%;height:100%}
 .widget.kc-card{min-width:0!important;border:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;pointer-events:none;overflow:visible!important}.kc-card>.body{width:100%;height:100%;padding:0!important;border:0!important;background:transparent!important;pointer-events:none}.kc-card .art{touch-action:none;pointer-events:none;background:transparent!important}.kc-card .art>svg{display:block;width:100%;height:100%;overflow:visible;pointer-events:none}.kc-card .kc-piece{pointer-events:visiblePainted;cursor:grab}.kc-card .kc-grips{opacity:0}.kc-card.selected .kc-grips{opacity:1}.kc-card .kc-grips circle{pointer-events:all;cursor:crosshair}.kc-card .handle,.kc-card .controls{pointer-events:auto}.kc-total{display:block;padding:5px;color:#172233;background:#eff6ff}
+
+.layout{grid-template-columns:minmax(0,1fr)!important}
+.brand-sidebar{width:auto!important;min-width:0!important;padding-left:2px!important}
+#menuToggle{position:fixed;z-index:2147482400;height:40px;padding:0 15px 0 12px;display:inline-flex;align-items:center;gap:8px;border:0!important;border-radius:11px!important;background:#2a2740!important;color:#fff!important;font:700 14px/1 system-ui,Arial,sans-serif;white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,.3);cursor:pointer}
+#menuToggle:hover{background:#3d3860!important}
+aside#menu{position:fixed!important;left:0;top:56px;width:264px;max-width:calc(100vw - 12px);z-index:2147482500;box-sizing:border-box;border-radius:14px;transform-origin:top left;clip-path:inset(0 100% 100% 0);opacity:0;visibility:hidden;pointer-events:none;transition:clip-path .34s cubic-bezier(.2,.8,.2,1),opacity .2s ease,visibility 0s linear .34s}
+aside#menu.open{clip-path:inset(0 -50px -50px 0);box-shadow:8px 10px 30px rgba(0,0,0,.4);opacity:1;visibility:visible;pointer-events:auto;transition:clip-path .34s cubic-bezier(.2,.8,.2,1),opacity .2s ease,visibility 0s}
+.menu-section:nth-child(1){--c:#ff6b6b}.menu-section:nth-child(2){--c:#fcc419}.menu-section:nth-child(3){--c:#f783ac}.menu-section:nth-child(4){--c:#9775fa}.menu-section:nth-child(5){--c:#38d9a9}.menu-section:nth-child(6){--c:#4dabf7}.menu-section:nth-child(7){--c:#ffa94d}
+.cat-main{display:flex;align-items:center;gap:9px;min-width:0}
+.cat-ico{flex:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px var(--c,#888);font-size:15px;line-height:1;font-style:normal}
+.cat-ico.alg{background:var(--c,#888);box-shadow:0 0 0 2px #fff}.cat-ico.alg b{color:#2a2740;font-size:12px;font-weight:800;letter-spacing:-.02em}
 </style>
 
 <header>
@@ -809,9 +820,11 @@ html *,svg text,svg tspan{font-family:var(--ui-font)!important}
   <div class="tool-menu-wrap">
     <button type="button" id="lineTool" class="tool-btn" title="Doğru araçları" aria-label="Doğru araçları"><svg viewBox="0 0 24 24"><path d="M4 20L20 4"/><circle cx="4" cy="20" r="2"/><circle cx="20" cy="4" r="2"/></svg><small>Doğru</small></button>
     <div id="lineMenu" class="tool-popup" hidden>
+      <button type="button" data-line="point">Nokta</button>
       <button type="button" data-line="line">Doğru</button>
       <button type="button" data-line="segment">Doğru parçası</button>
       <button type="button" data-line="ray">Işın</button>
+      <button type="button" data-line="angle">Açı</button>
     </div>
   </div>
   <button type="button" id="compassTool" class="tool-btn" title="Pergel" aria-label="Pergel"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M10 10L5 21M14 10l5 11M7 17h10"/></svg><small>Pergel</small></button>
@@ -830,13 +843,14 @@ const stage=document.querySelector('#stage'),menu=document.querySelector('#menu'
 const groups={'Sayı ve İşlem':[['nl','Sayı doğrusu'],['unit','Birim blok'],['ten','Onluk çubuk'],['hundred','Yüzlük blok'],['thousand','Binlik blok'],['counter','Sayma pulları'],['abacus','Abaküs']], 'Kesirler':[['fraction','Kesir kartı'],['circle','Kesir dairesi'],['bars','Kesir çubukları'],['circlecards','Kesir daireleri kartları'],['percent','Yüzde karesi']], 'Zaman':[['clock','Gerçek saat'],['timer','Kronometre'],['countdown','Geri sayım']], 'Geometri ve Ölçme':[['ruler','Cetvel'],['setsquare','Gönye'],['protractor','Açı ölçer'],['compass','Pergel'],['geo','Geoboard'],['tangram','Tangram'],['coordinate','Koordinat'],['shapes','Geometrik cisimler']], 'Veri ve Olasılık':[['dice','Zar'],['coin','Madeni para'],['spinner','Çark'],['graph','Sütun grafiği'],['piegraph','Daire grafiği'],['linegraph','Çizgi grafiği'],['areagraph','Alan grafiği'],['tallytable','Çetele tablosu'],['frequencytable','Sıklık tablosu']],'Cebir':[['algtiles','Cebir Karoları'],['balance','Denge Ölçeği'],['funcmachine','Fonksiyon Makineleri'],['coordtable','Koordinat Eksenleri ve Tablolar'],['sliders','Değişken Kaydırıcılar']],'Oyunlar ve Uygulamalar':[['g_hanoi','Hanoi Kuleleri'],['g_chess','Satranç'],['g_mangala','Mangala'],['g_surakarta','Surakarta'],['g_pentago','Pentago'],['g_quoridor','Koridor (Quoridor)'],['g_abalone','Abalone'],['m_piano','Piyano'],['m_xylo','Ksilofon'],['m_strings','Telli çalgılar'],['m_drums','Davul seti'],['m_perc','Perküsyon']]};
 const names=Object.fromEntries(Object.values(groups).flat());
 let openSection=null;
-for(const [title,tools] of Object.entries(groups)){
+const ORDER=['Sayı ve İşlem','Kesirler','Cebir','Geometri ve Ölçme','Veri ve Olasılık','Zaman','Oyunlar ve Uygulamalar'],ICON={'Sayı ve İşlem':'🔢','Kesirler':'🍕','Cebir':'<b>x²</b>','Geometri ve Ölçme':'📐','Veri ve Olasılık':'📊','Zaman':'⏰','Oyunlar ve Uygulamalar':'🎮'};
+for(const [title,tools] of [...ORDER,...Object.keys(groups).filter(k=>!ORDER.includes(k))].filter(k=>groups[k]).map(k=>[k,groups[k]])){
   const section=document.createElement('div');
   section.className='menu-section';
   const h=document.createElement('button');
   h.className='menu-cat';
   h.type='button';
-  h.innerHTML='<span class="cat-label">'+title+'</span><span class="cat-chevron">›</span>';
+  h.innerHTML='<span class="cat-main"><span class="cat-ico'+(title==='Cebir'?' alg':'')+'">'+(ICON[title]||'📁')+'</span><span class="cat-label">'+title+'</span></span><span class="cat-chevron">›</span>';
   const d=document.createElement('div');
   d.className='tools';
   d.hidden=true;
@@ -1026,13 +1040,35 @@ document.querySelector('#backgroundSelect').onchange=e=>stage.dataset.bg=e.targe
  function setMode(m){mode=m;if(typeof moveMode!=='undefined'){moveMode=(m==='select');const mm=document.getElementById('moveMode');if(mm)mm.textContent='Taşıma: '+(moveMode?'Açık':'Kapalı')}drawing=false;pointerId=null;preview=null;last=null;for(const b of [selectTool,penTool,eraseTool,lineTool,compassTool,textTool])b.classList.toggle('active',b===({select:selectTool,pen:penTool,erase:eraseTool,line:lineTool,compass:compassTool,text:textTool}[m]));stage.classList.toggle('pen-mode',m==='pen');stage.classList.toggle('erase-mode',m==='erase');stage.classList.toggle('shape-mode',['line','compass'].includes(m));stage.classList.toggle('draw-any',m!=='select');clearGuide();dock.classList.toggle('show-size',m==='pen'||m==='erase'||m==='line'||m==='compass');lineMenu.hidden=true;}
  selectTool.addEventListener('click',()=>setMode('select'));penTool.addEventListener('click',()=>setMode('pen'));eraseTool.addEventListener('click',()=>setMode('erase'));
  lineTool.addEventListener('click',()=>{lineMenu.hidden=!lineMenu.hidden});
- lineMenu.querySelectorAll('[data-line]').forEach(b=>b.addEventListener('click',()=>{lineKind=b.dataset.line;lineTool.title=b.textContent;lineTool.querySelector('small').textContent=b.textContent;setMode('line')}));
+ lineMenu.querySelectorAll('[data-line]').forEach(b=>b.addEventListener('click',()=>{lineKind=b.dataset.line;lineTool.title=b.textContent;lineTool.querySelector('small').textContent=b.textContent;setMode('line');if(lineKind==='angle')stTxt('Açı: sırayla 3 noktaya dokun (kol ucu → köşe → kol ucu)')}));
  compassTool.addEventListener('click',()=>setMode('compass'));
  textTool.addEventListener('click',()=>setMode('text'));
  function addPath(d,stroke=color.value,width=size.value,fill='none'){const p=document.createElementNS(ns,'path');p.setAttribute('d',d);p.setAttribute('stroke',stroke);p.setAttribute('stroke-width',width);p.setAttribute('stroke-linecap','round');p.setAttribute('stroke-linejoin','round');p.setAttribute('fill',fill);p.classList.add('board-ink');layer().append(p);return p}
  function rayEnd(a,b){const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy)||1,scale=Math.max(stage.clientWidth,stage.clientHeight)*3/L;return{x:a.x+dx*scale,y:a.y+dy*scale}}
  function shapePath(a,b){if(lineKind==='segment')return `M${a.x} ${a.y} L${b.x} ${b.y}`;if(lineKind==='ray'){const q=rayEnd(a,b);return `M${a.x} ${a.y} L${q.x} ${q.y}`}const q=rayEnd(a,b),r=rayEnd(b,a);return `M${r.x} ${r.y} L${q.x} ${q.y}`}
-  function clearGuide(){if(cg){cg.g.remove();cg=null}}
+  function clearGuide(){if(cg){cg.g.remove();cg=null}angCancel()}
+ let ptN=0;
+ function svgEl(tag,at){const e=document.createElementNS(ns,tag);for(const k in at)e.setAttribute(k,at[k]);return e}
+ function addPoint(p){const g=svgEl('g',{});g.classList.add('board-ink');const lb=String.fromCharCode(65+ptN%26)+(ptN>=26?Math.floor(ptN/26):'');ptN++;
+  g.append(svgEl('circle',{cx:p.x,cy:p.y,r:Math.max(4,+size.value*1.6),fill:color.value,stroke:'#fff','stroke-width':1.5}));
+  const t=svgEl('text',{x:p.x+10,y:p.y-10,'font-size':18,'font-weight':700,fill:color.value,stroke:'#fff','stroke-width':4,'paint-order':'stroke','pointer-events':'none'});t.textContent=lb;g.append(t);layer().append(g)}
+ let angTmp=null,angPts=[];
+ const stTxt=t=>{const e=document.querySelector('#status');if(e)e.textContent=t};
+ function angCancel(){if(angTmp){angTmp.remove();angTmp=null}angPts=[]}
+ function angDot(g,q,col,sw){g.append(svgEl('circle',{cx:q.x,cy:q.y,r:Math.max(4,+sw*1.4),fill:col,stroke:'#fff','stroke-width':1.5}));const t=svgEl('text',{x:q.x+10,y:q.y-10,'font-size':17,'font-weight':700,fill:col,stroke:'#fff','stroke-width':4,'paint-order':'stroke','pointer-events':'none'});t.textContent=q.l;g.append(t)}
+ function angClick(p){const L=angPts[angPts.length-1];if(L&&Math.hypot(p.x-L.x,p.y-L.y)<8)return;
+  angPts.push({x:p.x,y:p.y,l:String.fromCharCode(65+ptN%26)+(ptN>=26?Math.floor(ptN/26):'')});ptN++;
+  if(angTmp){angTmp.remove();angTmp=null}
+  const col=color.value,sw=size.value,P=angPts,g=svgEl('g',{});
+  if(P.length<3){if(P.length===2)g.append(svgEl('path',{d:`M${P[0].x} ${P[0].y} L${P[1].x} ${P[1].y}`,fill:'none',stroke:col,'stroke-width':sw,'stroke-linecap':'round'}));P.forEach(q=>angDot(g,q,col,sw));layer().append(g);angTmp=g;stTxt(P.length===1?'Açı: şimdi köşe noktasına dokun':'Açı: son olarak diğer kolun ucuna dokun');return}
+  const[A,B,C]=P,a0=Math.atan2(A.y-B.y,A.x-B.x),a1=Math.atan2(C.y-B.y,C.x-B.x);let df=a1-a0;while(df>Math.PI)df-=2*Math.PI;while(df<=-Math.PI)df+=2*Math.PI;
+  const deg=Math.abs(df)*180/Math.PI,la=Math.hypot(A.x-B.x,A.y-B.y),lc=Math.hypot(C.x-B.x,C.y-B.y),m=Math.min(la,lc),r=Math.max(16,Math.min(46,.4*m)),Pt=(an,rr)=>[B.x+rr*Math.cos(an),B.y+rr*Math.sin(an)];
+  let arc;if(Math.abs(deg-90)<.5){const sq=Math.max(12,Math.min(24,.3*m)),u=Pt(a0,sq),v=Pt(a1,sq);arc=`M${u[0]} ${u[1]} L${u[0]+v[0]-B.x} ${u[1]+v[1]-B.y} L${v[0]} ${v[1]}`}else{const s0=Pt(a0,r),s1=Pt(a1,r);arc=`M${s0[0]} ${s0[1]} A${r} ${r} 0 0 ${df>0?1:0} ${s1[0]} ${s1[1]}`}
+  g.classList.add('board-ink');
+  g.append(svgEl('path',{d:`M${A.x} ${A.y} L${B.x} ${B.y} L${C.x} ${C.y}`,fill:'none',stroke:col,'stroke-width':sw,'stroke-linecap':'round','stroke-linejoin':'round'}),svgEl('path',{d:arc,fill:'none',stroke:col,'stroke-width':Math.max(1.5,sw*.6),'stroke-linecap':'round'}));
+  P.forEach(q=>angDot(g,q,col,sw));
+  const txt=(Math.abs(deg-Math.round(deg))<.05?String(Math.round(deg)):String(Number(deg.toFixed(1))).replace('.',','))+'°',lp=Pt(a0+df/2,r+22),lab=svgEl('text',{x:lp[0],y:lp[1]+5,'font-size':16,'font-weight':700,fill:col,stroke:'#fff','stroke-width':4,'paint-order':'stroke','text-anchor':'middle','pointer-events':'none'});lab.textContent=txt;g.append(lab);
+  layer().append(g);angPts=[];angTmp=null;stTxt('Açı ölçüsü: '+txt+' · yeni açı için yine 3 noktaya dokun')}
  function makeGuide(p,c){const g=document.createElementNS(ns,'g');g.setAttribute('class','compass-guide');const line=document.createElementNS(ns,'line'),h=document.createElementNS(ns,'circle'),lab=document.createElementNS(ns,'text');
   line.setAttribute('x1',p.x);line.setAttribute('y1',p.y);line.setAttribute('x2',p.x);line.setAttribute('y2',p.y);line.setAttribute('stroke','#2563eb');line.setAttribute('stroke-width','1.5');line.setAttribute('stroke-dasharray','5 4');line.setAttribute('pointer-events','none');
   h.setAttribute('class','compass-handle');h.setAttribute('r','9');h.setAttribute('fill','#fff');h.setAttribute('stroke','#2563eb');h.setAttribute('stroke-width','2.5');h.setAttribute('pointer-events','all');h.setAttribute('cx',p.x);h.setAttribute('cy',p.y);
@@ -1056,7 +1092,7 @@ document.querySelector('#backgroundSelect').onchange=e=>stage.dataset.bg=e.targe
    drawing=true;pointerId=e.pointerId;start=p;last=p;
    try{stage.setPointerCapture(e.pointerId)}catch(_){}
    if(mode==='pen'){preview=addPath(`M${p.x} ${p.y}`,color.value,size.value)}
-   else if(mode==='line'){preview=addPath(shapePath(p,p),color.value,size.value)}
+   else if(mode==='line'){if(lineKind==='point'){addPoint(p);drawing=false;pointerId=null;preview=null}else if(lineKind==='angle'){angClick(p);drawing=false;pointerId=null;preview=null}else{preview=addPath(shapePath(p,p),color.value,size.value)}}
    else if(mode==='compass'){clearGuide();const g=document.createElementNS(ns,'g');g.classList.add('board-ink');const c=document.createElementNS(ns,'circle');c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',1);c.setAttribute('fill','none');c.setAttribute('stroke',color.value);c.setAttribute('stroke-width',size.value);const dot=document.createElementNS(ns,'circle');dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y);dot.setAttribute('r',Math.max(3.5,+size.value*1.3));dot.setAttribute('fill',color.value);g.append(c,dot);layer().append(g);preview=c;makeGuide(p,c)}
    else if(mode==='erase')eraseAt(p);
  },true);
@@ -2293,8 +2329,30 @@ function snapBarToLine(w){
  const lo=s.min,hi=s.max-val;v=hi>=lo?Math.min(Math.max(v,lo),hi):lo;v=Math.round(v/step)*step;
  const tl=r.left+40*kx+(v-s.min)*uPx,tt=ay-12*ky-br.height;
  w.style.left=Math.max(0,(parseFloat(w.style.left)||w.offsetLeft)+(tl-br.left)/k)+'px';
- w.style.top=Math.max(0,(parseFloat(w.style.top)||w.offsetTop)+(tt-br.top)/k)+'px'}
+ w.style.top=Math.max(0,(parseFloat(w.style.top)||w.offsetTop)+(tt-br.top)/k)+'px';if((+w.style.zIndex||0)<=(+nl.style.zIndex||0))w.style.zIndex=++z}
 window.snapBarToLine=snapBarToLine;
 const old=avoidDock;avoidDock=function(w){old(w);try{snapBarToLine(w)}catch(_){}};
+})();
+
+/* ===== Kenar menüsü: tahtanın sol üst köşesindeki düğmeyle açılır ===== */
+(function(){
+ const st=document.querySelector('#stage'),m=document.querySelector('#menu'),main=document.querySelector('main');if(!st||!m)return;
+ const b=document.createElement('button');b.id='menuToggle';b.type='button';b.title='Menü';b.setAttribute('aria-label','Menü');b.setAttribute('aria-controls','menu');b.setAttribute('aria-expanded','false');b.innerHTML='<span class="mt-ico" style="font-size:19px;width:20px;text-align:center">☰</span><span>Menü</span>';document.body.append(b);
+ const place=()=>{const r=st.getBoundingClientRect();b.style.left=(r.left+8)+'px';b.style.top=(r.top+8)+'px'};
+ const set=o=>{if(o){place();const r=b.getBoundingClientRect();m.style.left=r.left+'px';m.style.top=(r.bottom+6)+'px';m.style.maxHeight='calc(100vh - '+(r.bottom+16)+'px)'}m.classList.toggle('open',o);b.setAttribute('aria-expanded',String(o));b.querySelector('.mt-ico').textContent=o?'✕':'☰'};
+ b.onclick=()=>set(!m.classList.contains('open'));
+ document.addEventListener('pointerdown',e=>{if(m.classList.contains('open')&&!m.contains(e.target)&&!b.contains(e.target)&&!e.target.closest('dialog'))set(false)},true);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&m.classList.contains('open'))set(false)});
+ place();if(window.ResizeObserver){const ro=new ResizeObserver(place);ro.observe(st);if(main)ro.observe(main)}
+ addEventListener('resize',place);addEventListener('scroll',place,true);setTimeout(place,300);
+})();
+
+/* ===== Sayı doğrusunun üstündeki kesir çubukları hep üstte kalsın ===== */
+(function(){
+ const keep=()=>{const nls=[...stage.querySelectorAll('.widget[data-type="nl"]')],bars=[...stage.querySelectorAll('.widget[data-type="bars"]')];if(!nls.length||!bars.length)return;
+  for(const n of nls){const nr=n.getBoundingClientRect(),nz=+n.style.zIndex||0;
+   for(const b of bars){const r=b.getBoundingClientRect();if(r.right>nr.left&&r.left<nr.right&&r.bottom>nr.top&&r.top<nr.bottom&&(+b.style.zIndex||0)<=nz)b.style.zIndex=++z}}};
+ const old=select;select=function(w){old(w);try{keep()}catch(_){}};
+ const oldSnap=window.snapBarToLine;window.snapBarToLine=function(w){oldSnap(w);try{if(w&&w.isConnected&&w.dataset.type==='bars')keep()}catch(_){}};
 })();
 </script></html>
