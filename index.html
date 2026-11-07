@@ -783,6 +783,7 @@ aside#menu.open{clip-path:inset(0 -50px -50px 0);box-shadow:8px 10px 30px rgba(0
       <option value="iso">İzometrik</option>
       <option value="dots">Noktalı</option>
       <option value="dark">Koyu ekran</option>
+      <option value="music">Müzik Defteri</option>
     </select>
     <button id="pdfLoad">PDF Yükle</button>
     <button id="imageLoad">Resim Yükle</button>
@@ -2356,3 +2357,23 @@ const old=avoidDock;avoidDock=function(w){old(w);try{snapBarToLine(w)}catch(_){}
  const oldSnap=window.snapBarToLine;window.snapBarToLine=function(w){oldSnap(w);try{if(w&&w.isConnected&&w.dataset.type==='bars')keep()}catch(_){}};
 })();
 </script></html>
+<script>
+(function(){
+const board=document.getElementById('stage');
+function musicPaper(){
+ if(board.dataset.bg!=='music'){board.style.removeProperty('background-image');board.style.removeProperty('background-size');board.style.removeProperty('background-repeat');board.style.removeProperty('background-color');return;}
+ const w=board.clientWidth,h=board.clientHeight;if(!w||!h)return;
+ const left=32,right=w-32,top=36,gap=6,step=82;
+ let parts=[];
+ for(let y=top;y+48<=h-20;y+=step){
+  for(let i=0;i<5;i++)parts.push(`<path d="M${left} ${y+i*gap}H${right}" fill="none" stroke="#777" stroke-width="0.8"/>`);
+  parts.push(`<text x="${left-5}" y="${y+29}" font-size="42" font-family="Noto Music,Segoe UI Symbol,Apple Symbols,serif" fill="#222">𝄞</text>`);
+ }
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">${parts.join('')}</svg>`;
+ board.style.backgroundColor='white';board.style.backgroundImage='url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';board.style.backgroundSize=w+'px '+h+'px';board.style.backgroundRepeat='no-repeat';
+}
+new MutationObserver(musicPaper).observe(board,{attributes:true,attributeFilter:['data-bg']});
+new ResizeObserver(musicPaper).observe(board);
+musicPaper();
+})();
+</script>
