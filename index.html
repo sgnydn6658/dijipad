@@ -841,7 +841,7 @@ aside#menu.open{clip-path:inset(0 -50px -50px 0);box-shadow:8px 10px 30px rgba(0
 
 <script>
 const stage=document.querySelector('#stage'),menu=document.querySelector('#menu');let selected=null,z=1,serial=0;
-const groups={'Sayı ve İşlem':[['nl','Sayı doğrusu'],['unit','Birim blok'],['ten','Onluk çubuk'],['hundred','Yüzlük blok'],['thousand','Binlik blok'],['counter','Sayma pulları'],['abacus','Abaküs']], 'Kesirler':[['fraction','Kesir kartı'],['circle','Kesir dairesi'],['bars','Kesir çubukları'],['circlecards','Kesir daireleri kartları'],['percent','Yüzde karesi']], 'Zaman':[['clock','Gerçek saat'],['timer','Kronometre'],['countdown','Geri sayım']], 'Geometri ve Ölçme':[['ruler','Cetvel'],['setsquare','Gönye'],['protractor','Açı ölçer'],['compass','Pergel'],['geo','Geoboard'],['tangram','Tangram'],['coordinate','Koordinat'],['shapes','Geometrik cisimler'],['cubes','Küp yapıları (3B)']], 'Veri ve Olasılık':[['dice','Zar'],['coin','Madeni para'],['spinner','Çark'],['graph','Sütun grafiği'],['piegraph','Daire grafiği'],['linegraph','Çizgi grafiği'],['areagraph','Alan grafiği'],['tallytable','Çetele tablosu'],['frequencytable','Sıklık tablosu']],'Cebir':[['algtiles','Cebir Karoları'],['balance','Denge Ölçeği'],['funcmachine','Fonksiyon Makineleri'],['coordtable','Koordinat Eksenleri ve Tablolar'],['sliders','Değişken Kaydırıcılar']],'Oyunlar ve Uygulamalar':[['g_hanoi','Hanoi Kuleleri'],['g_chess','Satranç'],['g_mangala','Mangala'],['g_surakarta','Surakarta'],['g_pentago','Pentago'],['g_quoridor','Koridor (Quoridor)'],['g_abalone','Abalone'],['m_piano','Piyano'],['m_xylo','Ksilofon'],['m_strings','Telli çalgılar'],['m_drums','Davul seti'],['m_perc','Perküsyon']]};
+const groups={'Sayı ve İşlem':[['nl','Sayı doğrusu'],['unit','Birim blok'],['ten','Onluk çubuk'],['hundred','Yüzlük blok'],['thousand','Binlik blok'],['counter','Sayma pulları'],['abacus','Abaküs']], 'Kesirler':[['fraction','Kesir kartı'],['circle','Kesir dairesi'],['bars','Kesir çubukları'],['circlecards','Kesir daireleri kartları'],['percent','Yüzde karesi']], 'Zaman':[['clock','Gerçek saat'],['timer','Kronometre'],['countdown','Geri sayım']], 'Geometri ve Ölçme':[['ruler','Cetvel'],['setsquare','Gönye'],['protractor','Açı ölçer'],['compass','Pergel'],['geo','Geoboard'],['tangram','Tangram'],['coordinate','Koordinat'],['shapes','Geometrik cisimler'],['cubes','Küp yapıları (3B)'],['angles','Açılar']], 'Veri ve Olasılık':[['dice','Zar'],['coin','Madeni para'],['spinner','Çark'],['graph','Sütun grafiği'],['piegraph','Daire grafiği'],['linegraph','Çizgi grafiği'],['areagraph','Alan grafiği'],['tallytable','Çetele tablosu'],['frequencytable','Sıklık tablosu']],'Cebir':[['algtiles','Cebir Karoları'],['balance','Denge Ölçeği'],['funcmachine','Fonksiyon Makineleri'],['coordtable','Koordinat Eksenleri ve Tablolar'],['sliders','Değişken Kaydırıcılar']],'Oyunlar ve Uygulamalar':[['g_hanoi','Hanoi Kuleleri'],['g_chess','Satranç'],['g_mangala','Mangala'],['g_surakarta','Surakarta'],['g_pentago','Pentago'],['g_quoridor','Koridor (Quoridor)'],['g_abalone','Abalone'],['m_piano','Piyano'],['m_xylo','Ksilofon'],['m_strings','Telli çalgılar'],['m_drums','Davul seti'],['m_perc','Perküsyon']]};
 const names=Object.fromEntries(Object.values(groups).flat());
 let openSection=null;
 const ORDER=['Sayı ve İşlem','Kesirler','Cebir','Geometri ve Ölçme','Veri ve Olasılık','Zaman','Oyunlar ve Uygulamalar'],ICON={'Sayı ve İşlem':'🔢','Kesirler':'🍕','Cebir':'<b>x²</b>','Geometri ve Ölçme':'📐','Veri ve Olasılık':'📊','Zaman':'⏰','Oyunlar ve Uygulamalar':'🎮'};
@@ -1123,6 +1123,7 @@ function setup(w,type){
  if(type==='sliders'){setupSliders(w);return}
  if(type==='circlecard'){setupKC(w);return}
  if(type==='cubes'){setupCubes(w);return}
+ if(type==='angles'){setupAngles(w);return}
  if(['setsquare','protractor','compass'].includes(type)){setupGeometryInstrument(w,type);return}
  if(type==='shapes'){setupShapes(w);return}
  if(type==='tangram'){setupTangram(w);return}
@@ -2422,6 +2423,7 @@ function setupCubes(w){
   s.N=[4,5,6,8].includes(s.N)?s.N:5;
   s.h=Array.isArray(s.h)&&s.h.length===s.N*s.N?s.h.map(v=>Math.max(0,Math.min(s.N,v|0))):Array(s.N*s.N).fill(0);
   s.mode=s.mode==='del'?'del':'add';s.yaw=Number.isFinite(s.yaw)?s.yaw:-35;s.pitch=Number.isFinite(s.pitch)?s.pitch:30;
+  w.style.left='24px';w.style.top='64px';
   const BW=830,ISO_W=450,B=manipBase(w,'<button class="cu-add">＋ Küp ekle</button><button class="cu-del">✕ Küp sil</button><span class="sep"></span><button class="cu-rl" title="Yapıyı 90° sola çevir">↶ 90°</button><button class="cu-rr" title="Yapıyı 90° sağa çevir">90° ↷</button><button class="cu-reset">Bakışı sıfırla</button><span class="sep"></span><button class="cu-undo">Geri al</button><button class="cu-clear">Temizle</button><span class="sep"></span><select class="cu-n" title="Zemin boyutu"><option value="4">Zemin 4×4</option><option value="5">Zemin 5×5</option><option value="6">Zemin 6×6</option><option value="8">Zemin 8×8</option></select><select class="cu-ex" title="Hazır yapı"><option value="">Hazır yapı…</option><option value="stairs">Merdiven</option><option value="pyramid">Piramit</option><option value="ell">L yapı</option><option value="tower">Basamaklı kule</option></select><span class="cu-read manip-hint"></span>');
   const svg=B.svg,g=B.g;w.style.width=BW+'px';
   let hist=[],flash='';
@@ -2491,6 +2493,114 @@ function setupCubes(w){
   B.q('.cu-n').onchange=e=>{const n=+e.target.value,o=s.N,h=Array(n*n).fill(0);snap();for(let y=0;y<Math.min(n,o);y++)for(let x=0;x<Math.min(n,o);x++)h[y*n+x]=Math.min(n,s.h[y*o+x]);s.N=n;s.h=h;draw()};
   B.q('.cu-ex').onchange=e=>{const v=e.target.value;e.target.value='';if(!v)return;snap();s.h=CubeLib.preset(v,s.N);draw()};
   draw();
+}
+
+/* ---------- AÇILAR: açı türleri, tümler/bütünler, yöndeş, iç ters, dış ters, ters açılar (taşınabilir parçalar) ---------- */
+function setupAngles(w){
+  const s=w.state,TABS=[['type','Açı türleri'],['comp','Tümler'],['supp','Bütünler'],['corr','Yöndeş'],['alt','İç ters'],['ext','Dış ters'],['vert','Ters (karşıt)']];
+  s.tab=TABS.some(t=>t[0]===s.tab)?s.tab:'type';
+  for(const[k,v]of[['a',50],['c',35],['d',65],['th',65],['pair',0]])s[k]=Number.isFinite(s[k])?s[k]:v;
+  s.hint=s.hint!==false;
+  const BW=760,BH=470,RNG={type:['a',0,180,1,'Açı'],comp:['c',10,80,5,'Açı'],supp:['d',10,170,5,'Açı'],corr:['th',50,130,5,'Kesen'],alt:['th',50,130,5,'Kesen'],ext:['th',50,130,5,'Kesen'],vert:['th',50,130,5,'Kesen']};
+  w.style.left='24px';w.style.top='64px';
+  const B=manipBase(w,TABS.map(t=>'<button class="sh-tab an-tab" data-t="'+t[0]+'">'+t[1]+'</button>').join('')+'<span class="sep"></span><label class="s3-lab">'+'<span class="an-rl">Açı</span> <input type="range" class="s3-range an-range" style="width:150px"> <b class="an-val"></b></label><button class="an-next">Başka açı</button><button class="an-reset">Parçaları sıfırla</button><button class="an-hint">İpucu</button>');
+  const svg=B.svg,g=B.g;svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';
+  const RAD=Math.PI/180,norm=a=>((a%360)+360)%360,ad=(a,b)=>{const d=Math.abs(norm(a)-norm(b));return Math.min(d,360-d)},f1=n=>+n.toFixed(1);
+  const pol=(x,y,r,a)=>[x+r*Math.cos(a*RAD),y-r*Math.sin(a*RAD)];
+  const sector=(x,y,r,a0,m)=>{const p0=pol(x,y,r,a0),p1=pol(x,y,r,a0+m);return 'M'+f1(x)+' '+f1(y)+'L'+p0.map(f1).join(' ')+'A'+r+' '+r+' 0 '+(m>180?1:0)+' 0 '+p1.map(f1).join(' ')+'Z'};
+  let P=[],S=[],scene=null,drag=null;
+  const line=(a,b,c,wd)=>'<path d="M'+f1(a[0])+' '+f1(a[1])+'L'+f1(b[0])+' '+f1(b[1])+'" stroke="'+(c||'#1e293b')+'" stroke-width="'+(wd||3)+'" stroke-linecap="round" fill="none" pointer-events="none"/>';
+  const T=(x,y,t,sz,col,wt,anc)=>'<text x="'+f1(x)+'" y="'+f1(y)+'" font-size="'+sz+'" font-weight="'+(wt||400)+'" fill="'+(col||'#1e293b')+'" text-anchor="'+(anc||'start')+'" pointer-events="none">'+t+'</text>';
+  function build(){
+    const t=s.tab;scene={bg:'',title:[],done:null};P=[];S=[];
+    if(t==='comp'||t==='supp'){
+      const a=t==='comp'?s.c:s.d,tot=t==='comp'?90:180,b=tot-a,R=t==='comp'?120:110,V=t==='comp'?[150,360]:[250,340];
+      if(t==='comp'){scene.bg='<path d="'+sector(V[0],V[1],260,0,90)+'" fill="#f1f6ff" pointer-events="none"/>'+line(V,[V[0]+280,V[1]])+line(V,[V[0],V[1]-270])+'<path d="M'+(V[0]+24)+' '+V[1]+'L'+(V[0]+24)+' '+(V[1]-24)+'L'+V[0]+' '+(V[1]-24)+'" fill="none" stroke="#1e293b" stroke-width="2" pointer-events="none"/>';
+        scene.title=['Tümler açılar: ölçüleri toplamı 90° olan iki açıdır.','İki parçayı sürükleyip dik açının içine yerleştir; ucundaki beyaz noktadan tutarak döndür.']}
+      else{scene.bg='<path d="'+sector(V[0],V[1],235,0,180)+'" fill="#f1f6ff" pointer-events="none"/>'+line([V[0]-225,V[1]],[V[0]+225,V[1]]);
+        scene.title=['Bütünler açılar: ölçüleri toplamı 180° olan iki açıdır.','İki parçayı sürükleyip doğru açının içine yerleştir; ucundaki beyaz noktadan tutarak döndür.']}
+      S=[{x:V[0],y:V[1],rot:0,m:a,R,p:null},{x:V[0],y:V[1],rot:a,m:b,R,p:null}];
+      const sx=t==='comp'?[[520,150,35],[600,340,205]]:[[600,150,25],[610,350,200]];
+      P=[{m:a,R,color:'#fbbf24',x:sx[0][0],y:sx[0][1],rot:sx[0][2],slot:null},{m:b,R,color:'#4ade80',x:sx[1][0],y:sx[1][1],rot:sx[1][2],slot:null}];
+      scene.done=()=>a+'° + '+b+'° = '+tot+'°  →  '+(t==='comp'?'Tümler':'Bütünler')+' açılar';
+    }else if(t!=='type'){
+      const th=s.th,y1=150,y2=330,P2=[300,y2],tt=(y2-y1)/Math.sin(th*RAD),P1=[300+tt*Math.cos(th*RAD),y1],u=[Math.cos(th*RAD),-Math.sin(th*RAD)];
+      const ang=(I,k)=>({I,k,m:(k===1||k===3)?th:180-th,r0:[0,th,180,th+180][k-1],x:(I==='U'?P1:P2)[0],y:(I==='U'?P1:P2)[1]});
+      let pairs=[];
+      if(t==='corr')pairs=[1,2,3,4].map(k=>[ang('U',k),ang('L',k)]);
+      else if(t==='alt')pairs=[[ang('U',3),ang('L',1)],[ang('U',4),ang('L',2)],[ang('L',1),ang('U',3)],[ang('L',2),ang('U',4)]];
+      else if(t==='ext')pairs=[[ang('U',1),ang('L',3)],[ang('U',2),ang('L',4)],[ang('L',3),ang('U',1)],[ang('L',4),ang('U',2)]];
+      else for(const I of['U','L'])for(const[a,b]of[[1,3],[2,4],[3,1],[4,2]])pairs.push([ang(I,a),ang(I,b)]);
+      const[src,tgt]=pairs[((s.pair%pairs.length)+pairs.length)%pairs.length],R=52;
+      const names={corr:'Yöndeş',alt:'İç ters',ext:'Dış ters',vert:'Ters'};
+      const defs={corr:['Yöndeş açılar: paralel doğruları kesen doğrunun aynı yönündeki karşılıklı açılardır.','Kesenin aynı yanında, doğrulara göre aynı konumda bulunurlar. Ölçüleri eşittir.'],
+        alt:['İç ters açılar: paralel doğruların arasında, kesenin ayrı yanlarında bulunan açılardır.','Ölçüleri eşittir.'],
+        ext:['Dış ters açılar: paralel doğruların dışında, kesenin ayrı yanlarında bulunan açılardır.','Ölçüleri eşittir.'],
+        vert:['Ters açılar: iki doğrunun kesişmesiyle oluşan, tepe noktası ortak karşılıklı açılardır.','Ölçüleri eşittir.']};
+      let bg='<path d="'+sector(src.x,src.y,R,src.r0,src.m)+'" fill="#fbbf24" fill-opacity=".28" stroke="#b45309" stroke-dasharray="3 3" pointer-events="none"/>';
+      bg+=line([20,y1],[640,y1])+line([20,y2],[640,y2]);
+      for(const yy of[y1,y2])bg+='<path d="M600 '+(yy-7)+'L609 '+yy+'L600 '+(yy+7)+'M614 '+(yy-7)+'L623 '+yy+'L614 '+(yy+7)+'" fill="none" stroke="#1e293b" stroke-width="2" pointer-events="none"/>';
+      bg+=line([P2[0]-u[0]*58,P2[1]-u[1]*58],[P1[0]+u[0]*58,P1[1]+u[1]*58],'#334155',3);
+      const mid=pol(src.x,src.y,R+16,src.r0+src.m/2);bg+=T(mid[0],mid[1]+5,Math.round(src.m)+'°',15,'#b45309',700,'middle');
+      scene.bg=bg;scene.title=defs[t];scene.tgt=tgt;scene.names=names[t];
+      S=[{x:tgt.x,y:tgt.y,rot:tgt.r0,m:tgt.m,R,p:null}];
+      P=[{m:src.m,R,color:'#fbbf24',x:src.x,y:src.y,rot:src.r0,slot:null}];
+      scene.done=()=>names[t]+' açılar eşittir:  '+Math.round(src.m)+'° = '+Math.round(tgt.m)+'°';
+    }
+  }
+  function pieceSVG(p){const R=p.R,mid=pol(p.x,p.y,R*.62,p.rot+p.m/2),hd=pol(p.x,p.y,R+16,p.rot);
+    return '<path data-act="piece" d="'+sector(p.x,p.y,R,p.rot,p.m)+'" fill="'+p.color+'" fill-opacity="'+(p.slot!=null?.85:.65)+'" stroke="#334155" stroke-width="1.6" stroke-linejoin="round" style="cursor:grab"/>'+
+      T(mid[0],mid[1]+5,Math.round(p.m)+'°',R>80?15:12,'#1e293b',700,'middle')+
+      '<path d="M'+f1(p.x)+' '+f1(p.y)+'L'+f1(hd[0])+' '+f1(hd[1])+'" stroke="#334155" stroke-width="1.5" pointer-events="none"/>'+
+      '<circle data-act="rot" cx="'+f1(hd[0])+'" cy="'+f1(hd[1])+'" r="17" fill="transparent" style="cursor:alias"/><circle cx="'+f1(hd[0])+'" cy="'+f1(hd[1])+'" r="7" fill="#fff" stroke="#334155" stroke-width="2" pointer-events="none"/>'+
+      '<circle cx="'+f1(p.x)+'" cy="'+f1(p.y)+'" r="3.5" fill="#334155" pointer-events="none"/>'}
+  function drawType(){
+    const V=[280,370],a=s.a,L=220,info=a<90?['Dar açı','#16a34a']:a===90?['Dik açı','#2563eb']:a<180?['Geniş açı','#ea580c']:['Doğru açı','#7c3aed'],tip=pol(V[0],V[1],L,a);
+    let h='<path d="'+sector(V[0],V[1],85,0,a>0?a:.01)+'" fill="'+info[1]+'" fill-opacity=".3" stroke="'+info[1]+'" stroke-width="2" pointer-events="none"/>'+line(V,[V[0]+L,V[1]],'#1e293b',4)+line(V,tip,'#1e293b',4);
+    if(a===90)h+='<path d="M'+(V[0]+26)+' '+V[1]+'L'+(V[0]+26)+' '+(V[1]-26)+'L'+V[0]+' '+(V[1]-26)+'" fill="none" stroke="'+info[1]+'" stroke-width="2.5" pointer-events="none"/>';
+    const m=pol(V[0],V[1],122,a/2);if(a>3)h+=T(m[0],m[1]+7,a+'°',22,info[1],700,'middle');
+    h+=T(30,44,a+'°  —  '+info[0],26,info[1],700);
+    h+='<circle data-act="arm" cx="'+f1(tip[0])+'" cy="'+f1(tip[1])+'" r="24" fill="transparent" style="cursor:grab"/><circle cx="'+f1(tip[0])+'" cy="'+f1(tip[1])+'" r="11" fill="#fff" stroke="'+info[1]+'" stroke-width="3.5" pointer-events="none"/><circle cx="'+V[0]+'" cy="'+V[1]+'" r="4.5" fill="#1e293b" pointer-events="none"/>';
+    h+=T(30,70,'Kolu sürükleyerek açıyı büyüt ya da küçült.',13.5,'#475569');
+    [['Dar açı','0° < α < 90°','#16a34a',a>0&&a<90],['Dik açı','α = 90°','#2563eb',a===90],['Geniş açı','90° < α < 180°','#ea580c',a>90&&a<180],['Doğru açı','α = 180°','#7c3aed',a===180]].forEach((r,i)=>{const y=130+i*64;
+      h+='<rect x="560" y="'+y+'" width="180" height="54" rx="10" fill="'+(r[3]?r[2]:'#f8fafc')+'" fill-opacity="'+(r[3]?.18:1)+'" stroke="'+(r[3]?r[2]:'#cbd5e1')+'" stroke-width="'+(r[3]?3:1.5)+'" pointer-events="none"/>'+T(574,y+23,r[0],15,r[2],700)+T(574,y+43,r[1],14,'#334155')});
+    return h}
+  function draw(){
+    const t=s.tab;let h='<rect x="1" y="1" width="'+(BW-2)+'" height="'+(BH-2)+'" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>';
+    if(t==='type')h+=drawType();
+    else{
+      h+=scene.bg;scene.title.forEach((l,i)=>{h+=T(30,34+i*20,l,i?13:15,i?'#475569':'#1e293b',i?400:700)});
+      if(s.hint||P.length===1&&false)for(const sl of S)h+='<path d="'+sector(sl.x,sl.y,sl.R,sl.rot,sl.m)+'" fill="rgba(100,116,139,.10)" stroke="#64748b" stroke-width="2" stroke-dasharray="6 5" pointer-events="none"/>';
+      for(const p of P)h+=pieceSVG(p);
+      if(S.every(x=>x.p)){const msg=scene.done();h+='<rect x="'+(BW/2-250)+'" y="'+(BH-58)+'" width="500" height="40" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2" pointer-events="none"/>'+T(BW/2,BH-31,'✔ '+msg,17,'#166534',700,'middle')}
+    }
+    g.innerHTML=h;
+    TABS.forEach(([k])=>B.q('.an-tab[data-t="'+k+'"]').classList.toggle('on',k===t));
+    const rg=RNG[t],inp=B.q('.an-range');inp.min=rg[1];inp.max=rg[2];inp.step=rg[3];inp.value=s[rg[0]];B.q('.an-rl').textContent=rg[4];B.q('.an-val').textContent=s[rg[0]]+'°';
+    B.q('.an-next').style.display=t==='comp'||t==='supp'?'none':'';B.q('.an-next').textContent=t==='type'?'Örnek açı':'Başka açı çifti';
+    B.q('.an-reset').style.display=t==='type'?'none':'';B.q('.an-hint').style.display=t==='type'?'none':'';B.q('.an-hint').classList.toggle('on',s.hint);
+  }
+  const reset=()=>{if(s.tab!=='type')build();draw()};
+  function trySnap(p){for(let k=0;k<S.length;k++){const sl=S[k];if(!sl.p&&Math.abs(sl.m-p.m)<.01&&Math.hypot(p.x-sl.x,p.y-sl.y)<32&&ad(p.rot,sl.rot)<16){sl.p=p;p.slot=k;p.x=sl.x;p.y=sl.y;p.rot=sl.rot;return}}}
+  svg.onpointerdown=e=>{if(!e.isPrimary||e.button!==0)return;const t=e.target.closest('[data-act]');if(!t)return;e.preventDefault();e.stopPropagation();select(w);const pt=manipPt(svg,e),act=t.dataset.act;
+    if(act==='arm'){drag={id:e.pointerId,mode:'arm'}}
+    else{const idx=[...g.querySelectorAll('[data-act="'+act+'"]')].indexOf(t),p=P[idx];if(!p)return;
+      if(p.slot!=null){S[p.slot].p=null;p.slot=null}P.splice(P.indexOf(p),1);P.push(p);drag={id:e.pointerId,mode:act==='rot'?'rot':'move',p,dx:p.x-pt.x,dy:p.y-pt.y};draw()}
+    try{svg.setPointerCapture(e.pointerId)}catch(_){}};
+  svg.onpointermove=e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();const pt=manipPt(svg,e);
+    if(drag.mode==='arm'){const V=[280,370];let a=Math.atan2(V[1]-pt.y,pt.x-V[0])/RAD;if(a<0)a=a>-90?0:180;a=Math.round(a);if(Math.abs(a-90)<=3)a=90;if(a>=177)a=180;if(a<=2)a=0;s.a=a;draw();return}
+    const p=drag.p;if(drag.mode==='move'){p.x=Math.max(10,Math.min(BW-10,pt.x+drag.dx));p.y=Math.max(10,Math.min(BH-10,pt.y+drag.dy))}
+    else p.rot=norm(Math.atan2(p.y-pt.y,pt.x-p.x)/RAD);
+    // parçaları sürüklerken son çizilen en üstte kalsın
+    draw()};
+  const end=e=>{if(!drag||drag.id!==e.pointerId)return;const d=drag;drag=null;try{svg.releasePointerCapture(e.pointerId)}catch(_){}if(d.p){trySnap(d.p);draw()}};
+  svg.onpointerup=end;svg.onpointercancel=end;
+  TABS.forEach(([k])=>B.q('.an-tab[data-t="'+k+'"]').onclick=()=>{s.tab=k;s.pair=0;reset()});
+  B.q('.an-range').oninput=e=>{s[RNG[s.tab][0]]=+e.target.value;reset()};
+  B.q('.an-next').onclick=()=>{if(s.tab==='type'){const L=[35,90,125,180,60];s.a=L[(L.indexOf(s.a)+1)%L.length]||35;draw()}else{s.pair++;reset()}};
+  B.q('.an-reset').onclick=reset;
+  B.q('.an-hint').onclick=()=>{s.hint=!s.hint;draw()};
+  reset();
 }
 </script></html>
 <script>
