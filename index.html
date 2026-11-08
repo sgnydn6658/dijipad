@@ -2367,7 +2367,7 @@ function musicPaper(){
  let parts=[];
  for(let y=top;y+48<=h-20;y+=step){
   for(let i=0;i<5;i++)parts.push(`<path d="M${left} ${y+i*gap}H${right}" fill="none" stroke="#777" stroke-width="0.8"/>`);
-  parts.push(`<text x="${left-5}" y="${y+29}" font-size="42" font-family="Noto Music,Segoe UI Symbol,Apple Symbols,serif" fill="#222">𝄞</text>`);
+  parts.push(`<text x="${left-5}" y="${y+29}" font-size="42" font-family="Noto Music,Bravura,Segoe UI Symbol,Apple Symbols,serif" fill="#222">𝄞</text>`);
  }
  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">${parts.join('')}</svg>`;
  board.style.backgroundColor='white';board.style.backgroundImage='url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';board.style.backgroundSize=w+'px '+h+'px';board.style.backgroundRepeat='no-repeat';
