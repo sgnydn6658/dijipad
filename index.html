@@ -2626,3 +2626,22 @@ new ResizeObserver(musicPaper).observe(board);
 musicPaper();
 })();
 </script>
+<script>
+(function () {
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  }, false);
+
+  document.addEventListener('touchstart', function (e) {
+    if (e.touches && e.touches.length === 1 && e.target && e.target.style) {
+      e.target.style.touchAction = 'none';
+    }
+  }, { passive: true });
+
+  document.addEventListener('pointerdown', function (e) {
+    if (e.pointerType === 'touch' && e.target && e.target.style) {
+      e.target.style.touchAction = 'none';
+    }
+  }, { passive: true });
+})();
+</script>
