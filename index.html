@@ -763,7 +763,7 @@ html *,svg text,svg tspan{font-family:var(--ui-font)!important}
 
 .layout{grid-template-columns:minmax(0,1fr)!important}
 .brand-sidebar{width:auto!important;min-width:0!important;padding-left:2px!important}
-#menuToggle{position:fixed;z-index:2147482400;height:40px;padding:0 15px 0 12px;display:inline-flex;align-items:center;gap:8px;border:0!important;border-radius:11px!important;background:#2a2740!important;color:#fff!important;font:700 14px/1 system-ui,Arial,sans-serif;white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,.3);cursor:pointer}
+#menuToggle{position:fixed;z-index:2147482400;height:40px;padding:0 15px 0 12px;display:inline-flex;align-items:center;gap:8px;border:0!important;border-radius:11px!important;background:#2a2740!important;color:#fff!important;font-family:var(--ui-font);font-size:12.5px;font-weight:500;line-height:1;letter-spacing:normal;white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,.3);cursor:pointer}
 #menuToggle:hover{background:#3d3860!important}
 aside#menu{position:fixed!important;left:0;top:56px;width:264px;max-width:calc(100vw - 12px);z-index:2147482500;box-sizing:border-box;border-radius:14px;transform-origin:top left;clip-path:inset(0 100% 100% 0);opacity:0;visibility:hidden;pointer-events:none;transition:clip-path .34s cubic-bezier(.2,.8,.2,1),opacity .2s ease,visibility 0s linear .34s}
 aside#menu.open{clip-path:inset(0 -50px -50px 0);box-shadow:8px 10px 30px rgba(0,0,0,.4);opacity:1;visibility:visible;pointer-events:auto;transition:clip-path .34s cubic-bezier(.2,.8,.2,1),opacity .2s ease,visibility 0s}
@@ -771,6 +771,18 @@ aside#menu.open{clip-path:inset(0 -50px -50px 0);box-shadow:8px 10px 30px rgba(0
 .cat-main{display:flex;align-items:center;gap:9px;min-width:0}
 .cat-ico{flex:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px var(--c,#888);font-size:15px;line-height:1;font-style:normal}
 .cat-ico.alg{background:var(--c,#888);box-shadow:0 0 0 2px #fff}.cat-ico.alg b{color:#2a2740;font-size:12px;font-weight:800;letter-spacing:-.02em}
+</style>
+<style id="kiosk-guard-css">
+/* Akıllı tahta: uzun basınca seçim/sağ menü/çağrı balonu çıkmasın */
+html,body{-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+input,textarea,select,[contenteditable="true"],#stage .board-inline-text{-webkit-user-select:text;user-select:text}
+img,svg{-webkit-user-drag:none;-webkit-touch-callout:none}
+/* Silgi menüsü (sayfanın yazı stiliyle aynı, küçük ve kibar) */
+#eraseMenu{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);min-width:0;padding:4px;background:#34313f;border:1px solid #ffffff25;border-radius:10px;box-shadow:0 4px 14px #0005;display:flex;flex-direction:column;gap:2px;z-index:5}
+#eraseMenu[hidden]{display:none}
+#eraseMenu button{display:flex;align-items:center;gap:6px;border:0;background:transparent;color:#ffb4b4;text-align:left;padding:7px 11px;border-radius:7px;white-space:nowrap;font-family:var(--ui-font);font-size:12px;font-weight:400;line-height:1.1;letter-spacing:.02em;cursor:pointer;touch-action:manipulation}
+#eraseMenu button svg{width:14px;height:14px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#eraseMenu button:hover,#eraseMenu button:active{background:#ffffff25}
 </style>
 
 <header>
@@ -817,7 +829,12 @@ aside#menu.open{clip-path:inset(0 -50px -50px 0);box-shadow:8px 10px 30px rgba(0
   <span class="dock-sep"></span>
   <button type="button" id="penToggle" class="tool-btn active" title="Taşı" aria-label="Taşı"><svg viewBox="0 0 24 24"><path d="M5 3l14 11-7 1-3 6z" fill="currentColor" stroke="none"/></svg><small>Taşı</small></button>
   <button type="button" id="penTool" class="tool-btn" title="Kalem" aria-label="Kalem"><svg viewBox="0 0 24 24"><path d="M4 20l4.2-.9L20 7.3 16.7 4 4.9 15.8 4 20z"/><path d="M14.8 5.9l3.3 3.3"/></svg><small>Kalem</small></button>
-  <button type="button" id="eraseTool" class="tool-btn" title="Silgi" aria-label="Silgi"><svg viewBox="0 0 24 24"><path d="M3.5 14.5l9-10a2 2 0 0 1 2.8-.1l5.2 4.8a2 2 0 0 1 .1 2.8l-7.2 8H8z"/><path d="M8 20h12"/></svg><small>Silgi</small></button>
+  <div class="tool-menu-wrap">
+    <button type="button" id="eraseTool" class="tool-btn" title="Silgi" aria-label="Silgi"><svg viewBox="0 0 24 24"><path d="M3.5 14.5l9-10a2 2 0 0 1 2.8-.1l5.2 4.8a2 2 0 0 1 .1 2.8l-7.2 8H8z"/><path d="M8 20h12"/></svg><small>Silgi</small></button>
+    <div id="eraseMenu" class="tool-popup" hidden>
+      <button type="button" id="eraseAllBtn" aria-label="Tahtadaki tüm yazıları sil"><svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/><path d="M10 11v6M14 11v6"/></svg><span>Hepsini sil</span></button>
+    </div>
+  </div>
   <div class="tool-menu-wrap">
     <button type="button" id="lineTool" class="tool-btn" title="Doğru araçları" aria-label="Doğru araçları"><svg viewBox="0 0 24 24"><path d="M4 20L20 4"/><circle cx="4" cy="20" r="2"/><circle cx="20" cy="4" r="2"/></svg><small>Doğru</small></button>
     <div id="lineMenu" class="tool-popup" hidden>
@@ -996,7 +1013,7 @@ if(type==='shapes')h='<polygon points="20,170 90,30 160,170" fill="#60a5fa"/><re
 if(type==='graph'){for(let i=0;i<4;i++)h+=`<rect x="${40+i*65}" y="${[100,40,120,70][i]}" width="40" height="${[90,150,70,120][i]}" fill="${['#60a5fa','#4ade80','#fbbf24','#f87171'][i]}"/>`;h+='<path d="M25 15 V190 H310" stroke="#334155" fill="none"/>'}
 art.innerHTML=svg(h);if(['abacus','shapes','graph','counter'].includes(type))note('Görsel materyal · Başlığından taşıyabilir, kopyalayabilirsiniz.');
 }
-document.querySelector('#backgroundSelect').onchange=e=>stage.dataset.bg=e.target.value;document.querySelector('#full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.()};document.querySelector('#clear').onclick=()=>{stage.innerHTML='';selected=null};document.querySelector('#delete').onclick=()=>{const items=[...blockSelection].filter(w=>w.isConnected),inks=areaBox?inkNodesInBox(areaBox):[];if(items.length||inks.length){for(const w of items)w.remove();for(const n of inks)n.remove();resetBlockSelection();document.querySelector('#status').textContent=(items.length+inks.length)+' öğe silindi.';return}if(selected){selected.remove();selected=null}};document.querySelector('#rotate').onclick=()=>{if(selected){selected.angle=(selected.angle||0)+15;selected.style.rotate=selected.angle+'deg'}};document.querySelector('#copy').onclick=()=>{const items=[...blockSelection].filter(w=>w.isConnected&&['fraction','circle','unit','ten','hundred','thousand','blockpiece'].includes(w.dataset.type));if(items.length){const old=mergingNow;mergingNow=true;try{for(const w of items){const c=add(w.dataset.type,JSON.parse(JSON.stringify(w.state)));c.style.left=((parseFloat(w.style.left)||w.offsetLeft)+30)+'px';c.style.top=((parseFloat(w.style.top)||w.offsetTop)+30)+'px'}}finally{mergingNow=old}document.querySelectorAll('.widget.selected').forEach(x=>x.classList.remove('selected'));selected=null;document.querySelector('#status').textContent=items.length+' öğe kopyalandı.';return}if(selected){const src=selected,c=add(src.dataset.type,src.state);c.style.left=(src.offsetLeft+30)+'px';c.style.top=(src.offsetTop+30)+'px'}};document.addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='Delete')document.querySelector('#delete').click()});
+document.querySelector('#backgroundSelect').onchange=e=>stage.dataset.bg=e.target.value;document.querySelector('#full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.()};document.querySelector('#clear').onclick=()=>{stage.innerHTML='';selected=null};document.querySelector('#delete').onclick=()=>{const items=[...blockSelection].filter(w=>w.isConnected),inks=areaBox?inkNodesInBox(areaBox):[];if(items.length||inks.length){for(const w of items)w.remove();for(const n of inks)n.remove();resetBlockSelection();document.querySelector('#status').textContent=(items.length+inks.length)+' öğe silindi.';return}if(selected){selected.remove();selected=null}};document.querySelector('#rotate').onclick=()=>{if(selected){selected.angle=(selected.angle||0)+15;selected.style.rotate=selected.angle+'deg'}};document.querySelector('#copy').onclick=()=>{const items=[...blockSelection].filter(w=>w.isConnected&&w.dataset.type!=='uploaded-image'&&w.id!=='selectionRect');if(items.length){const old=mergingNow;let done=0;mergingNow=true;try{for(const w of items){let st;try{st=JSON.parse(JSON.stringify(w.state||{}))}catch(_){continue}const c=add(w.dataset.type,st);if(w.style.width)c.style.width=w.style.width;if(w.style.height)c.style.height=w.style.height;if(w.style.rotate){c.angle=w.angle;c.style.rotate=w.style.rotate}c.style.left=((parseFloat(w.style.left)||w.offsetLeft)+30)+'px';c.style.top=((parseFloat(w.style.top)||w.offsetTop)+30)+'px';done++}}finally{mergingNow=old}document.querySelectorAll('.widget.selected').forEach(x=>x.classList.remove('selected'));selected=null;document.querySelector('#status').textContent=done+' öğe kopyalandı.';return}if(selected){const src=selected,c=add(src.dataset.type,src.state);c.style.left=(src.offsetLeft+30)+'px';c.style.top=(src.offsetTop+30)+'px'}};document.addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='Delete')document.querySelector('#delete').click()});
 
 
 /* --- header tools --- */
@@ -1033,7 +1050,7 @@ document.querySelector('#backgroundSelect').onchange=e=>stage.dataset.bg=e.targe
  const penTool=document.getElementById('penTool'), eraseTool=document.getElementById('eraseTool');
  const color=document.getElementById('penColor'), size=document.getElementById('penSize'), sizeVal=document.getElementById('penSizeVal');
  const sizeMinus=document.getElementById('penSizeMinus'),sizePlus=document.getElementById('penSizePlus');
- const selectTool=document.getElementById('penToggle'),lineTool=document.getElementById('lineTool'),compassTool=document.getElementById('compassTool'),textTool=document.getElementById('textTool'),lineMenu=document.getElementById('lineMenu');
+ const selectTool=document.getElementById('penToggle'),lineTool=document.getElementById('lineTool'),compassTool=document.getElementById('compassTool'),textTool=document.getElementById('textTool'),lineMenu=document.getElementById('lineMenu'),eraseMenu=document.getElementById('eraseMenu'),eraseAllBtn=document.getElementById('eraseAllBtn');
  let mode='select',lineKind='line',drawing=false,pointerId=null,start=null,last=null,preview=null,cg=null;
  const ns='http://www.w3.org/2000/svg';
  function layer(){let el=stage.querySelector('#drawLayer');if(!el){el=document.createElementNS(ns,'svg');el.id='drawLayer';el.setAttribute('xmlns',ns);stage.append(el)}const w=Math.max(1,stage.scrollWidth,stage.clientWidth),h=Math.max(1,stage.scrollHeight,stage.clientHeight);el.setAttribute('width',w);el.setAttribute('height',h);el.setAttribute('viewBox',`0 0 ${w} ${h}`);return el}
@@ -1042,9 +1059,12 @@ document.querySelector('#backgroundSelect').onchange=e=>stage.dataset.bg=e.targe
  document.addEventListener('pointerdown',e=>{if(activeTextEditor&&!activeTextEditor.element.contains(e.target)&&stage.contains(e.target)){activeTextEditor.commit();e.preventDefault();e.stopImmediatePropagation()}},true);
  
  size.addEventListener('input',()=>updateSize(size.value));sizeMinus.addEventListener('click',()=>updateSize(+size.value-1));sizePlus.addEventListener('click',()=>updateSize(+size.value+1));
- function setMode(m){mode=m;if(typeof moveMode!=='undefined'){moveMode=(m==='select');const mm=document.getElementById('moveMode');if(mm)mm.textContent='Taşıma: '+(moveMode?'Açık':'Kapalı')}drawing=false;pointerId=null;preview=null;last=null;for(const b of [selectTool,penTool,eraseTool,lineTool,compassTool,textTool])b.classList.toggle('active',b===({select:selectTool,pen:penTool,erase:eraseTool,line:lineTool,compass:compassTool,text:textTool}[m]));stage.classList.toggle('pen-mode',m==='pen');stage.classList.toggle('erase-mode',m==='erase');stage.classList.toggle('shape-mode',['line','compass'].includes(m));stage.classList.toggle('draw-any',m!=='select');clearGuide();dock.classList.toggle('show-size',m==='pen'||m==='erase'||m==='line'||m==='compass');lineMenu.hidden=true;}
- selectTool.addEventListener('click',()=>setMode('select'));penTool.addEventListener('click',()=>setMode('pen'));eraseTool.addEventListener('click',()=>setMode('erase'));
- lineTool.addEventListener('click',()=>{lineMenu.hidden=!lineMenu.hidden});
+ function setMode(m){mode=m;if(typeof moveMode!=='undefined'){moveMode=(m==='select');const mm=document.getElementById('moveMode');if(mm)mm.textContent='Taşıma: '+(moveMode?'Açık':'Kapalı')}drawing=false;pointerId=null;preview=null;last=null;for(const b of [selectTool,penTool,eraseTool,lineTool,compassTool,textTool])b.classList.toggle('active',b===({select:selectTool,pen:penTool,erase:eraseTool,line:lineTool,compass:compassTool,text:textTool}[m]));stage.classList.toggle('pen-mode',m==='pen');stage.classList.toggle('erase-mode',m==='erase');stage.classList.toggle('shape-mode',['line','compass'].includes(m));stage.classList.toggle('draw-any',m!=='select');clearGuide();dock.classList.toggle('show-size',m==='pen'||m==='erase'||m==='line'||m==='compass');lineMenu.hidden=true;eraseMenu.hidden=true;}
+ selectTool.addEventListener('click',()=>setMode('select'));penTool.addEventListener('click',()=>setMode('pen'));eraseTool.addEventListener('click',()=>{const wasOpen=!eraseMenu.hidden;setMode('erase');eraseMenu.hidden=wasOpen});
+ function eraseAll(){clearGuide();const svg=stage.querySelector('#drawLayer'),items=svg?[...svg.querySelectorAll('.board-ink')]:[];eraseMenu.hidden=true;if(!items.length){stTxt('Silinecek yazı yok');return}items.forEach(el=>el.remove());stTxt('Tüm yazılar silindi · Geri al ile döndürebilirsin')}
+ eraseAllBtn.addEventListener('click',eraseAll);
+ document.addEventListener('pointerdown',e=>{if(!eraseMenu.hidden&&!e.target.closest('#eraseMenu,#eraseTool'))eraseMenu.hidden=true},true);
+ lineTool.addEventListener('click',()=>{eraseMenu.hidden=true;lineMenu.hidden=!lineMenu.hidden});
  lineMenu.querySelectorAll('[data-line]').forEach(b=>b.addEventListener('click',()=>{lineKind=b.dataset.line;lineTool.title=b.textContent;lineTool.querySelector('small').textContent=b.textContent;setMode('line');if(lineKind==='angle')stTxt('Açı: sırayla 3 noktaya dokun (kol ucu → köşe → kol ucu)')}));
  compassTool.addEventListener('click',()=>setMode('compass'));
  textTool.addEventListener('click',()=>setMode('text'));
@@ -1251,11 +1271,34 @@ function mergeBlockPieces(items){
   status.textContent='Toplam '+total+' → '+keys.filter(k=>cnt[k]).map(k=>cnt[k]+' '+names[k]).join(' + ')+' olarak birleşti.';
  }finally{mergingNow=false;resetBlockSelection();refreshMergeButton()}
 }
+// Kesir dairesi kartları (circlecard): aynı payda korunur, dilimler tam bütünlere toplanır, kalan ayrı kartta kalır
+function mergeCircleCards(){
+ const st=document.querySelector('#status'),sel=[...blockSelection].filter(w=>w.isConnected),items=sel.filter(w=>w.dataset.type==='circlecard');
+ if(!items.length||items.length!==sel.length){st.textContent='Kesir dairesi kartlarını diğer materyallerden ayrı seçin.';return}
+ const s0=items[0].state,den=s0.kcDen,r=s0.kcRadius||100;
+ if(items.some(w=>w.state.kcDen!==den)){st.textContent='Yalnız aynı paydadaki kesir daireleri birleştirilebilir.';return}
+ if(items.some(w=>Math.abs((w.state.kcRadius||100)-r)>.001)){st.textContent='Yalnız aynı boydaki kesir dairelerini birleştirebilirsin.';return}
+ const total=items.reduce((n,w)=>n+Math.max(1,Math.min(den,w.state.kcCount||1)),0),full=Math.floor(total/den),rest=total%den,counts=Array(full).fill(den);if(rest)counts.push(rest);
+ const before=items.map(w=>w.state.kcCount).sort((a,b)=>b-a),after=[...counts].sort((a,b)=>b-a);
+ if(before.length===after.length&&before.every((v,i)=>v===after[i])){st.textContent=total+'/'+den+' · Zaten en düzenli halde; birleştirilecek parça yok.';return}
+ if(counts.length>40){st.textContent='Çok fazla daire; daha az kart seçin.';return}
+ const left=Math.min(...items.map(w=>parseFloat(w.style.left)||w.offsetLeft)),top=Math.min(...items.map(w=>parseFloat(w.style.top)||w.offsetTop)),pitch=2*r+30,margin=46,
+  cols=Math.max(1,Math.min(counts.length,Math.floor((stage.clientWidth-2*margin-2*r)/pitch)+1)),x0=Math.max(0,Math.min(left,stage.clientWidth-(cols-1)*pitch-2*(r+margin)));
+ mergingNow=true;refreshMergeButton();
+ try{
+  closeSettings();
+  const guide=items.some(w=>w.state.kcGuide);
+  counts.forEach((k,i)=>{const p=add('circlecard',{kcDen:den,kcCount:k,kcRadius:r,kcColor:s0.kcColor,kcLabels:s0.kcLabels,kcGuide:guide,kcAngle:den===1?-90:-90-180/den});p.style.left=x0+(i%cols)*pitch+'px';p.style.top=top+Math.floor(i/cols)*pitch+'px'});
+  for(const w of items)w.remove();
+  st.textContent=total+'/'+den+' · Kesir daireleri toplandı → '+[full?full+' bütün':'',rest?rest+'/'+den:''].filter(Boolean).join(' + ')+'; payda korundu.';
+ }finally{mergingNow=false;resetBlockSelection();refreshMergeButton()}
+}
 function mergeSelectedBlocks(){
  {const sel=[...blockSelection].filter(w=>w.isConnected);
   if(sel.length&&sel.every(w=>PLACE_BLOCKS.includes(w.dataset.type))){mergeBlockPieces(sel);return}
   if(sel.some(w=>PLACE_BLOCKS.includes(w.dataset.type))){document.querySelector('#status').textContent='Birleştirmek için yalnızca blokları (birlik, onluk, yüzlük, binlik) seçin.';return}}
  if([...blockSelection].some(w=>w.isConnected&&w.dataset.type==='bars')){mergeLooseFractionBars();return}
+ if([...blockSelection].some(w=>w.isConnected&&w.dataset.type==='circlecard')){mergeCircleCards();return}
  const items=[...blockSelection].filter(w=>w.isConnected&&['fraction','circle'].includes(w.dataset.type));
  if(!items.length){document.querySelector('#status').textContent='Birleştirmek için kesir kartı veya daire dilimi seçin.';return}
  if(items.length!==blockSelection.size){document.querySelector('#status').textContent='Birleştirmek için yalnızca kesir kartı veya daire dilimi seçin.';return}
@@ -2602,7 +2645,7 @@ function setupAngles(w){
   B.q('.an-hint').onclick=()=>{s.hint=!s.hint;draw()};
   reset();
 }
-</script></html>
+</script>
 <script>
 (function(){
 const board=document.getElementById('stage');
@@ -2626,22 +2669,24 @@ new ResizeObserver(musicPaper).observe(board);
 musicPaper();
 })();
 </script>
-<script>
-(function () {
-  document.addEventListener('contextmenu', function (e) {
-    e.preventDefault();
-  }, false);
-
-  document.addEventListener('touchstart', function (e) {
-    if (e.touches && e.touches.length === 1 && e.target && e.target.style) {
-      e.target.style.touchAction = 'none';
-    }
-  }, { passive: true });
-
-  document.addEventListener('pointerdown', function (e) {
-    if (e.pointerType === 'touch' && e.target && e.target.style) {
-      e.target.style.touchAction = 'none';
-    }
-  }, { passive: true });
+<script id="kiosk-guard-js">
+/* Sağ tık / uzun basma engeli (akıllı tahta). Yakalama aşamasında, her yerde çalışır. */
+(function(){
+  'use strict';
+  var okText=function(t){return !!(t&&t.closest&&t.closest('input,textarea,select,[contenteditable="true"]'))};
+  var el=function(t){return t&&t.nodeType===1?t:(t&&t.parentElement)};
+  var kill=function(e){e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();return false};
+  window.addEventListener('contextmenu',kill,true);
+  document.addEventListener('contextmenu',kill,true);
+  document.oncontextmenu=window.oncontextmenu=function(){return false};
+  ['auxclick','mousedown','mouseup','pointerdown','pointerup'].forEach(function(n){
+    window.addEventListener(n,function(e){if(e.button===2)kill(e)},true);
+  });
+  document.addEventListener('selectstart',function(e){if(!okText(el(e.target)))e.preventDefault()},true);
+  document.addEventListener('dragstart',function(e){if(!okText(el(e.target)))e.preventDefault()},true);
+  window.addEventListener('keydown',function(e){
+    if(e.key==='ContextMenu'||(e.shiftKey&&e.key==='F10'))kill(e);
+  },true);
 })();
 </script>
+</html>
