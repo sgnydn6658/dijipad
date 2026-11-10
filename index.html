@@ -1340,6 +1340,7 @@ function setupRuler(w){
   const PX=50,PAD=14,BH=46;                       // 1 cm = 50 px (gönye ile aynı ölçek)
   if(s.x1===undefined){const a=s.angle?s.angle*Math.PI/180:0,L=(s.cm?s.cm*PX:400);s.x1=w.offsetLeft+60;s.y1=w.offsetTop+70;s.x2=s.x1+L*Math.cos(a);s.y2=s.y1+L*Math.sin(a)}
   if(Math.hypot(s.x2-s.x1,s.y2-s.y1)<PX){s.x2=s.x1+PX;s.y2=s.y1}
+  art.style.touchAction='none';
   let drag=null,pending=false;
   const pt=e=>{const r=stage.getBoundingClientRect();return{x:e.clientX-r.left-stage.clientLeft+stage.scrollLeft,y:e.clientY-r.top-stage.clientTop+stage.scrollTop}};
   const geo=()=>{const dx=s.x2-s.x1,dy=s.y2-s.y1,L=Math.hypot(dx,dy);return{L,ux:dx/L,uy:dy/L,ang:Math.atan2(dy,dx)*180/Math.PI}};
@@ -1352,11 +1353,13 @@ function setupRuler(w){
       h+=`<line x1="${x}" y1="0" x2="${x}" y2="${len}" stroke="#6f6e77" stroke-width="${major?1.1:.7}"/>`;
       if(major)h+=`<text x="${x}" y="${len+13}" text-anchor="middle" font-size="12" font-family="system-ui,sans-serif" fill="#242330">${i/10}</text>`}
     h+=`<text x="12" y="${BH-8}" font-size="11" font-family="system-ui,sans-serif" fill="#242330">cm</text>`;
+    h=h.replace(/<(line|text) /g,'<$1 pointer-events="none" ');
     // gövde (taşıma) ve kenar (çizgi çekme) alanları
     h=h.replace('<rect x=',`<rect data-act="move" x=`);
     h+=`<rect data-act="edge" x="${-PAD}" y="-9" width="${g.L+2*PAD}" height="18" fill="transparent" pointer-events="all" style="cursor:crosshair"/>`;
-    h+=`<g data-act="dotA" style="cursor:grab"><circle cx="0" cy="0" r="6" fill="transparent" pointer-events="all"/><circle cx="0" cy="0" r="4" fill="#242330"/></g>`;
-    h+=`<g data-act="dotB" style="cursor:grab"><circle cx="${g.L}" cy="0" r="6" fill="transparent" pointer-events="all"/><circle cx="${g.L}" cy="0" r="4" fill="#242330"/></g>`;
+    const DY=BH-10,DX=PAD/2;
+    h+=`<g data-act="dotA" style="cursor:grab"><circle cx="${-DX}" cy="${DY}" r="17" fill="transparent" pointer-events="all"/><circle cx="${-DX}" cy="${DY}" r="5.5" fill="#242330" stroke="#fff" stroke-width="1.5"/></g>`;
+    h+=`<g data-act="dotB" style="cursor:grab"><circle cx="${g.L+DX}" cy="${DY}" r="17" fill="transparent" pointer-events="all"/><circle cx="${g.L+DX}" cy="${DY}" r="5.5" fill="#242330" stroke="#fff" stroke-width="1.5"/></g>`;
     const c=[toStage(-PAD-24,-24),toStage(g.L+PAD+24,-24),toStage(g.L+PAD+24,BH+10),toStage(-PAD-24,BH+10)];
     const minX=Math.min(...c.map(p=>p.x)),minY=Math.min(...c.map(p=>p.y)),maxX=Math.max(...c.map(p=>p.x)),maxY=Math.max(...c.map(p=>p.y));
     w.style.left=minX+'px';w.style.top=minY+'px';w.style.width=(maxX-minX)+'px';w.style.height=(maxY-minY)+'px';w.style.rotate='none';
@@ -1372,6 +1375,7 @@ function setupRuler(w){
     const t=e.target.closest('[data-act]');if(!t)return;
     e.preventDefault();e.stopPropagation();select(w);
     const p=pt(e),act=t.dataset.act;drag={id:e.pointerId,act,x:p.x,y:p.y,s:{x1:s.x1,y1:s.y1,x2:s.x2,y2:s.y2}};
+    if(act==='dotA'){drag.ox=s.x1-p.x;drag.oy=s.y1-p.y}else if(act==='dotB'){drag.ox=s.x2-p.x;drag.oy=s.y2-p.y}
     if(act==='edge'){const a=toStage(along(p),0);drag.a=along(p);drag.path=ink(`M${a.x} ${a.y}L${a.x} ${a.y}`)}
     try{art.setPointerCapture(e.pointerId)}catch(_){}
   };
@@ -1381,7 +1385,7 @@ function setupRuler(w){
     if(d.act==='move'){const dx=p.x-d.x,dy=p.y-d.y;s.x1=d.s.x1+dx;s.y1=d.s.y1+dy;s.x2=d.s.x2+dx;s.y2=d.s.y2+dy;render()}
     else if(d.act==='dotA'||d.act==='dotB'){
       const A=d.act==='dotA',fx=A?s.x2:s.x1,fy=A?s.y2:s.y1;
-      let dx=p.x-fx,dy=p.y-fy,L=Math.hypot(dx,dy);
+      let dx=p.x+d.ox-fx,dy=p.y+d.oy-fy,L=Math.hypot(dx,dy);
       if(L<PX*1)L=PX;
       const ang=Math.atan2(dy,dx);L=Math.max(PX,Math.min(PX*50,Math.round(L/5)*5));
       const nx=fx+Math.cos(ang)*L,ny=fy+Math.sin(ang)*L;
