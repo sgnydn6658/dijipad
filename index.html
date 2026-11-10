@@ -858,7 +858,7 @@ img,svg{-webkit-user-drag:none;-webkit-touch-callout:none}
 
 <script>
 const stage=document.querySelector('#stage'),menu=document.querySelector('#menu');let selected=null,z=1,serial=0;
-const groups={'Sayı ve İşlem':[['nl','Sayı doğrusu'],['unit','Birim blok'],['ten','Onluk çubuk'],['hundred','Yüzlük blok'],['thousand','Binlik blok'],['counter','Sayma pulları'],['abacus','Abaküs']], 'Kesirler':[['fraction','Kesir kartı'],['circle','Kesir dairesi'],['bars','Kesir çubukları'],['circlecards','Kesir daireleri kartları'],['percent','Yüzde karesi']], 'Zaman':[['clock','Gerçek saat'],['timer','Kronometre'],['countdown','Geri sayım']], 'Geometri ve Ölçme':[['ruler','Cetvel'],['setsquare','Gönye'],['protractor','Açı ölçer'],['compass','Pergel'],['geo','Geoboard'],['tangram','Tangram'],['coordinate','Koordinat'],['shapes','Geometrik cisimler'],['cubes','Küp yapıları (3B)'],['angles','Açılar']], 'Veri ve Olasılık':[['dice','Zar'],['coin','Madeni para'],['spinner','Çark'],['graph','Sütun grafiği'],['piegraph','Daire grafiği'],['linegraph','Çizgi grafiği'],['areagraph','Alan grafiği'],['tallytable','Çetele tablosu'],['frequencytable','Sıklık tablosu']],'Cebir':[['algtiles','Cebir Karoları'],['balance','Denge Ölçeği'],['funcmachine','Fonksiyon Makineleri'],['coordtable','Koordinat Eksenleri ve Tablolar'],['sliders','Değişken Kaydırıcılar']],'Oyunlar ve Uygulamalar':[['g_hanoi','Hanoi Kuleleri'],['g_chess','Satranç'],['g_mangala','Mangala'],['g_surakarta','Surakarta'],['g_pentago','Pentago'],['g_quoridor','Koridor (Quoridor)'],['g_abalone','Abalone'],['m_piano','Piyano'],['m_xylo','Ksilofon'],['m_strings','Telli çalgılar'],['m_drums','Davul seti'],['m_perc','Perküsyon']]};
+const groups={'Sayı ve İşlem':[['nl','Sayı doğrusu'],['unit','Birim blok'],['ten','Onluk çubuk'],['hundred','Yüzlük blok'],['thousand','Binlik blok'],['counter','Sayma pulları'],['abacus','Abaküs'],['placeval','Basamak atölyesi']], 'Kesirler':[['fraction','Kesir kartı'],['circle','Kesir dairesi'],['bars','Kesir çubukları'],['circlecards','Kesir daireleri kartları'],['percent','Yüzde karesi']], 'Zaman':[['clock','Gerçek saat'],['timer','Kronometre'],['countdown','Geri sayım']], 'Geometri ve Ölçme':[['ruler','Cetvel'],['setsquare','Gönye'],['protractor','Açı ölçer'],['compass','Pergel'],['geo','Geoboard'],['tangram','Tangram'],['coordinate','Koordinat'],['shapes','Geometrik cisimler'],['cubes','Küp yapıları (3B)'],['angles','Açılar'],['geolab','Geometri Atölyesi']], 'Veri ve Olasılık':[['dice','Zar'],['coin','Madeni para'],['spinner','Çark'],['graph','Sütun grafiği'],['piegraph','Daire grafiği'],['linegraph','Çizgi grafiği'],['areagraph','Alan grafiği'],['tallytable','Çetele tablosu'],['frequencytable','Sıklık tablosu']],'Cebir':[['algtiles','Cebir Karoları'],['balance','Denge Ölçeği'],['funcmachine','Fonksiyon Makineleri'],['coordtable','Koordinat Eksenleri ve Tablolar'],['sliders','Değişken Kaydırıcılar']],'Oyunlar ve Uygulamalar':[['g_hanoi','Hanoi Kuleleri'],['g_chess','Satranç'],['g_mangala','Mangala'],['g_surakarta','Surakarta'],['g_pentago','Pentago'],['g_quoridor','Koridor (Quoridor)'],['g_abalone','Abalone'],['m_piano','Piyano'],['m_xylo','Ksilofon'],['m_strings','Telli çalgılar'],['m_drums','Davul seti'],['m_perc','Perküsyon']]};
 const names=Object.fromEntries(Object.values(groups).flat());
 let openSection=null;
 const ORDER=['Sayı ve İşlem','Kesirler','Cebir','Geometri ve Ölçme','Veri ve Olasılık','Zaman','Oyunlar ve Uygulamalar'],ICON={'Sayı ve İşlem':'🔢','Kesirler':'🍕','Cebir':'<b>x²</b>','Geometri ve Ölçme':'📐','Veri ve Olasılık':'📊','Zaman':'⏰','Oyunlar ve Uygulamalar':'🎮'};
@@ -1144,6 +1144,8 @@ function setup(w,type){
  if(type==='circlecard'){setupKC(w);return}
  if(type==='cubes'){setupCubes(w);return}
  if(type==='angles'){setupAngles(w);return}
+ if(type==='geolab'){setupGeoLab(w);return}
+ if(type==='placeval'){setupPlace(w);return}
  if(['setsquare','protractor','compass'].includes(type)){setupGeometryInstrument(w,type);return}
  if(type==='shapes'){setupShapes(w);return}
  if(type==='tangram'){setupTangram(w);return}
@@ -2644,6 +2646,313 @@ function setupAngles(w){
   B.q('.an-reset').onclick=reset;
   B.q('.an-hint').onclick=()=>{s.hint=!s.hint;draw()};
   reset();
+}
+
+/* ---------- ÜÇGENLER ---------- */
+var TRI_PRE=[['Çeşitkenar (dar açılı)',[[150,270],[470,270],[330,90]]],['Eşkenar',[[250,270],[490,270],[370,62]]],['İkizkenar',[[260,270],[500,270],[380,80]]],['Dik üçgen',[[220,270],[520,270],[220,100]]],['Geniş açılı',[[180,270],[540,270],[250,160]]]];
+var TK=(function(){
+ const RAD=Math.PI/180,f1=n=>+n.toFixed(1),norm=a=>((a%360)+360)%360,ad=(a,b)=>{const d=Math.abs(norm(a)-norm(b));return Math.min(d,360-d)},
+ pol=(x,y,r,a)=>[x+r*Math.cos(a*RAD),y-r*Math.sin(a*RAD)],
+ sector=(x,y,r,a0,m)=>{const p0=pol(x,y,r,a0),p1=pol(x,y,r,a0+m);return 'M'+f1(x)+' '+f1(y)+'L'+p0.map(f1).join(' ')+'A'+r+' '+r+' 0 '+(m>180?1:0)+' 0 '+p1.map(f1).join(' ')+'Z'},
+ T=(x,y,t,sz,col,wt,anc)=>`<text x="${f1(x)}" y="${f1(y)}" font-size="${sz}" font-weight="${wt||400}" fill="${col||'#1e293b'}" text-anchor="${anc||'start'}" pointer-events="none">${t}</text>`,
+ ang=(p,q)=>Math.atan2(p[1]-q[1],q[0]-p[0])/RAD,dist=(p,q)=>Math.hypot(p[0]-q[0],p[1]-q[1]),
+ corners=P=>P.map((V,i)=>{const a1=ang(V,P[(i+1)%3]),a2=ang(V,P[(i+2)%3]),d=norm(a2-a1);return d<=180?{a0:a1,m:d}:{a0:a2,m:360-d}}),
+ vals=P=>{const c=corners(P),A=Math.round(c[0].m),B=Math.round(c[1].m);return[A,B,180-A-B]},
+ line=(a,b,c,wd,dash)=>`<path d="M${f1(a[0])} ${f1(a[1])}L${f1(b[0])} ${f1(b[1])}" stroke="${c||'#1e293b'}" stroke-width="${wd||3}" stroke-linecap="round" fill="none"${dash?' stroke-dasharray="'+dash+'"':''} pointer-events="none"/>`,
+ vh=(V,i)=>`<circle data-act="v" data-i="${i}" cx="${V[0]}" cy="${V[1]}" r="24" fill="transparent" style="cursor:grab"/><circle cx="${V[0]}" cy="${V[1]}" r="8" fill="#fff" stroke="#1e293b" stroke-width="3" pointer-events="none"/>`,
+ angs=(P,r,col,lab)=>{const c=corners(P),v=vals(P);return c.map((k,i)=>{const V=P[i],cl=Array.isArray(col)?col[i]:col;let d=sector(V[0],V[1],r,k.a0,k.m);if(v[i]===90){const p1=pol(V[0],V[1],r,k.a0),p3=pol(V[0],V[1],r,k.a0+90);d='M'+V[0]+' '+V[1]+'L'+p1.map(f1).join(' ')+'L'+f1(p1[0]+p3[0]-V[0])+' '+f1(p1[1]+p3[1]-V[1])+'L'+p3.map(f1).join(' ')+'Z'}const m=pol(V[0],V[1],r+30,k.a0+k.m/2);return `<path d="${d}" fill="${cl}" fill-opacity=".6" stroke="${cl}" stroke-width="2" pointer-events="none"/>`+(lab?T(m[0],m[1]+5,v[i]+'°',16,'#1e293b',700,'middle'):'')}).join('')},
+ tri=(P,fill)=>`<path d="M${P.map(p=>f1(p[0])+' '+f1(p[1])).join('L')}Z" fill="${fill||'#eef2ff'}" stroke="#1e293b" stroke-width="3.5" stroke-linejoin="round" pointer-events="none"/>`,
+ frame=(W,H)=>`<rect x="1" y="1" width="${W-2}" height="${H-2}" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>`,
+ solve=(a1,b1,c1,a2,b2,c2)=>{const d=a1*b2-a2*b1;return Math.abs(d)<1e-6?null:[(c1*b2-c2*b1)/d,(a1*c2-a2*c1)/d]};
+ return{RAD,f1,norm,ad,pol,sector,T,ang,dist,corners,vals,line,vh,angs,tri,frame,solve}})();
+
+/* Üçgenin iç açıları: köşeleri kopar, doğru açıya diz */
+function setupTriAngles(w){
+ const{RAD,f1,norm,ad,pol,sector,T,dist,corners,vals,line,vh,angs,tri,frame}=TK,s=w.state,BW=760,BH=500,O=[380,410],R=50,COL=['#fbbf24','#4ade80','#60a5fa'];
+ s.P=Array.isArray(s.P)&&s.P.length===3?s.P:TRI_PRE[0][1].map(p=>p.slice());
+ s.ord=Array.isArray(s.ord)?s.ord:[];s.dir=s.dir||1;s.torn=!!s.torn&&Array.isArray(s.pc);
+ const B=manipBase(w,'<button class="tri-tear">✂ Açıları kopar</button><button class="tri-back">↺ Yerine koy</button><span class="sep"></span><select class="tri-pre"><option value="">Üçgen seç…</option>'+TRI_PRE.map((p,i)=>'<option value="'+i+'">'+p[0]+'</option>').join('')+'</select><button class="tri-rnd">🎲 Rastgele</button><span class="manip-hint"></span>');
+ const svg=B.svg,g=B.g;svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';w.style.left='24px';w.style.top='64px';
+ const byId=i=>s.pc.find(p=>p.id===i),sum=()=>s.ord.reduce((a,k)=>a+byId(k).m,0),start=p=>s.dir>0?sum():180-sum()-p.m;
+ const relay=()=>{let a=s.dir>0?0:180;for(const k of s.ord){const p=byId(k);if(s.dir<0)a-=p.m;p.x=O[0];p.y=O[1];p.rot=a;p.slot=true;if(s.dir>0)a+=p.m}};
+ const home=()=>{s.torn=false;s.pc=null;s.ord=[];s.dir=1};
+ const piece=p=>{const mid=pol(p.x,p.y,R*.62,p.rot+p.m/2),hd=pol(p.x,p.y,R+16,p.rot);return `<path data-act="p" data-i="${p.id}" d="${sector(p.x,p.y,R,p.rot,p.m)}" fill="${COL[p.id]}" fill-opacity="${p.slot?.9:.75}" stroke="#334155" stroke-width="1.6" stroke-linejoin="round" style="cursor:grab"/>`+T(mid[0],mid[1]+5,p.m+'°',13,'#1e293b',700,'middle')+line([p.x,p.y],hd,'#334155',1.5)+`<circle data-act="r" data-i="${p.id}" cx="${f1(hd[0])}" cy="${f1(hd[1])}" r="17" fill="transparent" style="cursor:alias"/><circle cx="${f1(hd[0])}" cy="${f1(hd[1])}" r="7" fill="#fff" stroke="#334155" stroke-width="2" pointer-events="none"/><circle cx="${f1(p.x)}" cy="${f1(p.y)}" r="3.5" fill="#334155" pointer-events="none"/>`};
+ function draw(){
+  const P=s.P,v=vals(P),mx=Math.max(...v),kind=mx<90?'Dar açılı üçgen':mx===90?'Dik üçgen':'Geniş açılı üçgen',done=s.torn&&s.ord.length===3;
+  let h=frame(BW,BH)+`<path d="${sector(O[0],O[1],150,0,180)}" fill="#f1f6ff" pointer-events="none"/>`+line([O[0]-260,O[1]],[O[0]+260,O[1]],'#1e293b',4)+`<circle cx="${O[0]}" cy="${O[1]}" r="5" fill="#1e293b" pointer-events="none"/>`+T(O[0],O[1]+28,'Doğru açı = 180°',15,'#7c3aed',700,'middle');
+  h+=s.torn?tri(P,'#f8fafc')+angs(P,38,'#ffffff',false):tri(P)+angs(P,38,COL,true);
+  if(s.torn)P.forEach((V,i)=>{h+=`<circle cx="${V[0]}" cy="${V[1]}" r="38" fill="none" stroke="#94a3b8" stroke-dasharray="4 4" pointer-events="none" opacity=".6"/>`});
+  P.forEach((V,i)=>h+=vh(V,i));
+  h+=T(30,40,kind,22,'#4338ca',700)+T(30,64,s.torn?'Açıları köşelerinden alıp sürükle, beyaz noktadan döndür; O noktasında yan yana diz.':'Köşelerden tutup sürükle, üçgeni istediğin gibi değiştir.',13.5,'#475569');
+  h+=T(BW-28,40,`<tspan fill="#d97706">${v[0]}°</tspan> + <tspan fill="#16a34a">${v[1]}°</tspan> + <tspan fill="#2563eb">${v[2]}°</tspan> = 180°`,22,'#1e293b',700,'end');
+  if(s.torn)for(const p of s.pc)h+=piece(p);
+  if(done)h+=`<rect x="${BW/2-270}" y="450" width="540" height="40" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2" pointer-events="none"/>`+T(BW/2,477,`✔ ${v[0]}° + ${v[1]}° + ${v[2]}° = 180°  →  üç açı bir doğru açı oluşturdu`,17,'#166534',700,'middle');
+  g.innerHTML=h;B.q('.tri-tear').disabled=s.torn;B.q('.tri-back').disabled=!s.torn;
+ }
+ let drag=null;
+ svg.onpointerdown=e=>{if(!e.isPrimary||e.button!==0)return;const t=e.target.closest('[data-act]');if(!t)return;e.preventDefault();e.stopPropagation();select(w);const pt=manipPt(svg,e),act=t.dataset.act,i=+t.dataset.i;
+  if(act==='v')drag={id:e.pointerId,m:'v',i};
+  else{const p=byId(i);s.ord=s.ord.filter(k=>k!==i);p.slot=false;s.pc.splice(s.pc.indexOf(p),1);s.pc.push(p);if(!s.ord.length)s.dir=1;relay();drag={id:e.pointerId,m:act,p,dx:p.x-pt.x,dy:p.y-pt.y};draw()}
+  try{svg.setPointerCapture(e.pointerId)}catch(_){}};
+ svg.onpointermove=e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();const pt=manipPt(svg,e);
+  if(drag.m==='v'){s.P[drag.i]=[Math.round(Math.max(40,Math.min(BW-40,pt.x))/10)*10,Math.round(Math.max(60,Math.min(280,pt.y))/10)*10];if(s.torn)home()}
+  else{const p=drag.p;if(drag.m==='p'){p.x=Math.max(10,Math.min(BW-10,pt.x+drag.dx));p.y=Math.max(10,Math.min(BH-10,pt.y+drag.dy))}else p.rot=norm(Math.atan2(p.y-pt.y,pt.x-p.x)/RAD)}
+  draw()};
+ const end=e=>{if(!drag||drag.id!==e.pointerId)return;const d=drag,p=d.p;drag=null;try{svg.releasePointerCapture(e.pointerId)}catch(_){}
+  if(p&&dist([p.x,p.y],O)<40){let ok=false;if(!s.ord.length){if(ad(p.rot,0)<24){s.dir=1;ok=true}else if(ad(p.rot+p.m,180)<24){s.dir=-1;ok=true}}else ok=ad(p.rot,start(p))<24;if(ok){s.ord.push(p.id);relay()}}
+  draw()};
+ svg.onpointerup=end;svg.onpointercancel=end;
+ B.q('.tri-tear').onclick=()=>{const v=vals(s.P);s.torn=true;s.ord=[];s.dir=1;const cn=corners(s.P);s.pc=v.map((m,i)=>({id:i,m,x:s.P[i][0],y:s.P[i][1],rot:cn[i].a0,slot:false}));draw()};
+ B.q('.tri-back').onclick=()=>{home();draw()};
+ B.q('.tri-pre').onchange=e=>{if(e.target.value==='')return;s.P=TRI_PRE[+e.target.value][1].map(p=>p.slice());e.target.value='';home();draw()};
+ B.q('.tri-rnd').onclick=()=>{let P;do{P=[0,1,2].map(()=>[100+10*Math.floor(Math.random()*56),70+10*Math.floor(Math.random()*21)])}while(Math.min(...vals(P))<20);s.P=P;home();draw()};
+ draw();
+}
+
+/* Üçgen atölyesi: çeşitleri, eşitsizlik, merkezler, dış açı, alan, Pisagor */
+function setupTriLab(w){
+ const{f1,pol,sector,T,ang,dist,corners,vals,line,vh,angs,tri,frame,solve}=TK,s=w.state,BW=760,BH=480,U=40,
+ TABS=[['kind','Çeşitleri'],['ineq','Eşitsizlik'],['cent','Merkezler'],['ext','Dış açı'],['area','Alan'],['pyth','Pisagor']];
+ s.tab=TABS.some(t=>t[0]===s.tab)?s.tab:'kind';
+ s.P=Array.isArray(s.P)&&s.P.length===3?s.P:TRI_PRE[0][1].map(p=>[p[0],p[1]+60]);
+ for(const[k,v]of[['la',3],['lb',4],['lc',5],['b',6],['h',4],['o',2],['p',3],['q',4]])s[k]=Number.isFinite(s[k])?s[k]:v;
+ s.sh=s.sh||{h:0,m:0,b:0,d:0};s.dup=!!s.dup;
+ const B=manipBase(w,TABS.map(t=>'<button class="sh-tab" data-t="'+t[0]+'">'+t[1]+'</button>').join('')+'<div class="tl-ctl" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%"></div>');
+ const svg=B.svg,g=B.g,ctl=B.q('.tl-ctl');svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';w.style.left='24px';w.style.top='64px';
+ const sl=(k,l,a,b)=>`<label class="s3-lab">${l} <input type="range" class="s3-range" style="width:130px" data-k="${k}" min="${a}" max="${b}" step="1" value="${s[k]}"> <b data-v="${k}"></b></label>`;
+ const pre='<select data-pre><option value="">Üçgen seç…</option>'+TRI_PRE.map((p,i)=>'<option value="'+i+'">'+p[0]+'</option>').join('')+'</select><span class="manip-hint">Köşelerden tutup sürükle.</span>';
+ const CTL={kind:()=>pre,ext:()=>pre,ineq:()=>sl('la','a',1,10)+sl('lb','b',1,10)+sl('lc','c',1,10),
+  cent:()=>[['h','Yükseklik'],['m','Kenarortay'],['b','Açıortay'],['d','Kenar orta dik']].map(x=>`<button data-tg="${x[0]}">${x[1]}</button>`).join('')+'<span class="manip-hint">Merkezleri görmek için aç; köşeleri sürükle.</span>',
+  area:()=>sl('b','Taban',2,10)+sl('h','Yükseklik',1,8)+'<button data-dup>İkinci üçgeni ekle</button><span class="manip-hint">Tepe noktasını yana sürükle.</span>',
+  pyth:()=>sl('p','Yatay dik kenar',1,8)+sl('q','Dikey dik kenar',1,8)};
+ const mid=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2],sub=(a,b)=>[a[0]-b[0],a[1]-b[1]],dot=(a,b)=>a[0]*b[0]+a[1]*b[1];
+ const dot2=(P,c,r,col)=>`<circle cx="${f1(P[0])}" cy="${f1(P[1])}" r="${r||6}" fill="${col}" stroke="#fff" stroke-width="2" pointer-events="none"/>`;
+ function dKind(){const P=s.P,v=vals(P),L=[dist(P[1],P[2]),dist(P[2],P[0]),dist(P[0],P[1])].map(x=>x/U),eq=(a,b)=>Math.abs(a-b)<.11,
+  n=(eq(L[0],L[1])?1:0)+(eq(L[1],L[2])?1:0)+(eq(L[0],L[2])?1:0),side=n>=2?'Eşkenar':n?'İkizkenar':'Çeşitkenar',mx=Math.max(...v),an=mx<90?'Dar açılı':mx===90?'Dik':'Geniş açılı',cx=(P[0][0]+P[1][0]+P[2][0])/3,cy=(P[0][1]+P[1][1]+P[2][1])/3;
+  let h=tri(P)+angs(P,26,['#fbbf24','#4ade80','#60a5fa'],true);
+  [[1,2],[2,0],[0,1]].forEach((e,i)=>{const m=mid(P[e[0]],P[e[1]]),d=Math.hypot(m[0]-cx,m[1]-cy)||1;h+=T(m[0]+(m[0]-cx)/d*22,m[1]+(m[1]-cy)/d*22+5,f1(L[i]).toString().replace('.',',')+' cm',14,'#475569',600,'middle')});
+  P.forEach((V,i)=>h+=vh(V,i));
+  return h+T(30,40,'Kenarlarına göre: '+side,20,'#4338ca',700)+T(30,66,'Açılarına göre: '+an+' üçgen',20,'#0f766e',700)}
+ function dIneq(){const L=[s.la,s.lb,s.lc],C=['#ef4444','#22c55e','#3b82f6'],N=['a','b','c'],ok=s.la+s.lb>s.lc&&s.la+s.lc>s.lb&&s.lb+s.lc>s.la;let h='';
+  L.forEach((l,i)=>h+=`<rect x="40" y="${60+i*42}" width="${l*22}" height="14" rx="7" fill="${C[i]}"/>`+T(40+l*22+10,72+i*42,N[i]+' = '+l+' cm',14,'#334155',600));
+  [[0,1,2],[0,2,1],[1,2,0]].forEach((t,i)=>{const a=L[t[0]],b=L[t[1]],c=L[t[2]];h+=T(320,50+i*24,`${N[t[0]]} + ${N[t[1]]} > ${N[t[2]]}  →  ${a} + ${b} = ${a+b} ${a+b>c?'>':'≤'} ${c}  ${a+b>c?'✔':'✘'}`,16,a+b>c?'#166534':'#b91c1c',700)});
+  const X0=300,Y0=380,k=30,c=s.lc*k;
+  if(ok){const x=(s.lb*s.lb+s.lc*s.lc-s.la*s.la)/(2*s.lc),y=Math.sqrt(Math.max(0,s.lb*s.lb-x*x)),A=[X0,Y0],Bp=[X0+c,Y0],Cp=[X0+x*k,Y0-y*k];h+=tri([A,Bp,Cp],'#eef2ff')+line(A,Bp,C[2],6)+line(Bp,Cp,C[0],6)+line(Cp,A,C[1],6)}
+  else h+=line([X0,Y0],[X0+c,Y0],C[2],6)+line([X0,Y0-12],[X0+s.lb*k,Y0-12],C[1],6)+line([X0+c,Y0-24],[X0+c-s.la*k,Y0-24],C[0],6);
+  return h+T(30,440,ok?'✔ Üçgen çizilebilir: her iki kenarın toplamı üçüncü kenardan büyük.':'✘ Üçgen oluşmaz: iki kenarın toplamı üçüncü kenardan büyük olmalı.',16,ok?'#166534':'#b91c1c',700)}
+ function dCent(){const P=s.P,[A,Bp,C]=P,a=dist(Bp,C),b=dist(C,A),c=dist(A,Bp),per=a+b+c,ar=Math.abs((Bp[0]-A[0])*(C[1]-A[1])-(C[0]-A[0])*(Bp[1]-A[1]))/2,sh=s.sh;let h='';
+  if(ar<300)return tri(P)+P.map((V,i)=>vh(V,i)).join('')+T(30,40,'Köşeleri birbirinden uzaklaştır.',18,'#b91c1c',700);
+  const foot=(V,Q,Rr)=>{const d=sub(Rr,Q),t=dot(sub(V,Q),d)/dot(d,d);return[Q[0]+t*d[0],Q[1]+t*d[1]]},opp=[[Bp,C],[C,A],[A,Bp]],G=[(A[0]+Bp[0]+C[0])/3,(A[1]+Bp[1]+C[1])/3];
+  if(sh.b){const I=[(a*A[0]+b*Bp[0]+c*C[0])/per,(a*A[1]+b*Bp[1]+c*C[1])/per],r=2*ar/per;h+=`<circle cx="${f1(I[0])}" cy="${f1(I[1])}" r="${f1(r)}" fill="#22c55e" fill-opacity=".12" stroke="#16a34a" stroke-width="2" pointer-events="none"/>`;
+   P.forEach((V,i)=>{const q=opp[i],wb=[dist(V,q[0]),dist(V,q[1])],D=[(wb[1]*q[0][0]+wb[0]*q[1][0])/(wb[0]+wb[1]),(wb[1]*q[0][1]+wb[0]*q[1][1])/(wb[0]+wb[1])];h+=line(V,D,'#16a34a',2.5)});h+=dot2(I,0,6,'#16a34a')+T(I[0]+10,I[1]-8,'I',16,'#15803d',700)}
+  if(sh.d){const x=solve(Bp[0]-A[0],Bp[1]-A[1],dot(mid(A,Bp),sub(Bp,A)),C[0]-Bp[0],C[1]-Bp[1],dot(mid(Bp,C),sub(C,Bp)));if(x){const rr=dist(x,A);if(rr<420)h+=`<circle cx="${f1(x[0])}" cy="${f1(x[1])}" r="${f1(rr)}" fill="none" stroke="#9333ea" stroke-width="2" stroke-dasharray="6 5" pointer-events="none"/>`;
+   [[A,Bp],[Bp,C],[C,A]].forEach(e=>h+=line(mid(e[0],e[1]),x,'#9333ea',2.5,'6 4'));h+=dot2(x,0,6,'#9333ea')+T(x[0]+10,x[1]-8,'O',16,'#7e22ce',700)}}
+  if(sh.m){P.forEach((V,i)=>h+=line(V,mid(opp[i][0],opp[i][1]),'#2563eb',2.5));h+=dot2(G,0,6,'#2563eb')+T(G[0]+10,G[1]-8,'G',16,'#1d4ed8',700)}
+  if(sh.h){P.forEach((V,i)=>h+=line(V,foot(V,opp[i][0],opp[i][1]),'#ef4444',2.5,'6 4'));const x=solve(Bp[0]-C[0],Bp[1]-C[1],dot(A,sub(Bp,C)),A[0]-C[0],A[1]-C[1],dot(Bp,sub(A,C)));if(x)h+=dot2(x,0,6,'#ef4444')+T(x[0]+10,x[1]-8,'H',16,'#b91c1c',700)}
+  h+=tri(P,'none');P.forEach((V,i)=>h+=vh(V,i));
+  const nm=[['h','Yükseklikler → diklik merkezi H','#b91c1c'],['m','Kenarortaylar → ağırlık merkezi G','#1d4ed8'],['b','Açıortaylar → iç teğet çember merkezi I','#15803d'],['d','Kenar orta dikmeler → çevrel çember merkezi O','#7e22ce']].filter(x=>sh[x[0]]);
+  nm.forEach((x,i)=>h+=T(30,40+i*24,x[1],16,x[2],700));return h}
+ function dExt(){const P=s.P,v=vals(P),[A,Bp,C]=P,u=sub(Bp,A),l=Math.hypot(u[0],u[1])||1,E=[Bp[0]+u[0]/l*130,Bp[1]+u[1]/l*130],aE=ang(Bp,E),aC=ang(Bp,C),d=((aE-aC)%360+360)%360,a0=d<=180?aC:aE,m=d<=180?d:360-d,ex=v[0]+v[2];
+  const mp=pol(Bp[0],Bp[1],62,a0+m/2);
+  let h=tri(P)+line(Bp,E,'#1e293b',3.5)+angs(P,26,['#fbbf24','#e2e8f0','#60a5fa'],false)+`<path d="${sector(Bp[0],Bp[1],44,a0,m)}" fill="#f97316" fill-opacity=".45" stroke="#ea580c" stroke-width="2" pointer-events="none"/>`;
+  [0,2].forEach(i=>{const c=corners(P)[i],q=pol(P[i][0],P[i][1],56,c.a0+c.m/2);h+=T(q[0],q[1]+5,v[i]+'°',16,'#1e293b',700,'middle')});
+  h+=T(mp[0],mp[1]+5,ex+'°',17,'#c2410c',700,'middle');P.forEach((V,i)=>h+=vh(V,i));
+  return h+T(30,40,`Dış açı = ${ex}°`,22,'#c2410c',700)+T(30,68,`${v[0]}° + ${v[2]}° = ${ex}°  (kendisine komşu olmayan iki iç açının toplamı)`,15,'#475569',600)}
+ function dArea(){const UA=30,X0=70,Y0=390,{b,h,o}=s,A=[X0,Y0],Bp=[X0+b*UA,Y0],C=[X0+o*UA,Y0-h*UA];let t='';
+  if(s.dup){const A2=[Bp[0]+C[0]-A[0],C[1]];t+=tri([A2,C,Bp],'#fed7aa')+line(A,C,'#94a3b8',1.5,'4 4')}
+  t+=tri([A,Bp,C],'#bfdbfe')+line(C,[C[0],Y0],'#ef4444',2.5,'6 4')+T(C[0]+8,(C[1]+Y0)/2,'h = '+h,15,'#b91c1c',700)+T((A[0]+Bp[0])/2,Y0+24,'taban = '+b,15,'#1d4ed8',700,'middle');
+  t+=`<circle data-act="o" cx="${C[0]}" cy="${C[1]}" r="26" fill="transparent" style="cursor:ew-resize"/><circle cx="${C[0]}" cy="${C[1]}" r="8" fill="#fff" stroke="#1e293b" stroke-width="3" pointer-events="none"/>`;
+  return t+T(30,40,`Alan = (taban × yükseklik) ÷ 2 = (${b} × ${h}) ÷ 2 = ${b*h/2} cm²`,19,'#1d4ed8',700)+(s.dup?T(30,66,`İki üçgen paralelkenar oluşturur: ${b} × ${h} = ${b*h} cm²  →  üçgen bunun yarısıdır.`,15,'#c2410c',700):'')}
+ function dPyth(){const k=18,V=[260,330],{p,q}=s,Bp=[V[0]+p*k,V[1]],C=[V[0],V[1]-q*k],e=sub(C,Bp);let n=[-e[1],e[0]];if(dot(n,sub(mid(Bp,C),V))<0)n=[e[1],-e[0]];
+  const sq=(pts,c)=>`<path d="M${pts.map(x=>f1(x[0])+' '+f1(x[1])).join('L')}Z" fill="${c}" fill-opacity=".5" stroke="#334155" stroke-width="2" pointer-events="none"/>`,
+  grid=(x0,y0,wd,ht)=>{let g2='';for(let i=1;i<wd/k;i++)g2+=line([x0+i*k,y0],[x0+i*k,y0+ht],'#fff',1);for(let j=1;j<ht/k;j++)g2+=line([x0,y0+j*k],[x0+wd,y0+j*k],'#fff',1);return g2},c2=p*p+q*q,r=Math.sqrt(c2),cen=[(Bp[0]+C[0])/2+n[0]/2,(Bp[1]+C[1])/2+n[1]/2];
+  let h=sq([V,[V[0]+p*k,V[1]],[V[0]+p*k,V[1]+p*k],[V[0],V[1]+p*k]],'#4ade80')+grid(V[0],V[1],p*k,p*k)+sq([[V[0]-q*k,V[1]-q*k],[V[0],V[1]-q*k],V,[V[0]-q*k,V[1]]],'#fbbf24')+grid(V[0]-q*k,V[1]-q*k,q*k,q*k)+sq([Bp,C,[C[0]+n[0],C[1]+n[1]],[Bp[0]+n[0],Bp[1]+n[1]]],'#f87171');
+  h+=tri([V,Bp,C],'#dbeafe')+`<path d="M${V[0]+14} ${V[1]}L${V[0]+14} ${V[1]-14}L${V[0]} ${V[1]-14}" fill="none" stroke="#1e293b" stroke-width="2"/>`;
+  h+=T(V[0]+p*k/2,V[1]+p*k/2+6,p+'² = '+p*p,16,'#14532d',700,'middle')+T(V[0]-q*k/2,V[1]-q*k/2+6,q+'² = '+q*q,16,'#92400e',700,'middle')+T(cen[0],cen[1]+6,'c² = '+c2,16,'#7f1d1d',700,'middle');
+  return h+T(30,40,`${q}² + ${p}² = ${q*q} + ${p*p} = ${c2} = c²`,20,'#1e293b',700)+T(30,66,`c = √${c2} = ${f(+r.toFixed(2))}`+(Number.isInteger(r)?'   ✔ Pisagor üçlüsü':''),17,Number.isInteger(r)?'#166534':'#475569',700)}
+ const DRAW={kind:dKind,ineq:dIneq,cent:dCent,ext:dExt,area:dArea,pyth:dPyth};
+ function draw(){g.innerHTML=frame(BW,BH)+DRAW[s.tab]();B.bar.querySelectorAll('[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===s.tab));B.bar.querySelectorAll('[data-tg]').forEach(b=>b.classList.toggle('on',!!s.sh[b.dataset.tg]));B.bar.querySelectorAll('[data-dup]').forEach(b=>b.classList.toggle('on',s.dup));B.bar.querySelectorAll('[data-v]').forEach(x=>x.textContent=s[x.dataset.v]+' cm')}
+ const render=()=>{ctl.innerHTML=CTL[s.tab]();draw()};
+ B.bar.oninput=e=>{const k=e.target.dataset.k;if(k){s[k]=+e.target.value;if(k==='b')s.o=Math.max(-2,Math.min(s.b+2,s.o));draw()}};
+ B.bar.onchange=e=>{if(e.target.dataset.pre!==undefined&&e.target.value!==''){s.P=TRI_PRE[+e.target.value][1].map(p=>[p[0],p[1]+60]);e.target.value='';draw()}};
+ B.bar.onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.t){s.tab=b.dataset.t;render()}else if(b.dataset.tg){s.sh[b.dataset.tg]=s.sh[b.dataset.tg]?0:1;draw()}else if(b.dataset.dup!==undefined){s.dup=!s.dup;draw()}};
+ let drag=null;
+ svg.onpointerdown=e=>{if(!e.isPrimary||e.button!==0)return;const t=e.target.closest('[data-act]');if(!t)return;e.preventDefault();e.stopPropagation();select(w);drag={id:e.pointerId,m:t.dataset.act,i:+t.dataset.i};try{svg.setPointerCapture(e.pointerId)}catch(_){}};
+ svg.onpointermove=e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();const pt=manipPt(svg,e);
+  if(drag.m==='v')s.P[drag.i]=[Math.round(Math.max(40,Math.min(BW-40,pt.x))/10)*10,Math.round(Math.max(80,Math.min(420,pt.y))/10)*10];
+  else s.o=Math.max(-2,Math.min(s.b+2,Math.round((pt.x-70)/15)/2));
+  draw()};
+ svg.onpointerup=svg.onpointercancel=e=>{if(drag&&drag.id===e.pointerId){drag=null;try{svg.releasePointerCapture(e.pointerId)}catch(_){}}};
+ render();
+}
+
+/* ---------- GEOMETRİ ATÖLYESİ (çatı) ---------- */
+function setupGeoLab(w){
+ const s=w.state,M=[['ang','Üçgenin iç açıları',setupTriAngles],['tri','Üçgen özellikleri',setupTriLab],['quad','Dörtgenler',setupQuads],['sol','Cisimler: alan · hacim',setupSolids]];
+ if(!M.some(m=>m[0]===s.mode))s.mode='ang';
+ M.find(m=>m[0]===s.mode)[2](w);
+ const bar=document.createElement('div');bar.className='manip-bar';bar.style.cssText='padding:0 2px 8px;border-bottom:1px solid var(--border);margin-bottom:6px';
+ bar.innerHTML=M.map(m=>'<button class="sh-tab'+(m[0]===s.mode?' on':'')+'" data-m="'+m[0]+'" style="font-size:14px">'+m[1]+'</button>').join('');
+ bar.onclick=e=>{const b=e.target.closest('[data-m]');if(b&&b.dataset.m!==s.mode){s.mode=b.dataset.m;setupGeoLab(w)}};
+ w.querySelector('.art').prepend(bar);
+}
+
+/* ---------- DÖRTGENLER ---------- */
+function setupQuads(w){
+ const{f1,pol,T,ang,dist,line,frame,vh,norm}=TK,s=w.state,BW=760,BH=480,k=24,RAD=Math.PI/180,
+ SH=[['kare','Kare',[['a','Kenar',1,10]]],['dik','Dikdörtgen',[['a','Uzun kenar',1,10],['b','Kısa kenar',1,10]]],['par','Paralelkenar',[['a','Taban',2,10],['b','Yan kenar',2,8],['t','Açı',30,150]]],['esk','Eşkenar dörtgen',[['a','Kenar',2,8],['t','Açı',30,150]]],['yam','Yamuk',[['a','Alt taban',2,10],['c','Üst taban',1,10],['h','Yükseklik',1,8],['o','Kayma',0,8]]],['del','Deltoid',[['a','Yatay yarı',1,6],['b','Üst',1,6],['c','Alt',1,7]]],['gen','Genel dörtgen',[]]];
+ s.sp=SH.some(x=>x[0]===s.sp)?s.sp:'par';s.q=Object.assign({a:5,b:3,t:60,c:3,h:4,o:1},s.q||{});s.dg=s.dg||0;
+ s.G=Array.isArray(s.G)&&s.G.length===4?s.G:[[120,390],[420,390],[380,220],[170,160]];
+ const B=manipBase(w,SH.map(x=>'<button class="sh-tab" data-sp="'+x[0]+'">'+x[1]+'</button>').join('')+'<div class="qd-ctl" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%"></div>');
+ const svg=B.svg,g=B.g,ctl=B.q('.qd-ctl');svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';w.style.left='24px';w.style.top='64px';
+ const pts=()=>{const{a,b,t,c,h,o}=s.q,X=90,Y=400,c0=Math.cos(t*RAD),s0=Math.sin(t*RAD),P=(x,y)=>[X+x*k,Y-y*k];
+  switch(s.sp){case'kare':return[P(0,0),P(a,0),P(a,a),P(0,a)];case'dik':return[P(0,0),P(a,0),P(a,b),P(0,b)];case'par':return[P(0,0),P(a,0),P(a+b*c0,b*s0),P(b*c0,b*s0)];case'esk':return[P(0,0),P(a,0),P(a+a*c0,a*s0),P(a*c0,a*s0)];case'yam':return[P(0,0),P(a,0),P(o+c,h),P(o,h)];case'del':{const Z=[230,270];return[[Z[0],Z[1]-b*k],[Z[0]+a*k,Z[1]],[Z[0],Z[1]+c*k],[Z[0]-a*k,Z[1]]]}default:return s.G}};
+ const PR={kare:'4 kenarı eşit, 4 açısı dik; köşegenleri eşit ve birbirini dik ortalar.',dik:'Karşılıklı kenarlar eşit ve paralel, 4 açı dik; köşegenler eşit.',par:'Karşılıklı kenarlar eşit ve paralel; karşılıklı açılar eşit; köşegenler birbirini ortalar.',esk:'4 kenarı eşit; karşılıklı açılar eşit; köşegenler birbirini dik ortalar.',yam:'Yalnız bir çift kenarı paralel (tabanlar).',del:'İki çift komşu kenarı eşit; bir köşegen diğerini dik ortalar.',gen:'Köşelerden tutup sürükle. İç açıları toplamı her zaman 360°.'};
+ function draw(){
+  const P=pts(),n=4,sa=P.reduce((a,p,i)=>{const q=P[(i+1)%n];return a+(p[0]*(-q[1])-q[0]*(-p[1]))},0),ccw=sa>0,A=Math.abs(sa)/2/k/k,per=P.reduce((a,p,i)=>a+dist(p,P[(i+1)%n]),0)/k,gg=x=>f(+x.toFixed(1)),{a,b,c,h,t}=s.q,hh=gg(b*Math.sin(t*RAD));
+  const ag=P.map((V,i)=>{let a1=ang(V,P[(i+1)%n]),a2=ang(V,P[(i+n-1)%n]);if(!ccw)[a1,a2]=[a2,a1];return{a0:a1,m:norm(a2-a1)}}),rr=ag.map(x=>Math.round(x.m));rr[3]=360-rr[0]-rr[1]-rr[2];
+  const cx=P.reduce((q,p)=>q+p[0],0)/4,cy=P.reduce((q,p)=>q+p[1],0)/4,pp=Q=>'M'+Q.map(p=>f1(p[0])+' '+f1(p[1])).join('L')+'Z';
+  const FM={kare:[`Alan = a × a = ${a} × ${a} = ${gg(A)} cm²`,`Çevre = 4 × a = ${gg(per)} cm`],dik:[`Alan = a × b = ${a} × ${b} = ${gg(A)} cm²`,`Çevre = 2 × (a + b) = ${gg(per)} cm`],par:[`Alan = taban × yükseklik = ${a} × ${hh} = ${gg(A)} cm²`,`Çevre = 2 × (a + b) = ${gg(per)} cm`],esk:[`Alan = taban × yükseklik = ${a} × ${gg(a*Math.sin(t*RAD))} = ${gg(A)} cm²`,`Çevre = 4 × a = ${gg(per)} cm`],yam:[`Alan = (a + c) × h ÷ 2 = (${a} + ${c}) × ${h} ÷ 2 = ${gg(A)} cm²`,`Çevre = ${gg(per)} cm`],del:[`Alan = (köşegen₁ × köşegen₂) ÷ 2 = (${2*a} × ${b+c}) ÷ 2 = ${gg(A)} cm²`,`Çevre = 2 × (b′ + c′) = ${gg(per)} cm`],gen:[`Alan = ${gg(A)} cm²  (bir köşegenle iki üçgene bölünür)`,`Çevre = ${gg(per)} cm`]}[s.sp];
+  let h2=frame(BW,BH);
+  if(s.dg===2)h2+=`<path d="${pp([P[0],P[1],P[2]])}" fill="#fde68a" stroke="none"/><path d="${pp([P[0],P[2],P[3]])}" fill="#bbf7d0" stroke="none"/>`;
+  h2+=`<path d="${pp(P)}" fill="${s.dg===2?'none':'#e0e7ff'}" stroke="#1e293b" stroke-width="3.5" stroke-linejoin="round" pointer-events="none"/>`;
+  if(s.dg===1)h2+=line(P[0],P[2],'#ef4444',2.5,'6 4')+line(P[1],P[3],'#2563eb',2.5,'6 4')+T((P[0][0]+P[2][0])/2+6,(P[0][1]+P[2][1])/2-6,gg(dist(P[0],P[2])/k),13,'#b91c1c',700)+T((P[1][0]+P[3][0])/2+6,(P[1][1]+P[3][1])/2+16,gg(dist(P[1],P[3])/k),13,'#1d4ed8',700);
+  if(s.dg===2)h2+=line(P[0],P[2],'#ef4444',3)+T(cx,cy+5,'180° + 180°',14,'#92400e',700,'middle');
+  P.forEach((V,i)=>{const q=ag[i],m=pol(V[0],V[1],44,q.a0+q.m/2),N=P[(i+1)%n],d=Math.hypot((V[0]+N[0])/2-cx,(V[1]+N[1])/2-cy)||1,mx=(V[0]+N[0])/2,my=(V[1]+N[1])/2;
+   h2+=`<path d="${TK.sector(V[0],V[1],24,q.a0,q.m)}" fill="#f59e0b" fill-opacity=".55" stroke="#d97706" stroke-width="1.5" pointer-events="none"/>`+T(m[0],m[1]+5,rr[i]+'°',14,'#1e293b',700,'middle')+T(mx+(mx-cx)/d*24,my+(my-cy)/d*24+5,gg(dist(V,N)/k),13,'#475569',600,'middle')});
+  if(s.sp==='gen')P.forEach((V,i)=>h2+=vh(V,i));
+  h2+=T(30,38,FM[0],19,'#1d4ed8',700)+T(30,62,FM[1],16,'#0f766e',700)+T(30,86,PR[s.sp],14,'#475569',600)+T(30,110,`İç açılar: ${rr.join('° + ')}° = 360°`,15,'#b45309',700);
+  g.innerHTML=h2;B.bar.querySelectorAll('[data-sp]').forEach(b=>b.classList.toggle('on',b.dataset.sp===s.sp));B.bar.querySelectorAll('[data-dg]').forEach(b=>{b.textContent=['Köşegen: kapalı','Köşegenleri göster','Üçgene böl'][s.dg]});
+  B.bar.querySelectorAll('[data-v]').forEach(x=>x.textContent=s.q[x.dataset.v]+(x.dataset.v==='t'?'°':' cm'));
+ }
+ const render=()=>{const d=SH.find(x=>x[0]===s.sp)[2];ctl.innerHTML=d.map(x=>`<label class="s3-lab">${x[1]} <input type="range" class="s3-range" style="width:120px" data-k="${x[0]}" min="${x[2]}" max="${x[3]}" step="1" value="${s.q[x[0]]}"> <b data-v="${x[0]}"></b></label>`).join('')+'<button data-dg></button>';draw()};
+ B.bar.oninput=e=>{const q=e.target.dataset.k;if(q){s.q[q]=+e.target.value;draw()}};
+ B.bar.onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.sp){s.sp=b.dataset.sp;render()}else if(b.dataset.dg!==undefined){s.dg=(s.dg+1)%3;draw()}};
+ let drag=null;
+ svg.onpointerdown=e=>{if(!e.isPrimary||e.button!==0)return;const t=e.target.closest('[data-act]');if(!t)return;e.preventDefault();e.stopPropagation();select(w);drag={id:e.pointerId,i:+t.dataset.i};try{svg.setPointerCapture(e.pointerId)}catch(_){}};
+ svg.onpointermove=e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();const pt=manipPt(svg,e);s.G[drag.i]=[Math.round(Math.max(40,Math.min(720,pt.x))/10)*10,Math.round(Math.max(130,Math.min(450,pt.y))/10)*10];draw()};
+ svg.onpointerup=svg.onpointercancel=e=>{if(drag&&drag.id===e.pointerId){drag=null;try{svg.releasePointerCapture(e.pointerId)}catch(_){}}};
+ render();
+}
+
+/* ---------- CİSİMLER: alan · yüzey alanı · hacim ---------- */
+function setupSolids(w){
+ const{f1,T,line,frame}=TK,s=w.state,BW=760,BH=480,k=20,PI=Math.PI,X0=70,Y0=420,dx=10,dy=-10,
+ SO=[['cube','Küp',[['a','Kenar',1,10]]],['prism','Dikdörtgenler prizması',[['a','En',1,10],['b','Boy',1,10],['c','Yükseklik',1,10]]],['cyl','Silindir',[['r','Yarıçap',1,6],['c','Yükseklik',1,10]]],['cone','Koni',[['r','Yarıçap',1,6],['c','Yükseklik',1,10]]],['sph','Küre',[['r','Yarıçap',1,8]]],['pyr','Kare piramit',[['a','Taban kenarı',1,10],['c','Yükseklik',1,10]]]];
+ s.so=SO.some(x=>x[0]===s.so)?s.so:'prism';s.v=Object.assign({a:4,b:3,c:3,r:3},s.v||{});s.fl=Number.isFinite(s.fl)?Math.max(0,s.fl):0;
+ const B=manipBase(w,SO.map(x=>'<button class="sh-tab" data-so="'+x[0]+'">'+x[1]+'</button>').join('')+'<div class="so-ctl" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%"></div>');
+ const svg=B.svg,g=B.g,ctl=B.q('.so-ctl');svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';w.style.left='24px';w.style.top='64px';
+ const gg=x=>f(+x.toFixed(2)),P2=pts=>'M'+pts.map(p=>f1(p[0])+' '+f1(p[1])).join('L')+'Z',face=(pts,fl,op)=>`<path d="${P2(pts)}" fill="${fl}" fill-opacity="${op||1}" stroke="#1e293b" stroke-width="2" stroke-linejoin="round" pointer-events="none"/>`,gl=(a,b)=>line(a,b,'#64748b',1);
+ function draw(){
+  const v=s.v,{r}=v;let h=frame(BW,BH),L=[],c=v.c,a=v.a,b=v.b;
+  if(s.so==='cube'){b=a;c=a}
+  if(s.so==='cube'||s.so==='prism'){
+   const X1=X0+a*k,Yt=Y0-c*k,tot=a*b*c,n=Math.min(s.fl,tot),cu=s.so==='cube',CC=['#f59e0b','#22c55e','#3b82f6','#a855f7','#ef4444','#14b8a6'],CT=['#fcd34d','#86efac','#93c5fd','#d8b4fe','#fca5a5','#5eead4'],CR=['#d97706','#16a34a','#2563eb','#9333ea','#dc2626','#0d9488'];s.fl=n;
+   h+=face([[X0,Y0],[X1,Y0],[X1,Yt],[X0,Yt]],'#bfdbfe',.3)+face([[X0,Yt],[X1,Yt],[X1+b*dx,Yt+b*dy],[X0+b*dx,Yt+b*dy]],'#e0f2fe',.4)+face([[X1,Y0],[X1+b*dx,Y0+b*dy],[X1+b*dx,Yt+b*dy],[X1,Yt]],'#93c5fd',.3);
+   for(let i=1;i<a;i++)h+=gl([X0+i*k,Y0],[X0+i*k,Yt])+gl([X0+i*k,Yt],[X0+i*k+b*dx,Yt+b*dy]);
+   for(let j=1;j<c;j++)h+=gl([X0,Y0-j*k],[X1,Y0-j*k])+gl([X1,Y0-j*k],[X1+b*dx,Y0-j*k+b*dy]);
+   for(let i=1;i<b;i++)h+=gl([X0+i*dx,Yt+i*dy],[X1+i*dx,Yt+i*dy])+gl([X1+i*dx,Y0+i*dy],[X1+i*dx,Yt+i*dy]);
+   const cs='stroke="#475569" stroke-width="1" stroke-linejoin="round" pointer-events="none"';
+   for(let z=0;z<c;z++)for(let y=b-1;y>=0;y--)for(let x=0;x<a;x++){if(z*a*b+y*a+x>=n)continue;const x0=X0+x*k+y*dx,yb=Y0-z*k+y*dy,q=z%6;
+    h+=`<path d="${P2([[x0,yb],[x0+k,yb],[x0+k,yb-k],[x0,yb-k]])}" fill="${CC[q]}" ${cs}/><path d="${P2([[x0,yb-k],[x0+k,yb-k],[x0+k+dx,yb-k+dy],[x0+dx,yb-k+dy]])}" fill="${CT[q]}" ${cs}/><path d="${P2([[x0+k,yb],[x0+k+dx,yb+dy],[x0+k+dx,yb-k+dy],[x0+k,yb-k]])}" fill="${CR[q]}" ${cs}/>`}
+   h+=face([[X0,Y0],[X1,Y0],[X1,Yt],[X0,Yt]],'none')+face([[X0,Yt],[X1,Yt],[X1+b*dx,Yt+b*dy],[X0+b*dx,Yt+b*dy]],'none')+face([[X1,Y0],[X1+b*dx,Y0+b*dy],[X1+b*dx,Yt+b*dy],[X1,Yt]],'none');
+   h+=`<path data-act="tap" d="${P2([[X0,Y0],[X1,Y0],[X1+b*dx,Y0+b*dy],[X1+b*dx,Yt+b*dy],[X0+b*dx,Yt+b*dy],[X0,Yt]])}" fill="transparent" style="cursor:pointer"/>`;
+   [['ha',X1,Y0],['hb',X1+b*dx,Y0+b*dy],['hc',X0,Yt]].forEach(q=>h+=`<circle data-act="${q[0]}" cx="${q[1]}" cy="${q[2]}" r="22" fill="transparent" style="cursor:grab"/><circle cx="${q[1]}" cy="${q[2]}" r="8" fill="#fff" stroke="#1e293b" stroke-width="3" pointer-events="none"/>`);
+   h+=T(30,36,'Beyaz noktalardan tutup prizmanın kenarlarını uzat-kısalt; içine dokunarak küp ekle.',13.5,'#475569',600)+T(X0+a*k/2,Y0+24,'en = '+a,14,'#1d4ed8',700,'middle')+T(X1+b*dx+30,Y0+b*dy/2+4,'boy = '+b,14,'#1d4ed8',700)+T(X0-30,Y0-c*k/2,'yük. = '+c,14,'#1d4ed8',700,'end');
+   L=[['Taban alanı = '+(cu?'a × a':'en × boy'),`${a} × ${b} = ${a*b} cm²`],['Yüzey alanı = '+(cu?'6 × a²':'2 × (en·boy + boy·yük. + en·yük.)'),`${2*(a*b+b*c+a*c)} cm²`],['Doldurulan küp sayısı',`${n} / ${tot}  ·  ${Math.floor(n/(a*b))} tam katman`],[n===tot?'✔ Prizma doldu → Hacim = taban alanı × yükseklik':'Hacim (şimdilik) = doldurulan küp',n===tot?`${a*b} × ${c} = ${tot} cm³`:`${n} cm³`]];
+  }else if(s.so==='cyl'||s.so==='cone'){
+   const CX=210,Y0=410,rx=r*k,ry=rx*.32,Yt=Y0-c*k,low=(y)=>`M${CX-rx} ${y}A${rx} ${ry} 0 0 0 ${CX+rx} ${y}`,up=(y)=>`M${CX-rx} ${y}A${rx} ${ry} 0 0 1 ${CX+rx} ${y}`,st='fill="none" stroke="#1e293b" stroke-width="2.5"';
+   if(s.so==='cyl')h+=`<path d="M${CX-rx} ${Yt}V${Y0}A${rx} ${ry} 0 0 0 ${CX+rx} ${Y0}V${Yt}Z" fill="#bfdbfe" stroke="none"/><path d="${up(Y0)}" ${st} stroke-dasharray="5 4"/><path d="${low(Y0)}" ${st}/><path d="M${CX-rx} ${Yt}V${Y0}M${CX+rx} ${Yt}V${Y0}" ${st}/><ellipse cx="${CX}" cy="${Yt}" rx="${rx}" ry="${ry}" fill="#e0f2fe" stroke="#1e293b" stroke-width="2.5"/>`;
+   else h+=`<path d="M${CX-rx} ${Y0}L${CX} ${Yt}L${CX+rx} ${Y0}A${rx} ${ry} 0 0 1 ${CX-rx} ${Y0}Z" fill="#bfdbfe" stroke="none"/><path d="${up(Y0)}" ${st} stroke-dasharray="5 4"/><path d="${low(Y0)}" ${st}/><path d="M${CX-rx} ${Y0}L${CX} ${Yt}L${CX+rx} ${Y0}" ${st}/>`;
+   h+=line([CX,Y0],[CX+rx,Y0],'#ef4444',2.5)+T(CX+rx/2,Y0-6,'r = '+r,14,'#b91c1c',700,'middle')+line([CX+rx+16,Yt],[CX+rx+16,Y0],'#16a34a',2.5)+T(CX+rx+24,(Yt+Y0)/2,'h = '+c,14,'#15803d',700);
+   const tb=PI*r*r;
+   if(s.so==='cyl')L=[['Taban alanı = π × r²',`3,14 × ${r}² = ${gg(tb)} cm²`],['Yanal alan = 2 × π × r × h',`${gg(2*PI*r*c)} cm²`],['Yüzey alanı = 2π r (r + h)',`${gg(2*PI*r*(r+c))} cm²`],['Hacim = π × r² × h',`${gg(tb)} × ${c} = ${gg(tb*c)} cm³`]];
+   else{const l=Math.hypot(r,c);L=[['Taban alanı = π × r²',`${gg(tb)} cm²`],['Yan yüz uzunluğu l = √(r² + h²)',`${gg(l)} cm`],['Yüzey alanı = π r (r + l)',`${gg(PI*r*(r+l))} cm²`],['Hacim = π r² h ÷ 3',`${gg(tb*c/3)} cm³`]]}
+  }else if(s.so==='sph'){
+   const CX=230,CY=250,R=r*k,st='fill="none" stroke="#1e293b" stroke-width="2.5"';
+   h+=`<circle cx="${CX}" cy="${CY}" r="${R}" fill="#bfdbfe" stroke="#1e293b" stroke-width="2.5"/><path d="M${CX-R} ${CY}A${R} ${R*.3} 0 0 0 ${CX+R} ${CY}" ${st}/><path d="M${CX-R} ${CY}A${R} ${R*.3} 0 0 1 ${CX+R} ${CY}" ${st} stroke-dasharray="5 4"/>`+line([CX,CY],[CX+R,CY],'#ef4444',2.5)+T(CX+R/2,CY-6,'r = '+r,14,'#b91c1c',700,'middle');
+   L=[['Yüzey alanı = 4 × π × r²',`4 × 3,14 × ${r}² = ${gg(4*PI*r*r)} cm²`],['Hacim = 4 ÷ 3 × π × r³',`${gg(4/3*PI*r*r*r)} cm³`]]
+  }else{
+   const CX=210,Y0=380,hw=a*k/2,hd=a*k*.28,Ap=[CX,Y0-c*k],Lf=[CX-hw,Y0],Fr=[CX,Y0+hd],Rt=[CX+hw,Y0],Bk=[CX,Y0-hd];
+   h+=face([Ap,Lf,Fr],'#bfdbfe')+face([Ap,Fr,Rt],'#93c5fd')+line(Lf,Bk,'#1e293b',2,'5 4')+line(Rt,Bk,'#1e293b',2,'5 4')+line(Ap,Bk,'#1e293b',2,'5 4')+line(Ap,[CX,Y0],'#16a34a',2.5,'6 4')+T(CX+8,(Ap[1]+Y0)/2,'h = '+c,14,'#15803d',700)+T(CX,Fr[1]+22,'a = '+a,14,'#1d4ed8',700,'middle');
+   const sl=Math.hypot(c,a/2);
+   L=[['Taban alanı = a × a',`${a*a} cm²`],['Yan yüz yüksekliği = √(h² + (a÷2)²)',`${gg(sl)} cm`],['Yüzey alanı = a² + 2 × a × yan yüz yük.',`${gg(a*a+2*a*sl)} cm²`],['Hacim = taban alanı × h ÷ 3',`${a*a} × ${c} ÷ 3 = ${gg(a*a*c/3)} cm³`]]
+  }
+  L.forEach((q,i)=>{h+=T(440,70+i*74,q[0],14,'#475569',600)+T(440,96+i*74,q[1],20,['#1d4ed8','#0f766e','#b45309','#7c3aed'][i%4],700)});
+  g.innerHTML=h;B.bar.querySelectorAll('input[data-k]').forEach(x=>x.value=s.v[x.dataset.k]);B.bar.querySelectorAll('[data-so]').forEach(x=>x.classList.toggle('on',x.dataset.so===s.so));B.bar.querySelectorAll('[data-v]').forEach(x=>x.textContent=s.v[x.dataset.v]+' cm');
+ }
+ const render=()=>{const d=SO.find(x=>x[0]===s.so)[2];ctl.innerHTML=d.map(x=>`<label class="s3-lab">${x[1]} <input type="range" class="s3-range" style="width:120px" data-k="${x[0]}" min="${x[2]}" max="${x[3]}" step="1" value="${s.v[x[0]]}"> <b data-v="${x[0]}"></b></label>`).join('')+(s.so==='cube'||s.so==='prism'?'<span class="sep"></span><button data-fl="one">+1 küp</button><button data-fl="row">+1 sıra</button><button data-fl="lay">+1 katman</button><button data-fl="rm">− 1 küp</button><button data-fl="clr">Boşalt</button><button data-fl="all">Hepsini doldur</button>':'');draw()};
+ const dims=()=>s.so==='cube'?[s.v.a,s.v.a,s.v.a]:[s.v.a,s.v.b,s.v.c],clampF=()=>{const d=dims();s.fl=Math.min(s.fl,d[0]*d[1]*d[2])};
+ B.bar.oninput=e=>{const q=e.target.dataset.k;if(!q)return;s.v[q]=+e.target.value;clampF();draw()};
+ B.bar.onclick=e=>{const b=e.target.closest('button');if(!b)return;const[a,bb,c]=dims(),tot=a*bb*c;
+  if(b.dataset.so){s.so=b.dataset.so;s.fl=0;render()}
+  else if(b.dataset.fl){const m=b.dataset.fl;s.fl=m==='one'?s.fl+1:m==='row'?s.fl+a:m==='lay'?s.fl+a*bb:m==='rm'?s.fl-1:m==='all'?tot:0;s.fl=Math.max(0,Math.min(tot,s.fl));draw()}};
+ let drag=null;
+ svg.onpointerdown=e=>{if(!e.isPrimary||e.button!==0)return;const t=e.target.closest('[data-act]');if(!t)return;e.preventDefault();e.stopPropagation();select(w);drag={id:e.pointerId,m:t.dataset.act,mv:false,x:e.clientX,y:e.clientY};try{svg.setPointerCapture(e.pointerId)}catch(_){}};
+ svg.onpointermove=e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();if(drag.m==='tap'){if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.mv=true;return}
+  const pt=manipPt(svg,e),cl=v=>Math.max(1,Math.min(10,Math.round(v))),[a]=dims(),m=drag.m;let key=m==='ha'?'a':m==='hb'?'b':'c',v=m==='ha'?cl((pt.x-X0)/k):m==='hc'?cl((Y0-pt.y)/k):cl(((pt.x-(X0+a*k))*dx+(pt.y-Y0)*dy)/(dx*dx+dy*dy));
+  if(s.so==='cube')key='a';if(s.v[key]!==v){s.v[key]=v;clampF();draw()}};
+ const end=e=>{if(!drag||drag.id!==e.pointerId)return;const d=drag;drag=null;try{svg.releasePointerCapture(e.pointerId)}catch(_){}if(d.m==='tap'&&!d.mv){const q=dims();s.fl=Math.min(q[0]*q[1]*q[2],s.fl+1);draw()}};
+ svg.onpointerup=end;svg.onpointercancel=end;
+ render();
+}
+
+/* ---------- BASAMAK ATÖLYESİ: abaküs + basamak tablosu ---------- */
+function setupPlace(w){
+ const{T,line,frame}=TK,s=w.state,BW=790,BH=470,NM=['Yüz binler','On binler','Binler','Yüzler','Onlar','Birler'],COL=['#7c3aed','#2563eb','#0891b2','#16a34a','#f59e0b','#ef4444'];
+ s.n=Number.isFinite(s.n)?Math.max(0,Math.min(999999,Math.floor(s.n))):4305;s.tab=['tbl','val'].includes(s.tab)?s.tab:'aba';s.m=Number.isFinite(s.m)?Math.max(0,Math.min(999999999,Math.floor(s.m))):234567890;s.sel=Number.isInteger(s.sel)&&s.sel>=0&&s.sel<9?s.sel:null;s.msg=s.msg||'';
+ const B=manipBase(w,'<button class="sh-tab" data-t="aba">Abaküs</button><button class="sh-tab" data-t="tbl">Basamak tablosu</button><button class="sh-tab" data-t="val">Basamak &amp; sayı değeri</button><span class="sep"></span><input type="number" class="pv-in" min="0" max="999999999" style="width:110px" placeholder="Sayı yaz"><button class="pv-set">Göster</button><button class="pv-clr">Sıfırla</button>');
+ const svg=B.svg,g=B.g;svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';w.style.left='24px';w.style.top='64px';
+ const pv=i=>Math.pow(10,5-i),dg=i=>Math.floor(s.n/pv(i))%10,cx=i=>70+i*110+(i>=3?30:0)+50,
+ b1=['','bir','iki','üç','dört','beş','altı','yedi','sekiz','dokuz'],b10=['','on','yirmi','otuz','kırk','elli','altmış','yetmiş','seksen','doksan'],
+ r3=n=>{const y=Math.floor(n/100),o=Math.floor(n/10)%10,u=n%10;return[y>1?b1[y]:'',y?'yüz':'',b10[o],b1[u]].filter(Boolean).join(' ')},
+ words=n=>{if(!n)return'sıfır';const M=Math.floor(n/1e6),t=Math.floor(n/1000)%1000,r=n%1000;return[M?r3(M)+' milyon':'',t?(t===1?'':r3(t)+' ')+'bin':'',r?r3(r):''].filter(Boolean).join(' ')};
+
+ const pv9=i=>Math.pow(10,8-i),dg9=i=>Math.floor(s.m/pv9(i))%10,TR=x=>x.toLocaleString('tr-TR'),PN=['Yüz milyonlar','On milyonlar','Milyonlar','Yüz binler','On binler','Binler','Yüzler','Onlar','Birler'],BK=[['MİLYONLAR BÖLÜĞÜ','#7c3aed'],['BİNLER BÖLÜĞÜ','#2563eb'],['BİRLER BÖLÜĞÜ','#ef4444']];
+ function drawVal(){
+  const len=String(s.m).length,XC=i=>130+i*72;let h=frame(BW,BH)+T(30,40,'Sayı: '+TR(s.m),28,'#1e293b',700)+T(BW-30,40,s.msg,14,'#b45309',700,'end');
+  BK.forEach((b,j)=>{h+=`<rect x="${130+j*216}" y="56" width="216" height="28" fill="${b[1]}" stroke="#fff" stroke-width="2" pointer-events="none"/>`+T(130+j*216+108,75,b[0],13,'#fff',700,'middle')});
+  const R=[[88,26],[116,28],[146,60],[208,28],[240,56]];
+  for(let i=0;i<9;i++){const X=XC(i),C=BK[Math.floor(i/3)][1],on=i>=9-len,d=dg9(i),se=s.sel===i;
+   R.forEach(r=>{h+=`<rect x="${X}" y="${r[0]}" width="72" height="${r[1]}" fill="${se?'#fef9c3':'#fff'}" stroke="#94a3b8" stroke-width="1" pointer-events="none"/>`});
+   h+=T(X+36,106,['Yüzler','Onlar','Birler'][i%3],13,C,700,'middle')+`<path data-act="vu" data-i="${i}" d="M${X+22} 138L${X+36} 122L${X+50} 138Z" fill="${C}" style="cursor:pointer"/><rect data-act="vu" data-i="${i}" x="${X}" y="116" width="72" height="28" fill="transparent" style="cursor:pointer"/>`
+    +`<rect data-act="vs" data-i="${i}" x="${X}" y="146" width="72" height="60" fill="transparent" style="cursor:pointer"/>`+T(X+36,190,on?d:'·',34,on?C:'#cbd5e1',700,'middle')
+    +`<path data-act="vd" data-i="${i}" d="M${X+22} 216L${X+36} 232L${X+50} 216Z" fill="${C}" style="cursor:pointer"/><rect data-act="vd" data-i="${i}" x="${X}" y="208" width="72" height="28" fill="transparent" style="cursor:pointer"/>`
+    +`<rect data-act="vs" data-i="${i}" x="${X}" y="240" width="72" height="56" fill="transparent" style="cursor:pointer"/>`+T(X+36,273,on?TR(d*pv9(i)):'',12,on&&d?C:'#94a3b8',700,'middle')}
+  h+=T(122,106,'Basamak',14,'#475569',700,'end')+T(122,170,'Rakam',14,'#475569',700,'end')+T(122,187,'(sayı değeri)',12,'#475569',600,'end')+T(122,265,'Basamak',14,'#475569',700,'end')+T(122,282,'değeri',14,'#475569',700,'end');
+  const e=s.sel;if(e===null)h+=T(30,330,'Bir sütuna dokun: rakamın sayı değerini ve basamak değerini gör. ▲▼ ile rakamı değiştir.',14.5,'#475569',600);
+  else{const d=dg9(e);h+=T(30,328,`Seçilen rakam: ${d}  →  ${PN[e]} basamağı (${BK[Math.floor(e/3)][0].split(' ')[0].toLowerCase()} bölüğü)`,15,'#1e293b',700)+T(30,354,`Sayı değeri = ${d}  (rakamın kendisi)`,16,'#1d4ed8',700)+T(30,380,`Basamak değeri = ${d} × ${TR(pv9(e))} = ${TR(d*pv9(e))}`,16,'#b45309',700)}
+  const pr=[];for(let i=0;i<9;i++)if(dg9(i))pr.push(TR(dg9(i)*pv9(i)));
+  h+=T(30,418,`Bölüklere göre: ${Math.floor(s.m/1e6)} milyon | ${Math.floor(s.m/1000)%1000} bin | ${s.m%1000}`,13.5,'#475569',600)+T(30,442,'Okunuşu: '+words(s.m),15,'#1e293b',700)+T(30,462,'Çözümleme: '+(pr.join(' + ')||'0'),13,'#475569',600);
+  g.innerHTML=h;B.bar.querySelectorAll('[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===s.tab));
+ }
+ function valAct(a,i){s.msg='';const o=dg9(i);
+  if(a==='vu'){s.sel=i;if(s.m+pv9(i)<=999999999){s.m+=pv9(i);if(o===9&&i>0)s.msg='9 + 1 = 10 → bir üst basamağa geçti (takas)'}}
+  else if(a==='vd'){s.sel=i;if(s.m-pv9(i)>=0){s.m-=pv9(i);if(o===0)s.msg='Üst basamaktan 1 bozuldu → bu basamağa 10 olarak geldi'}}
+  else s.sel=s.sel===i?null:i;
+  drawVal()}
+ function draw(){
+  if(s.tab==='val')return drawVal();
+  let h=frame(BW,BH)+T(30,40,'Sayı: '+s.n.toLocaleString('tr-TR'),28,'#1e293b',700)+T(BW-30,40,s.msg,14,'#b45309',700,'end');
+  h+=T(cx(1),66,'BİNLER SINIFI',13,'#64748b',700,'middle')+T(cx(4),66,'BİRLER SINIFI',13,'#64748b',700,'middle')+line([cx(2)+65,72],[cx(2)+65,410],'#cbd5e1',2,'6 5');
+  for(let i=0;i<6;i++){const X=cx(i),d=dg(i),C=COL[i];
+   h+=T(X,90,NM[i],14,C,700,'middle')+`<path data-act="u" data-i="${i}" d="M${X-16} 118L${X} 100L${X+16} 118Z" fill="${C}" style="cursor:pointer"/><rect data-act="u" data-i="${i}" x="${X-22}" y="98" width="44" height="26" fill="transparent" style="cursor:pointer"/>`;
+   if(s.tab==='aba'){h+=line([X,130],[X,350],'#92400e',5)+`<rect x="${X-48}" y="124" width="96" height="8" rx="4" fill="#92400e" pointer-events="none"/><rect x="${X-48}" y="348" width="96" height="8" rx="4" fill="#92400e" pointer-events="none"/>`;
+    for(let j=0;j<9;j++){const y=j<d?336-j*24:150+(8-j)*24;h+=`<ellipse data-act="bead" data-i="${i}" data-k="${j+1}" cx="${X}" cy="${y}" rx="22" ry="11" fill="${j<d?C:'#e2e8f0'}" stroke="#334155" stroke-width="1.5" style="cursor:pointer"/>`}}
+   else{h+=`<rect x="${X-48}" y="130" width="96" height="226" rx="8" fill="${C}" fill-opacity=".1" stroke="${C}" stroke-width="2" pointer-events="none"/>`;for(let j=0;j<d;j++)h+=`<circle cx="${X-26+(j%3)*26}" cy="${165+Math.floor(j/3)*52}" r="11" fill="${C}" stroke="#fff" stroke-width="2" pointer-events="none"/>`}
+   h+=T(X,392,d,30,C,700,'middle')+`<path data-act="d" data-i="${i}" d="M${X-16} 402L${X} 420L${X+16} 402Z" fill="${C}" style="cursor:pointer;opacity:.85"/><rect data-act="d" data-i="${i}" x="${X-22}" y="398" width="44" height="26" fill="transparent" style="cursor:pointer"/>`}
+  const parts=[];for(let i=0;i<6;i++)if(dg(i))parts.push((dg(i)*pv(i)).toLocaleString('tr-TR'));
+  h+=T(30,448,'Okunuşu: '+words(s.n),16,'#1e293b',700)+T(30,466,'Çözümleme: '+(parts.join(' + ')||'0'),13.5,'#475569',600);
+  g.innerHTML=h;B.bar.querySelectorAll('[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===s.tab));
+ }
+ svg.onpointerdown=e=>{if(!e.isPrimary||e.button!==0)return;const t=e.target.closest('[data-act]');if(!t)return;e.preventDefault();e.stopPropagation();select(w);const i=+t.dataset.i,a=t.dataset.act,o=dg(i);s.msg='';
+  if(s.tab==='val'){valAct(a,i);return}
+  if(a==='u'){if(s.n+pv(i)<=999999){s.n+=pv(i);if(o===9&&i>0)s.msg='9 + 1 = 10 → '+NM[i]+' doldu, bir üst basamağa geçti (takas)'}}
+  else if(a==='d'){if(s.n-pv(i)>=0){s.n-=pv(i);if(o===0)s.msg='Üst basamaktan 1 bozuldu → bu basamağa 10 olarak geldi'}}
+  else{const nw=o===+t.dataset.k?o-1:+t.dataset.k;s.n+=(nw-o)*pv(i)}
+  draw()};
+ B.bar.onclick=e=>{const b=e.target.closest('button');if(!b)return;const K=s.tab==='val'?'m':'n',MX=s.tab==='val'?999999999:999999;if(b.dataset.t){s.tab=b.dataset.t}else if(b.classList.contains('pv-set')){const v=Math.floor(+B.q('.pv-in').value);if(Number.isFinite(v)&&v>=0&&v<=MX){s[K]=v;s.msg=''}}else if(b.classList.contains('pv-clr')){s[K]=0;s.msg=''}draw()};
+ draw();
 }
 </script>
 <script>
