@@ -704,7 +704,7 @@ header .actions #backgroundSelect{background-color:white!important;color:#172233
 .extended-number-line>.body{padding:0;border:0;width:100%;height:320px;background:transparent}.extended-number-line .art{width:100%;height:320px;overflow:visible}.extended-number-line .art svg{width:100%;height:320px;max-width:none}.nl-range-grip{position:absolute;top:120px;width:40px;height:40px;min-width:40px;min-height:40px;border:0;padding:0;margin:0;background:transparent;box-shadow:none;border-radius:50%;cursor:ew-resize;touch-action:none;z-index:4}.nl-range-left{left:-4px}.nl-range-right{right:-4px}.nl-range-grip:hover{background:#2563eb12}.nl-range-grip:focus-visible{outline:1px dashed #64748b;outline-offset:-4px}#toolSettings input.nl-size{width:150px;max-width:180px;min-width:100px}.nl-size-value{min-width:42px;text-align:right;font-size:12px}
 .geometry-instrument .art{width:100%;height:100%;position:relative;overflow:visible;touch-action:none}.geometry-instrument .art svg{display:block;width:100%;height:100%;overflow:visible}.geometry-instrument [data-geo="move"]{cursor:grab}.geometry-instrument [data-geo="transform"],.geometry-instrument [data-geo="compass-transform"]{cursor:grab}.geometry-instrument [data-geo="draw"]{cursor:crosshair}.ruler-instrument [data-act="move"]{cursor:grab}.ruler-instrument [data-act="edge"]{cursor:crosshair}.ruler-instrument [data-act^="dot"]:hover circle:last-child{stroke:white;stroke-width:1}.geometry-instrument [data-geo="edge-h"],.geometry-instrument [data-geo="edge-v"]{cursor:crosshair}.geometry-instrument .geo-point:hover .geo-dot{stroke:white;stroke-width:.5}
 .manip-board .art{overflow:visible}.manip-board .art svg{display:block;width:100%;height:auto;overflow:visible}.manip-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 2px 0}.manip-bar button,.manip-bar select{min-height:32px;padding:4px 10px;font-size:13px;border-radius:8px}.manip-bar button.on{background:var(--primary-soft);border-color:var(--primary);color:#4c3fc0}.manip-bar .sep{width:1px;height:22px;background:var(--border)}.manip-bar .gb-col{width:26px;min-width:26px;height:26px;min-height:26px;padding:0;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #94a3b8}.manip-bar .gb-col.on{box-shadow:0 0 0 2px #1e293b}.manip-hint{font-size:12px;color:#52657e;flex:1 1 180px}
-.widget.manip-board{overflow:visible;min-width:0}.widget.manip-board>.body{background:transparent;border:0;padding:0}
+.widget.manip-board{overflow:visible;min-width:0}.widget.manip-board>.body{background:transparent;border:0;padding:0}.widget.mb-sized{width:var(--mw)!important}.mb-grip{position:absolute;right:-14px;bottom:-14px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid #cbd5e1;box-shadow:0 2px 8px rgba(15,23,42,.22);display:flex;align-items:center;justify-content:center;cursor:nwse-resize;touch-action:none;z-index:40;opacity:.92}.mb-grip:hover,.mb-grip:active{opacity:1;border-color:#2563eb}.mb-grip svg{pointer-events:none}
 .manip-bar .sh-tab{font-weight:600}.manip-bar .s3-range{width:210px;min-height:0;padding:0;accent-color:var(--primary,#6d5ef5)}.manip-bar .s3-lab{font-size:13px;font-weight:600;color:#334155}.manip-bar .s3-pct{min-width:38px;font-size:13px;color:#334155}.manip-bar select{max-width:230px}
 
 /* --- düzeltmeler --- */
@@ -1408,6 +1408,12 @@ function manipBase(w,html){
   if(!window.__restoring)document.querySelector('#penToggle')?.click();
   const ns='http://www.w3.org/2000/svg',art=w.querySelector('.art'),ctrl=w.querySelector('.controls');
   w.classList.add('manip-board');ctrl.innerHTML='';art.innerHTML='';
+  if(w.state&&w.state.mw){w.classList.add('mb-sized');w.style.setProperty('--mw',w.state.mw+'px')}
+  if(!w.querySelector(':scope>.mb-grip')){const gr=document.createElement('div');gr.className='mb-grip';gr.title='Büyüt / küçült';gr.setAttribute('aria-label','Büyüt / küçült');
+    gr.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#334155" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>';w.append(gr);
+    gr.onpointerdown=e=>{if(e.button!==0)return;e.preventDefault();e.stopPropagation();const r=w.getBoundingClientRect(),W0=r.width,H0=r.height||1,x0=e.clientX,y0=e.clientY,cap=Math.max(300,(typeof stage!=='undefined'?stage.clientWidth-w.offsetLeft-8:2400));try{gr.setPointerCapture(e.pointerId)}catch(_){}
+      gr.onpointermove=ev=>{ev.preventDefault();const W=Math.round(Math.max(300,Math.min(cap,W0+((ev.clientX-x0)+(ev.clientY-y0)*W0/H0)/2)));w.classList.add('mb-sized');w.style.setProperty('--mw',W+'px');if(w.state)w.state.mw=W};
+      gr.onpointerup=gr.onpointercancel=ev=>{gr.onpointermove=null;try{gr.releasePointerCapture(ev.pointerId)}catch(_){}}}}
   const svg=document.createElementNS(ns,'svg');svg.style.touchAction='none';svg.style.overflow='visible';
   const g=document.createElementNS(ns,'g'),pv=document.createElementNS(ns,'g');pv.setAttribute('pointer-events','none');svg.append(g,pv);art.append(svg);
   const bar=document.createElement('div');bar.className='manip-bar';bar.innerHTML=html;art.append(bar);
@@ -2472,7 +2478,7 @@ function setupCubes(w){
   s.N=[4,5,6,8].includes(s.N)?s.N:5;
   s.h=Array.isArray(s.h)&&s.h.length===s.N*s.N?s.h.map(v=>Math.max(0,Math.min(s.N,v|0))):Array(s.N*s.N).fill(0);
   s.mode=s.mode==='del'?'del':'add';s.yaw=Number.isFinite(s.yaw)?s.yaw:-35;s.pitch=Number.isFinite(s.pitch)?s.pitch:30;
-  w.style.left='24px';w.style.top='64px';
+  if(!s.placed){w.style.left='24px';w.style.top='64px';s.placed=1}
   const BW=830,ISO_W=450,B=manipBase(w,'<button class="cu-add">＋ Küp ekle</button><button class="cu-del">✕ Küp sil</button><span class="sep"></span><button class="cu-rl" title="Yapıyı 90° sola çevir">↶ 90°</button><button class="cu-rr" title="Yapıyı 90° sağa çevir">90° ↷</button><button class="cu-reset">Bakışı sıfırla</button><span class="sep"></span><button class="cu-undo">Geri al</button><button class="cu-clear">Temizle</button><span class="sep"></span><select class="cu-n" title="Zemin boyutu"><option value="4">Zemin 4×4</option><option value="5">Zemin 5×5</option><option value="6">Zemin 6×6</option><option value="8">Zemin 8×8</option></select><select class="cu-ex" title="Hazır yapı"><option value="">Hazır yapı…</option><option value="stairs">Merdiven</option><option value="pyramid">Piramit</option><option value="ell">L yapı</option><option value="tower">Basamaklı kule</option></select><span class="cu-read manip-hint"></span>');
   const svg=B.svg,g=B.g;w.style.width=BW+'px';
   let hist=[],flash='';
@@ -2551,7 +2557,7 @@ function setupAngles(w){
   for(const[k,v]of[['a',50],['c',35],['d',65],['th',65],['pair',0]])s[k]=Number.isFinite(s[k])?s[k]:v;
   s.hint=s.hint!==false;
   const BW=760,BH=470,RNG={type:['a',0,180,1,'Açı'],comp:['c',10,80,5,'Açı'],supp:['d',10,170,5,'Açı'],corr:['th',50,130,5,'Kesen'],alt:['th',50,130,5,'Kesen'],ext:['th',50,130,5,'Kesen'],vert:['th',50,130,5,'Kesen']};
-  w.style.left='24px';w.style.top='64px';
+  if(!s.placed){w.style.left='24px';w.style.top='64px';s.placed=1}
   const B=manipBase(w,TABS.map(t=>'<button class="sh-tab an-tab" data-t="'+t[0]+'">'+t[1]+'</button>').join('')+'<span class="sep"></span><label class="s3-lab">'+'<span class="an-rl">Açı</span> <input type="range" class="s3-range an-range" style="width:150px"> <b class="an-val"></b></label><button class="an-next">Başka açı</button><button class="an-reset">Parçaları sıfırla</button><button class="an-hint">İpucu</button>');
   const svg=B.svg,g=B.g;svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';
   const RAD=Math.PI/180,norm=a=>((a%360)+360)%360,ad=(a,b)=>{const d=Math.abs(norm(a)-norm(b));return Math.min(d,360-d)},f1=n=>+n.toFixed(1);
@@ -2676,7 +2682,7 @@ function setupTriAngles(w){
  s.P=Array.isArray(s.P)&&s.P.length===3?s.P:TRI_PRE[0][1].map(p=>p.slice());
  s.ord=Array.isArray(s.ord)?s.ord:[];s.dir=s.dir||1;s.torn=!!s.torn&&Array.isArray(s.pc);
  const B=manipBase(w,'<button class="tri-tear">✂ Açıları kopar</button><button class="tri-back">↺ Yerine koy</button><span class="sep"></span><select class="tri-pre"><option value="">Üçgen seç…</option>'+TRI_PRE.map((p,i)=>'<option value="'+i+'">'+p[0]+'</option>').join('')+'</select><button class="tri-rnd">🎲 Rastgele</button><span class="manip-hint"></span>');
- const svg=B.svg,g=B.g;svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';w.style.left='24px';w.style.top='64px';
+ const svg=B.svg,g=B.g;svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';if(!s.placed){w.style.left='24px';w.style.top='64px';s.placed=1}
  const byId=i=>s.pc.find(p=>p.id===i),sum=()=>s.ord.reduce((a,k)=>a+byId(k).m,0),start=p=>s.dir>0?sum():180-sum()-p.m;
  const relay=()=>{let a=s.dir>0?0:180;for(const k of s.ord){const p=byId(k);if(s.dir<0)a-=p.m;p.x=O[0];p.y=O[1];p.rot=a;p.slot=true;if(s.dir>0)a+=p.m}};
  const home=()=>{s.torn=false;s.pc=null;s.ord=[];s.dir=1};
@@ -2722,7 +2728,7 @@ function setupTriLab(w){
  for(const[k,v]of[['la',3],['lb',4],['lc',5],['b',6],['h',4],['o',2],['p',3],['q',4]])s[k]=Number.isFinite(s[k])?s[k]:v;
  s.sh=s.sh||{h:0,m:0,b:0,d:0};s.dup=!!s.dup;
  const B=manipBase(w,TABS.map(t=>'<button class="sh-tab" data-t="'+t[0]+'">'+t[1]+'</button>').join('')+'<div class="tl-ctl" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%"></div>');
- const svg=B.svg,g=B.g,ctl=B.q('.tl-ctl');svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';w.style.left='24px';w.style.top='64px';
+ const svg=B.svg,g=B.g,ctl=B.q('.tl-ctl');svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';if(!s.placed){w.style.left='24px';w.style.top='64px';s.placed=1}
  const sl=(k,l,a,b)=>`<label class="s3-lab">${l} <input type="range" class="s3-range" style="width:130px" data-k="${k}" min="${a}" max="${b}" step="1" value="${s[k]}"> <b data-v="${k}"></b></label>`;
  const pre='<select data-pre><option value="">Üçgen seç…</option>'+TRI_PRE.map((p,i)=>'<option value="'+i+'">'+p[0]+'</option>').join('')+'</select><span class="manip-hint">Köşelerden tutup sürükle.</span>';
  const CTL={kind:()=>pre,ext:()=>pre,ineq:()=>sl('la','a',1,10)+sl('lb','b',1,10)+sl('lc','c',1,10),
@@ -2808,7 +2814,7 @@ function setupQuads(w){
  s.sp=SH.some(x=>x[0]===s.sp)?s.sp:'par';s.q=Object.assign({a:5,b:3,t:60,c:3,h:4,o:1},s.q||{});s.dg=s.dg||0;
  s.G=Array.isArray(s.G)&&s.G.length===4?s.G:[[120,390],[420,390],[380,220],[170,160]];
  const B=manipBase(w,SH.map(x=>'<button class="sh-tab" data-sp="'+x[0]+'">'+x[1]+'</button>').join('')+'<div class="qd-ctl" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%"></div>');
- const svg=B.svg,g=B.g,ctl=B.q('.qd-ctl');svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';w.style.left='24px';w.style.top='64px';
+ const svg=B.svg,g=B.g,ctl=B.q('.qd-ctl');svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';if(!s.placed){w.style.left='24px';w.style.top='64px';s.placed=1}
  const pts=()=>{const{a,b,t,c,h,o}=s.q,X=90,Y=400,c0=Math.cos(t*RAD),s0=Math.sin(t*RAD),P=(x,y)=>[X+x*k,Y-y*k];
   switch(s.sp){case'kare':return[P(0,0),P(a,0),P(a,a),P(0,a)];case'dik':return[P(0,0),P(a,0),P(a,b),P(0,b)];case'par':return[P(0,0),P(a,0),P(a+b*c0,b*s0),P(b*c0,b*s0)];case'esk':return[P(0,0),P(a,0),P(a+a*c0,a*s0),P(a*c0,a*s0)];case'yam':return[P(0,0),P(a,0),P(o+c,h),P(o,h)];case'del':{const Z=[230,270];return[[Z[0],Z[1]-b*k],[Z[0]+a*k,Z[1]],[Z[0],Z[1]+c*k],[Z[0]-a*k,Z[1]]]}default:return s.G}};
  const PR={kare:'4 kenarı eşit, 4 açısı dik; köşegenleri eşit ve birbirini dik ortalar.',dik:'Karşılıklı kenarlar eşit ve paralel, 4 açı dik; köşegenler eşit.',par:'Karşılıklı kenarlar eşit ve paralel; karşılıklı açılar eşit; köşegenler birbirini ortalar.',esk:'4 kenarı eşit; karşılıklı açılar eşit; köşegenler birbirini dik ortalar.',yam:'Yalnız bir çift kenarı paralel (tabanlar).',del:'İki çift komşu kenarı eşit; bir köşegen diğerini dik ortalar.',gen:'Köşelerden tutup sürükle. İç açıları toplamı her zaman 360°.'};
@@ -2845,7 +2851,7 @@ function setupSolids(w){
  SO=[['cube','Küp',[['a','Kenar',1,10]]],['prism','Dikdörtgenler prizması',[['a','En',1,10],['b','Boy',1,10],['c','Yükseklik',1,10]]],['cyl','Silindir',[['r','Yarıçap',1,6],['c','Yükseklik',1,10]]],['cone','Koni',[['r','Yarıçap',1,6],['c','Yükseklik',1,10]]],['sph','Küre',[['r','Yarıçap',1,8]]],['pyr','Kare piramit',[['a','Taban kenarı',1,10],['c','Yükseklik',1,10]]]];
  s.so=SO.some(x=>x[0]===s.so)?s.so:'prism';s.v=Object.assign({a:4,b:3,c:3,r:3},s.v||{});s.fl=Number.isFinite(s.fl)?Math.max(0,s.fl):0;
  const B=manipBase(w,SO.map(x=>'<button class="sh-tab" data-so="'+x[0]+'">'+x[1]+'</button>').join('')+'<div class="so-ctl" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%"></div>');
- const svg=B.svg,g=B.g,ctl=B.q('.so-ctl');svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';w.style.left='24px';w.style.top='64px';
+ const svg=B.svg,g=B.g,ctl=B.q('.so-ctl');svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';if(!s.placed){w.style.left='24px';w.style.top='64px';s.placed=1}
  const gg=x=>f(+x.toFixed(2)),P2=pts=>'M'+pts.map(p=>f1(p[0])+' '+f1(p[1])).join('L')+'Z',face=(pts,fl,op)=>`<path d="${P2(pts)}" fill="${fl}" fill-opacity="${op||1}" stroke="#1e293b" stroke-width="2" stroke-linejoin="round" pointer-events="none"/>`,gl=(a,b)=>line(a,b,'#64748b',1);
  function draw(){
   const v=s.v,{r}=v;let h=frame(BW,BH),L=[],c=v.c,a=v.a,b=v.b;
@@ -2906,7 +2912,7 @@ function setupPlace(w){
  const{T,line,frame}=TK,s=w.state,BW=790,BH=470,NM=['Yüz binler','On binler','Binler','Yüzler','Onlar','Birler'],COL=['#7c3aed','#2563eb','#0891b2','#16a34a','#f59e0b','#ef4444'];
  s.n=Number.isFinite(s.n)?Math.max(0,Math.min(999999,Math.floor(s.n))):4305;s.tab=['tbl','val'].includes(s.tab)?s.tab:'aba';s.m=Number.isFinite(s.m)?Math.max(0,Math.min(999999999,Math.floor(s.m))):234567890;s.sel=Number.isInteger(s.sel)&&s.sel>=0&&s.sel<9?s.sel:null;s.msg=s.msg||'';
  const B=manipBase(w,'<button class="sh-tab" data-t="aba">Abaküs</button><button class="sh-tab" data-t="tbl">Basamak tablosu</button><button class="sh-tab" data-t="val">Basamak &amp; sayı değeri</button><span class="sep"></span><input type="number" class="pv-in" min="0" max="999999999" style="width:110px" placeholder="Sayı yaz"><button class="pv-set">Göster</button><button class="pv-clr">Sıfırla</button>');
- const svg=B.svg,g=B.g;svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';w.style.left='24px';w.style.top='64px';
+ const svg=B.svg,g=B.g;svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';if(!s.placed){w.style.left='24px';w.style.top='64px';s.placed=1}
  const pv=i=>Math.pow(10,5-i),dg=i=>Math.floor(s.n/pv(i))%10,cx=i=>70+i*110+(i>=3?30:0)+50,
  b1=['','bir','iki','üç','dört','beş','altı','yedi','sekiz','dokuz'],b10=['','on','yirmi','otuz','kırk','elli','altmış','yetmiş','seksen','doksan'],
  r3=n=>{const y=Math.floor(n/100),o=Math.floor(n/10)%10,u=n%10;return[y>1?b1[y]:'',y?'yüz':'',b10[o],b1[u]].filter(Boolean).join(' ')},
