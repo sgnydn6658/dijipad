@@ -1205,7 +1205,7 @@ function setupAbacus(w){
  const s=w.state,art=w.querySelector('.art'),ctrl=w.querySelector('.controls'),note=w.querySelector('.note');s.columns=Math.max(1,Math.min(100,s.columns??s.digits?.length??5));s.zoom=s.zoom??100;s.digits=Array.isArray(s.digits)?s.digits.slice(-s.columns).map(v=>Math.max(0,Math.min(9,Math.round(v)))):[];while(s.digits.length<s.columns)s.digits.unshift(0);
  const top=62,bottom=458,gap=22,gate=248,H=620;let ys=[],drag=null,el=null,beads=[],generation=0,baseScale=null;const colors=[['#d5a65c','#8b5427','#4a2914'],['#ce7059','#933b2b','#502016'],['#6b9ec5','#315a82','#17344f'],['#9bb67a','#53713b','#2d4120'],['#b59acb','#70518b','#38274a']];
  function packed(d){return Array.from({length:9},(_,i)=>i<9-d?top+i*gap:bottom-(8-i)*gap)}
- function label(e){return ['Birler','Onlar','Yüzler','Binler','On binler','Yüz binler','Milyonlar','On milyonlar','Yüz milyonlar','Milyarlar','On milyarlar','Yüz milyarlar','Trilyonlar'][e]||'10^'+e}
+ function label(e){return ['Birler','Onlar','Yüzler','Binler','On Binler','Yüz Binler','Milyonlar','On Milyonlar','Yüz Milyonlar','Milyarlar','On Milyarlar','Yüz Milyarlar','Trilyonlar'][e]||'10^'+e}
  function fit(rebase=false){if(!el)return;const W=s.columns*105+65,availableW=Math.max(50,stage.clientWidth-18),availableH=Math.max(80,stage.clientHeight-24),maxScale=Math.min(availableW/W,availableH/H);if(baseScale===null||rebase)baseScale=Math.min(400/W,340/H,maxScale);const maxPct=Math.max(40,Math.min(200,Math.floor(maxScale/baseScale*100)));s.zoom=Math.max(40,Math.min(maxPct,s.zoom));const k=baseScale*s.zoom/100;w.style.width=W*k+'px';w.style.height='auto';w.style.left=Math.max(0,Math.min(w.offsetLeft,stage.clientWidth-W*k-4))+'px';w.style.top=Math.max(0,Math.min(w.offsetTop,stage.clientHeight-H*k-4))+'px';ctrl.querySelector('.ab-size').max=maxPct;ctrl.querySelector('.ab-size').value=s.zoom;ctrl.querySelector('.ab-size-value').value=s.zoom+'%'}
  function update(){for(let j=0;j<s.columns;j++){ys[j].forEach((y,i)=>beads[j][i].setAttribute('transform',`translate(0 ${y})`));el.querySelector(`[data-digit="${j}"]`).textContent=s.digits[j]}s.total=BigInt(s.digits.join('')||'0').toString();el.querySelector('[data-total]').textContent='Sayı: '+BigInt(s.total).toLocaleString('tr-TR')}
  function snap(){ys=s.digits.map(packed);update()}
@@ -2911,59 +2911,57 @@ function setupSolids(w){
 
 /* ---------- BASAMAK ATÖLYESİ: abaküs + basamak tablosu ---------- */
 function setupPlace(w){
- const{T,line,frame}=TK,s=w.state,BW=790,BH=470,NM=['Yüz binler','On binler','Binler','Yüzler','Onlar','Birler'],COL=['#7c3aed','#2563eb','#0891b2','#16a34a','#f59e0b','#ef4444'];
- s.n=Number.isFinite(s.n)?Math.max(0,Math.min(999999,Math.floor(s.n))):4305;s.tab=['tbl','val'].includes(s.tab)?s.tab:'aba';s.m=Number.isFinite(s.m)?Math.max(0,Math.min(999999999,Math.floor(s.m))):234567890;s.sel=Number.isInteger(s.sel)&&s.sel>=0&&s.sel<9?s.sel:null;s.msg=s.msg||'';
- const B=manipBase(w,'<button class="sh-tab" data-t="aba">Abaküs</button><button class="sh-tab" data-t="tbl">Basamak tablosu</button><button class="sh-tab" data-t="val">Basamak &amp; sayı değeri</button><span class="sep"></span><input type="number" class="pv-in" min="0" max="999999999" style="width:110px" placeholder="Sayı yaz"><button class="pv-set">Göster</button><button class="pv-clr">Sıfırla</button>');
- const svg=B.svg,g=B.g;svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';if(!s.placed){w.style.left='24px';w.style.top='64px';s.placed=1}
- const pv=i=>Math.pow(10,5-i),dg=i=>Math.floor(s.n/pv(i))%10,cx=i=>70+i*110+(i>=3?30:0)+50,
- b1=['','bir','iki','üç','dört','beş','altı','yedi','sekiz','dokuz'],b10=['','on','yirmi','otuz','kırk','elli','altmış','yetmiş','seksen','doksan'],
- r3=n=>{const y=Math.floor(n/100),o=Math.floor(n/10)%10,u=n%10;return[y>1?b1[y]:'',y?'yüz':'',b10[o],b1[u]].filter(Boolean).join(' ')},
- words=n=>{if(!n)return'sıfır';const M=Math.floor(n/1e6),t=Math.floor(n/1000)%1000,r=n%1000;return[M?r3(M)+' milyon':'',t?(t===1?'':r3(t)+' ')+'bin':'',r?r3(r):''].filter(Boolean).join(' ')};
-
- const pv9=i=>Math.pow(10,8-i),dg9=i=>Math.floor(s.m/pv9(i))%10,TR=x=>x.toLocaleString('tr-TR'),PN=['Yüz milyonlar','On milyonlar','Milyonlar','Yüz binler','On binler','Binler','Yüzler','Onlar','Birler'],BK=[['MİLYONLAR BÖLÜĞÜ','#7c3aed'],['BİNLER BÖLÜĞÜ','#2563eb'],['BİRLER BÖLÜĞÜ','#ef4444']];
- function drawVal(){
-  const len=String(s.m).length,XC=i=>130+i*72;let h=frame(BW,BH)+T(30,40,'Sayı: '+TR(s.m),28,'#1e293b',700)+T(BW-30,40,s.msg,14,'#b45309',700,'end');
-  BK.forEach((b,j)=>{h+=`<rect x="${130+j*216}" y="56" width="216" height="28" fill="${b[1]}" stroke="#fff" stroke-width="2" pointer-events="none"/>`+T(130+j*216+108,75,b[0],13,'#fff',700,'middle')});
-  const R=[[88,26],[116,28],[146,60],[208,28],[240,56]];
-  for(let i=0;i<9;i++){const X=XC(i),C=BK[Math.floor(i/3)][1],on=i>=9-len,d=dg9(i),se=s.sel===i;
-   R.forEach(r=>{h+=`<rect x="${X}" y="${r[0]}" width="72" height="${r[1]}" fill="${se?'#fef9c3':'#fff'}" stroke="#94a3b8" stroke-width="1" pointer-events="none"/>`});
-   h+=T(X+36,106,['Yüzler','Onlar','Birler'][i%3],13,C,700,'middle')+`<path data-act="vu" data-i="${i}" d="M${X+22} 138L${X+36} 122L${X+50} 138Z" fill="${C}" style="cursor:pointer"/><rect data-act="vu" data-i="${i}" x="${X}" y="116" width="72" height="28" fill="transparent" style="cursor:pointer"/>`
-    +`<rect data-act="vs" data-i="${i}" x="${X}" y="146" width="72" height="60" fill="transparent" style="cursor:pointer"/>`+T(X+36,190,on?d:'·',34,on?C:'#cbd5e1',700,'middle')
-    +`<path data-act="vd" data-i="${i}" d="M${X+22} 216L${X+36} 232L${X+50} 216Z" fill="${C}" style="cursor:pointer"/><rect data-act="vd" data-i="${i}" x="${X}" y="208" width="72" height="28" fill="transparent" style="cursor:pointer"/>`
-    +`<rect data-act="vs" data-i="${i}" x="${X}" y="240" width="72" height="56" fill="transparent" style="cursor:pointer"/>`+T(X+36,273,on?TR(d*pv9(i)):'',12,on&&d?C:'#94a3b8',700,'middle')}
-  h+=T(122,106,'Basamak',14,'#475569',700,'end')+T(122,170,'Rakam',14,'#475569',700,'end')+T(122,187,'(sayı değeri)',12,'#475569',600,'end')+T(122,265,'Basamak',14,'#475569',700,'end')+T(122,282,'değeri',14,'#475569',700,'end');
+ const{T,line,frame}=TK,s=w.state,BH=470,BW0=790;let BW=BW0;
+ const DN=['Birler','Onlar','Yüzler','Binler','On Binler','Yüz Binler','Milyonlar','On Milyonlar','Yüz Milyonlar','Milyarlar','On Milyarlar','Yüz Milyarlar'],
+  BN=['Birler Bölüğü','Binler Bölüğü','Milyonlar Bölüğü','Milyarlar Bölüğü'],BC=['#ef4444','#2563eb','#7c3aed','#0d9488'],
+  DC=['#ef4444','#f59e0b','#16a34a','#2563eb','#0891b2','#7c3aed','#be185d','#ea580c','#65a30d','#0d9488','#4f46e5','#b91c1c'],BS=['','bin','milyon','milyar'];
+ s.k=[3,6,9,12].includes(s.k)?s.k:6;const MX=()=>Math.pow(10,s.k)-1;
+ s.n=Number.isFinite(s.n)?Math.max(0,Math.min(MX(),Math.floor(s.n))):4305;s.tab=['tbl','val'].includes(s.tab)?s.tab:'aba';s.sel=Number.isInteger(s.sel)&&s.sel>=0&&s.sel<12?s.sel:null;s.msg=s.msg||'';
+ const B=manipBase(w,'<button class="sh-tab" data-t="aba">Abaküs</button><button class="sh-tab" data-t="tbl">Basamak tablosu</button><button class="sh-tab" data-t="val">Basamak &amp; sayı değeri</button><span class="sep"></span><select class="pv-k" title="Kaç basamaklı sayı"><option value="3">Birler bölüğü</option><option value="6">Binler bölüğüne kadar</option><option value="9">Milyonlar bölüğüne kadar</option><option value="12">Milyarlar bölüğüne kadar</option></select><input type="number" class="pv-in" min="0" style="width:130px" placeholder="Sayı yaz"><button class="pv-set">Göster</button><button class="pv-clr">Sıfırla</button>');
+ const svg=B.svg,g=B.g;if(!s.placed){w.style.left='24px';w.style.top='64px';s.placed=1}
+ const pv=e=>Math.pow(10,e),dg=e=>Math.floor(s.n/pv(e))%10,TR=x=>x.toLocaleString('tr-TR'),E=i=>s.k-1-i,G=()=>s.k/3,
+  colW=()=>s.k<=6?110:s.k<=9?88:68,GAP=18,cx=i=>60+i*colW()+Math.floor(i/3)*GAP+colW()/2,
+  b1=['','bir','iki','üç','dört','beş','altı','yedi','sekiz','dokuz'],b10=['','on','yirmi','otuz','kırk','elli','altmış','yetmiş','seksen','doksan'],
+  r3=n=>{const y=Math.floor(n/100),o=Math.floor(n/10)%10,u=n%10;return[y>1?b1[y]:'',y?'yüz':'',b10[o],b1[u]].filter(Boolean).join(' ')},
+  words=n=>{if(!n)return'sıfır';const o=[];for(let j=3;j>=1;j--){const q=Math.floor(n/pv(3*j))%1000;if(q)o.push((j===1&&q===1?'':r3(q)+' ')+BS[j])}const r=n%1000;if(r)o.push(r3(r));return o.join(' ')},
+  part=()=>{const a=[];for(let e=0;e<s.k;e++)if(dg(e))a.push(TR(dg(e)*pv(e)));return a.reverse().join(' + ')||'0'},
+  foot=y=>T(30,y,'Okunuşu: '+words(s.n),16,'#1e293b',700)+T(30,y+18,'Çözümleme: '+part(),13.5,'#475569',600);
+ function colsBody(){let h='';const cw=colW(),rw=cw-14,fs=s.k<=6?14:s.k<=9?12:10.5,st=rw/4;
+  for(let j=0;j<G();j++){const gi=G()-1-j,xm=(cx(j*3)+cx(j*3+2))/2;h+=T(xm,66,BN[gi].toLocaleUpperCase('tr-TR'),13,'#64748b',700,'middle');if(j)h+=line([(cx(j*3-1)+cx(j*3))/2,72],[(cx(j*3-1)+cx(j*3))/2,410],'#cbd5e1',2,'6 5')}
+  for(let i=0;i<s.k;i++){const e=E(i),X=cx(i),d=dg(e),C=DC[e],nm=DN[e].split(' ');
+   h+=cw<100&&nm.length>1?T(X,80,nm[0],fs,C,700,'middle')+T(X,94,nm[1],fs,C,700,'middle'):T(X,90,DN[e],fs,C,700,'middle');
+   h+=`<path data-act="u" data-i="${e}" d="M${X-16} 118L${X} 100L${X+16} 118Z" fill="${C}" style="cursor:pointer"/><rect data-act="u" data-i="${e}" x="${X-22}" y="98" width="44" height="26" fill="transparent" style="cursor:pointer"/>`;
+   if(s.tab==='aba'){h+=line([X,130],[X,350],'#92400e',5)+`<rect x="${X-rw/2}" y="124" width="${rw}" height="8" rx="4" fill="#92400e" pointer-events="none"/><rect x="${X-rw/2}" y="348" width="${rw}" height="8" rx="4" fill="#92400e" pointer-events="none"/>`;
+    for(let j=0;j<9;j++){const y=j<d?336-j*24:150+(8-j)*24;h+=`<ellipse data-act="bead" data-i="${e}" data-k="${j+1}" cx="${X}" cy="${y}" rx="${Math.min(22,cw*.2)}" ry="11" fill="${j<d?C:'#e2e8f0'}" stroke="#334155" stroke-width="1.5" style="cursor:pointer"/>`}}
+   else{h+=`<rect x="${X-rw/2}" y="130" width="${rw}" height="226" rx="8" fill="${C}" fill-opacity=".1" stroke="${C}" stroke-width="2" pointer-events="none"/>`;for(let j=0;j<d;j++)h+=`<circle cx="${X-st+(j%3)*st}" cy="${165+Math.floor(j/3)*52}" r="${Math.min(11,st*.42)}" fill="${C}" stroke="#fff" stroke-width="2" pointer-events="none"/>`}
+   h+=T(X,392,d,s.k>9?24:30,C,700,'middle')+`<path data-act="d" data-i="${e}" d="M${X-16} 402L${X} 420L${X+16} 402Z" fill="${C}" style="cursor:pointer;opacity:.85"/><rect data-act="d" data-i="${e}" x="${X-22}" y="398" width="44" height="26" fill="transparent" style="cursor:pointer"/>`}
+  return h+foot(448)}
+ function valBody(){const cw=s.k<=9?72:64,L0=130,len=String(s.n).length,XC=i=>L0+i*cw;let h='';
+  for(let j=0;j<G();j++){const gi=G()-1-j;h+=`<rect x="${L0+j*3*cw}" y="56" width="${3*cw}" height="28" fill="${BC[gi]}" stroke="#fff" stroke-width="2" pointer-events="none"/>`+T(L0+j*3*cw+1.5*cw,75,BN[gi].toLocaleUpperCase('tr-TR'),13,'#fff',700,'middle')}
+  const R=[[86,30],[116,28],[146,60],[208,28],[240,56]],nameT=(m,e,C,cw)=>{const p=DN[e].split(' '),f=cw>=72?11:10;return p.length>1?T(m,98,p[0],f,C,700,'middle')+T(m,111,p[1],f,C,700,'middle'):T(m,106,p[0],cw>=72?13:11,C,700,'middle')};
+  for(let i=0;i<s.k;i++){const e=E(i),X=XC(i),C=BC[Math.floor(e/3)],on=i>=s.k-len,d=dg(e),se=s.sel===e,m=X+cw/2;
+   R.forEach(r=>{h+=`<rect x="${X}" y="${r[0]}" width="${cw}" height="${r[1]}" fill="${se?'#fef9c3':'#fff'}" stroke="#94a3b8" stroke-width="1" pointer-events="none"/>`});
+   h+=nameT(m,e,C,cw)+`<path data-act="vu" data-i="${e}" d="M${m-14} 138L${m} 122L${m+14} 138Z" fill="${C}" style="cursor:pointer"/><rect data-act="vu" data-i="${e}" x="${X}" y="116" width="${cw}" height="28" fill="transparent" style="cursor:pointer"/>`
+    +`<rect data-act="vs" data-i="${e}" x="${X}" y="146" width="${cw}" height="60" fill="transparent" style="cursor:pointer"/>`+T(m,190,on?d:'·',34,on?C:'#cbd5e1',700,'middle')
+    +`<path data-act="vd" data-i="${e}" d="M${m-14} 216L${m} 232L${m+14} 216Z" fill="${C}" style="cursor:pointer"/><rect data-act="vd" data-i="${e}" x="${X}" y="208" width="${cw}" height="28" fill="transparent" style="cursor:pointer"/>`
+    +`<rect data-act="vs" data-i="${e}" x="${X}" y="240" width="${cw}" height="56" fill="transparent" style="cursor:pointer"/>`+T(m,273,on?TR(d*pv(e)):'',s.k>9?10:12,on&&d?C:'#94a3b8',700,'middle')}
+  h+=T(122,106,'Basamak adı',14,'#475569',700,'end')+T(122,170,'Rakam',14,'#475569',700,'end')+T(122,187,'(sayı değeri)',12,'#475569',600,'end')+T(122,265,'Basamak',14,'#475569',700,'end')+T(122,282,'değeri',14,'#475569',700,'end');
   const e=s.sel;if(e===null)h+=T(30,330,'Bir sütuna dokun: rakamın sayı değerini ve basamak değerini gör. ▲▼ ile rakamı değiştir.',14.5,'#475569',600);
-  else{const d=dg9(e);h+=T(30,328,`Seçilen rakam: ${d}  →  ${PN[e]} basamağı (${BK[Math.floor(e/3)][0].split(' ')[0].toLowerCase()} bölüğü)`,15,'#1e293b',700)+T(30,354,`Sayı değeri = ${d}  (rakamın kendisi)`,16,'#1d4ed8',700)+T(30,380,`Basamak değeri = ${d} × ${TR(pv9(e))} = ${TR(d*pv9(e))}`,16,'#b45309',700)}
-  const pr=[];for(let i=0;i<9;i++)if(dg9(i))pr.push(TR(dg9(i)*pv9(i)));
-  h+=T(30,418,`Bölüklere göre: ${Math.floor(s.m/1e6)} milyon | ${Math.floor(s.m/1000)%1000} bin | ${s.m%1000}`,13.5,'#475569',600)+T(30,442,'Okunuşu: '+words(s.m),15,'#1e293b',700)+T(30,462,'Çözümleme: '+(pr.join(' + ')||'0'),13,'#475569',600);
-  g.innerHTML=h;B.bar.querySelectorAll('[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===s.tab));
- }
- function valAct(a,i){s.msg='';const o=dg9(i);
-  if(a==='vu'){s.sel=i;if(s.m+pv9(i)<=999999999){s.m+=pv9(i);if(o===9&&i>0)s.msg='9 + 1 = 10 → bir üst basamağa geçti (takas)'}}
-  else if(a==='vd'){s.sel=i;if(s.m-pv9(i)>=0){s.m-=pv9(i);if(o===0)s.msg='Üst basamaktan 1 bozuldu → bu basamağa 10 olarak geldi'}}
-  else s.sel=s.sel===i?null:i;
-  drawVal()}
- function draw(){
-  if(s.tab==='val')return drawVal();
-  let h=frame(BW,BH)+T(30,40,'Sayı: '+s.n.toLocaleString('tr-TR'),28,'#1e293b',700)+T(BW-30,40,s.msg,14,'#b45309',700,'end');
-  h+=T(cx(1),66,'BİNLER SINIFI',13,'#64748b',700,'middle')+T(cx(4),66,'BİRLER SINIFI',13,'#64748b',700,'middle')+line([cx(2)+65,72],[cx(2)+65,410],'#cbd5e1',2,'6 5');
-  for(let i=0;i<6;i++){const X=cx(i),d=dg(i),C=COL[i];
-   h+=T(X,90,NM[i],14,C,700,'middle')+`<path data-act="u" data-i="${i}" d="M${X-16} 118L${X} 100L${X+16} 118Z" fill="${C}" style="cursor:pointer"/><rect data-act="u" data-i="${i}" x="${X-22}" y="98" width="44" height="26" fill="transparent" style="cursor:pointer"/>`;
-   if(s.tab==='aba'){h+=line([X,130],[X,350],'#92400e',5)+`<rect x="${X-48}" y="124" width="96" height="8" rx="4" fill="#92400e" pointer-events="none"/><rect x="${X-48}" y="348" width="96" height="8" rx="4" fill="#92400e" pointer-events="none"/>`;
-    for(let j=0;j<9;j++){const y=j<d?336-j*24:150+(8-j)*24;h+=`<ellipse data-act="bead" data-i="${i}" data-k="${j+1}" cx="${X}" cy="${y}" rx="22" ry="11" fill="${j<d?C:'#e2e8f0'}" stroke="#334155" stroke-width="1.5" style="cursor:pointer"/>`}}
-   else{h+=`<rect x="${X-48}" y="130" width="96" height="226" rx="8" fill="${C}" fill-opacity=".1" stroke="${C}" stroke-width="2" pointer-events="none"/>`;for(let j=0;j<d;j++)h+=`<circle cx="${X-26+(j%3)*26}" cy="${165+Math.floor(j/3)*52}" r="11" fill="${C}" stroke="#fff" stroke-width="2" pointer-events="none"/>`}
-   h+=T(X,392,d,30,C,700,'middle')+`<path data-act="d" data-i="${i}" d="M${X-16} 402L${X} 420L${X+16} 402Z" fill="${C}" style="cursor:pointer;opacity:.85"/><rect data-act="d" data-i="${i}" x="${X-22}" y="398" width="44" height="26" fill="transparent" style="cursor:pointer"/>`}
-  const parts=[];for(let i=0;i<6;i++)if(dg(i))parts.push((dg(i)*pv(i)).toLocaleString('tr-TR'));
-  h+=T(30,448,'Okunuşu: '+words(s.n),16,'#1e293b',700)+T(30,466,'Çözümleme: '+(parts.join(' + ')||'0'),13.5,'#475569',600);
-  g.innerHTML=h;B.bar.querySelectorAll('[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===s.tab));
- }
- svg.onpointerdown=e=>{if(!e.isPrimary||e.button!==0)return;const t=e.target.closest('[data-act]');if(!t)return;e.preventDefault();e.stopPropagation();select(w);const i=+t.dataset.i,a=t.dataset.act,o=dg(i);s.msg='';
-  if(s.tab==='val'){valAct(a,i);return}
-  if(a==='u'){if(s.n+pv(i)<=999999){s.n+=pv(i);if(o===9&&i>0)s.msg='9 + 1 = 10 → '+NM[i]+' doldu, bir üst basamağa geçti (takas)'}}
-  else if(a==='d'){if(s.n-pv(i)>=0){s.n-=pv(i);if(o===0)s.msg='Üst basamaktan 1 bozuldu → bu basamağa 10 olarak geldi'}}
-  else{const nw=o===+t.dataset.k?o-1:+t.dataset.k;s.n+=(nw-o)*pv(i)}
-  draw()};
- B.bar.onclick=e=>{const b=e.target.closest('button');if(!b)return;const K=s.tab==='val'?'m':'n',MX=s.tab==='val'?999999999:999999;if(b.dataset.t){s.tab=b.dataset.t}else if(b.classList.contains('pv-set')){const v=Math.floor(+B.q('.pv-in').value);if(Number.isFinite(v)&&v>=0&&v<=MX){s[K]=v;s.msg=''}}else if(b.classList.contains('pv-clr')){s[K]=0;s.msg=''}draw()};
+  else{const d=dg(e);h+=T(30,328,`Seçilen rakam: ${d}  →  ${DN[e]} basamağı (${BN[Math.floor(e/3)]})`,15,'#1e293b',700)+T(30,354,`Sayı değeri = ${d}  (rakamın kendisi)`,16,'#1d4ed8',700)+T(30,380,`Basamak değeri = ${d} × ${TR(pv(e))} = ${TR(d*pv(e))}`,16,'#b45309',700)}
+  const bl=[];for(let j=G()-1;j>=0;j--)bl.push(Math.floor(s.n/pv(3*j))%1000+(BS[j]?' '+BS[j]:''));
+  return h+T(30,418,'Bölüklere göre: '+bl.join(' | '),13.5,'#475569',600)+T(30,442,'Okunuşu: '+words(s.n),15,'#1e293b',700)+T(30,462,'Çözümleme: '+part(),13,'#475569',600)}
+ function draw(){BW=s.tab==='val'?Math.max(BW0,160+s.k*(s.k<=9?72:64)):Math.max(BW0,60+s.k*colW()+(G()-1)*GAP+30);svg.setAttribute('viewBox','0 0 '+BW+' '+BH);w.style.width=BW+'px';
+  B.q('.pv-k').value=s.k;B.q('.pv-in').max=MX();
+  g.innerHTML=frame(BW,BH)+T(30,40,'Sayı: '+TR(s.n),28,'#1e293b',700)+T(BW-30,40,s.msg,14,'#b45309',700,'end')+(s.tab==='val'?valBody():colsBody());
+  B.bar.querySelectorAll('[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===s.tab))}
+ function act(a,e){const o=dg(e);s.msg='';
+  if(a==='vs'){s.sel=s.sel===e?null:e;return}
+  if(a==='u'||a==='vu'){if(a==='vu')s.sel=e;if(s.n+pv(e)<=MX()){s.n+=pv(e);if(o===9&&e<s.k-1)s.msg='9 + 1 = 10 → '+DN[e]+' doldu, bir üst basamağa geçti (takas)'}}
+  else if(a==='d'||a==='vd'){if(a==='vd')s.sel=e;if(s.n-pv(e)>=0){s.n-=pv(e);if(o===0)s.msg='Üst basamaktan 1 bozuldu → '+DN[e]+' basamağına 10 olarak geldi'}}}
+ svg.onpointerdown=ev=>{if(!ev.isPrimary||ev.button!==0)return;const t=ev.target.closest('[data-act]');if(!t)return;ev.preventDefault();ev.stopPropagation();select(w);const e=+t.dataset.i,a=t.dataset.act;
+  if(a==='bead'){const o=dg(e),nw=o===+t.dataset.k?o-1:+t.dataset.k;s.n+=(nw-o)*pv(e);s.msg=''}else act(a,e);draw()};
+ B.bar.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;if(b.dataset.t)s.tab=b.dataset.t;else if(b.classList.contains('pv-set')){const v=Math.floor(+B.q('.pv-in').value);if(Number.isFinite(v)&&v>=0&&v<=MX()){s.n=v;s.msg=''}else s.msg='0 – '+TR(MX())+' arasında bir sayı yaz'}else if(b.classList.contains('pv-clr')){s.n=0;s.msg=''}draw()};
+ B.bar.addEventListener('change',ev=>{if(ev.target.classList.contains('pv-k')){s.k=+ev.target.value;s.n=Math.min(s.n,MX());s.sel=null;s.msg='';draw()}});
  draw();
 }
 </script>
@@ -3021,25 +3019,32 @@ musicPaper();
 .fp-edge{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none}.fp-edge polygon{fill:none;stroke:#64748b;stroke-width:2}.fp.sel .fp-edge polygon{stroke:#2563eb;stroke-width:5}
 #foldLayer .fp-rot{position:absolute;width:34px;height:34px;border-radius:50%;background:#2563eb;color:#fff;display:none;align-items:center;justify-content:center;font-size:19px;transform:translate(-50%,-50%);z-index:2147483000;cursor:grab;box-shadow:0 2px 8px #0006;touch-action:none;pointer-events:auto}
 #foldLayer .fp-bar{position:absolute;display:none;gap:3px;padding:3px;background:rgba(40,38,54,.95);border-radius:10px;z-index:2147483000;pointer-events:auto;box-shadow:0 2px 8px #0006}#foldLayer .fp-bar button{background:#ffffff22;color:#fff;border:0;border-radius:7px;width:30px;height:30px;font-size:15px;cursor:pointer;padding:0}
-#foldGuide{position:absolute;left:0;top:0;z-index:404;pointer-events:none;overflow:visible}
+#foldGuide,#foldMeas{position:absolute;left:0;top:0;z-index:404;pointer-events:none;overflow:visible}
 #foldLayer .fp-pop{position:absolute;display:none;padding:6px 8px;background:rgba(40,38,54,.96);color:#fff;border-radius:10px;z-index:2147483000;pointer-events:auto;font-size:11px;width:176px;box-shadow:0 2px 8px #0006}#foldLayer .fp-pop div{margin:3px 0 2px;opacity:.8}#foldLayer .fp-pop span{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin:1px;border-radius:50%;border:1px solid #fff6;cursor:pointer;font-size:11px}
 #foldCatch{position:absolute;left:0;top:0;z-index:402;touch-action:none;cursor:crosshair;display:none}#foldCatch svg{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 #foldPanel{position:fixed;top:62px;left:50%;transform:translateX(-50%);z-index:2147483000;display:none;flex-direction:column;gap:8px;width:fit-content;max-width:calc(100vw - 16px);padding:10px 12px;background:rgba(40,38,54,.97);color:#fff;border:1px solid #ffffff22;border-radius:14px;box-shadow:0 6px 22px #0006;font-size:13px}
 #foldPanel.on{display:flex}#foldPanel .fh{font-weight:700;font-size:15px}#foldPanel .fr{display:flex;flex-wrap:wrap;align-items:center;gap:7px}#foldPanel label{display:flex;align-items:center;gap:4px}
 #foldPanel button{background:#7c6cf0;color:#fff;border:0;border-radius:10px;padding:8px 12px;font-size:13px;cursor:pointer}#foldPanel button.big{padding:11px 15px;font-size:14px}#foldPanel button.alt,#foldPanel .fh button{background:#ffffff22}#foldPanel input[type=color]{width:26px;height:22px;padding:0;border:0;background:none}#foldPanel #fpMsg{color:#cbd5e1;min-height:16px}
 </style>
+<style id="fold-css2">
+#foldLayer{overflow:hidden}#foldCatch{overflow:hidden}#foldGuide,#foldMeas{overflow:hidden!important}
+#foldLayer.yield{z-index:399!important}#foldLayer.yield .fp,#foldLayer.yield .fp-pop,#foldLayer.yield .fp-bar,#foldLayer.yield .fp-rot{pointer-events:none!important}#foldLayer.yield .fp-pop,#foldLayer.yield .fp-bar,#foldLayer.yield .fp-rot{display:none!important}#foldCatch.yield{pointer-events:none!important}
+#foldPanel{left:8px;transform:none!important;width:auto!important;max-width:min(290px,calc(100vw - 16px))!important;padding:6px 8px!important;gap:4px!important;border-radius:12px!important;font-size:11.5px!important}
+#foldPanel .fr{gap:4px!important}#foldPanel button{width:30px;height:30px;padding:0!important;font-size:15px!important;border-radius:8px!important;background:#ffffff1c!important}#foldPanel button.on{background:#7c6cf0!important}
+#foldPanel select option{color:#111!important;background:#fff!important}#foldPanel select{height:30px;width:38px;background:#ffffff1c;color:#fff;border:0;border-radius:8px;font-size:14px}#foldPanel #fpMsg{font-size:11px!important;line-height:1.3;max-width:260px}
+</style>
 <script>
 /* ===== KATLA: alan seç, katlama çizgisi çiz, katla / aç / taşı / döndür ===== */
 (function(){
 const stage=document.getElementById('stage');if(!stage)return;
 const NS='http://www.w3.org/2000/svg',$=(t,c,p)=>{const e=document.createElement(t);if(c)e.className=c;if(p)p.append(e);return e};
-let on=false,armed=false,curG=0,mode=null,shape='rect',pieces=[],hist=[],gid=0,zc=10,sel=null,line=null,busy=false,tmp=null,grp=false,layer,catchEl,guide;
+let on=false,armed=false,ptMode=false,dots={},curG=0,mode=null,shape='rect',pieces=[],hist=[],gid=0,zc=10,sel=null,line=null,busy=false,tmp=null,grp=false,layer,catchEl,guide,mz,measOn=false,lastEnds=null;
 const S={back:'#fde68a',backC:false,hole:'#e2e8f0',holeC:false,fill:'#fef08a',fillC:true};
 const circ=(cx,cy,rx,ry,a0,a1,n=72)=>{const r=[];for(let i=0;i<=n;i++){const a=(a0+(a1-a0)*i/n)*Math.PI/180;r.push([cx+rx*Math.cos(a),cy+ry*Math.sin(a)])}return r};
 const ng=(k,r2)=>(x,y,w,h)=>{const r=[],m=r2?k*2:k;for(let i=0;i<m;i++){const a=(-90+360*i/m)*Math.PI/180,q=r2&&i%2?r2:1;r.push([x+w/2+w/2*q*Math.cos(a),y+h/2+h/2*q*Math.sin(a)])}return r};
 const R4=(x,y,w,h)=>[[x,y],[x+w,y],[x+w,y+h],[x,y+h]];
 const SH={rect:['Dikdörtgen',R4],square:['Kare',R4,1],circle:['Daire',(x,y,w,h)=>circ(x+w/2,y+h/2,w/2,h/2,0,360),1],ellipse:['Elips',(x,y,w,h)=>circ(x+w/2,y+h/2,w/2,h/2,0,360)],
-half:['Yarım daire',(x,y,w,h)=>circ(x+w/2,y+h,w/2,h,180,360),2],quarter:['Çeyrek daire',(x,y,w,h)=>[[x,y+h],...circ(x,y+h,w,h,-90,0,36)],1],
+half:['Yarım daire',(x,y,w,h)=>circ(x+w/2,y+h,w/2,h,180,360),2,(x,y,w,h)=>[x+w/2,y+h]],quarter:['Çeyrek daire',(x,y,w,h)=>[[x,y+h],...circ(x,y+h,w,h,-90,0,36)],1,(x,y,w,h)=>[x,y+h]],
 tri:['Üçgen',(x,y,w,h)=>[[x+w/2,y],[x+w,y+h],[x,y+h]]],rtri:['Dik üçgen',(x,y,w,h)=>[[x,y],[x+w,y+h],[x,y+h]]],
 trap:['Yamuk',(x,y,w,h)=>[[x+w*.25,y],[x+w*.75,y],[x+w,y+h],[x,y+h]]],para:['Paralelkenar',(x,y,w,h)=>[[x+w*.25,y],[x+w,y],[x+w*.75,y+h],[x,y+h]]],
 rhomb:['Eşkenar dörtgen',(x,y,w,h)=>[[x+w/2,y],[x+w,y+h/2],[x+w/2,y+h],[x,y+h/2]]],pent:['Beşgen',ng(5),1],hex:['Altıgen',ng(6),1],star:['Yıldız',ng(5,.4),1],
@@ -3053,8 +3058,8 @@ const clip=(P,f,sg)=>{const o=[];for(let i=0;i<P.length;i++){const a=P[i],b=P[(i
 const pt=e=>{const r=stage.getBoundingClientRect();return[e.clientX-r.left+stage.scrollLeft-stage.clientLeft,e.clientY-r.top+stage.scrollTop-stage.clientTop]};
 const msg=t=>{const m=document.getElementById('fpMsg');if(m)m.textContent=t};
 function ensure(){if(layer&&layer.isConnected)return;pieces=[];hist=[];sel=null;line=null;layer=$('div');layer.id='foldLayer';stage.append(layer);catchEl=$('div');catchEl.id='foldCatch';stage.append(catchEl);
- guide=document.createElementNS(NS,'svg');guide.id='foldGuide';stage.append(guide);bindCatch()}
-function size(){const W=Math.max(stage.scrollWidth,stage.clientWidth),H=Math.max(stage.scrollHeight,stage.clientHeight);for(const e of [layer,catchEl,guide]){e.style.width=W+'px';e.style.height=H+'px'}return[W,H]}
+ guide=document.createElementNS(NS,'svg');guide.id='foldGuide';stage.append(guide);mz=document.createElementNS(NS,'svg');mz.id='foldMeas';stage.append(mz);bindCatch()}
+function size(){const L=[layer,catchEl,guide,mz],ds=L.map(e=>e.style.display);L.forEach(e=>e.style.display='none');const W=Math.max(stage.scrollWidth,stage.clientWidth),H=Math.max(stage.scrollHeight,stage.clientHeight);L.forEach((e,i)=>e.style.display=ds[i]);for(const e of L){e.style.width=W+'px';e.style.height=H+'px'}return[W,H]}
 function snap(){const[W,H]=size(),c=$('div','fc'),cs=getComputedStyle(stage),bg=$('div','',c);c.style.width=W+'px';c.style.height=H+'px';
  bg.style.cssText=`position:absolute;inset:0;background-color:${cs.backgroundColor};background-image:${cs.backgroundImage};background-size:${cs.backgroundSize};background-position:${stage.scrollLeft}px ${stage.scrollTop}px`;
  for(const n of stage.children){let k;if(n.id==='drawLayer'){k=n.cloneNode(true);k.querySelectorAll('.compass-guide').forEach(x=>x.remove());k.style.cssText+=';position:absolute;left:0;top:0;z-index:400'}
@@ -3066,10 +3071,10 @@ function paint(p){const[a,b,c,d,e,f]=p.M,x=p.bx,y=p.by,fl=a*d-b*c<0;p.el.style.t
 function mk(poly,g,content,M){const xs=poly.map(v=>v[0]),ys=poly.map(v=>v[1]),bx=Math.min(...xs),by=Math.min(...ys),bw=Math.max(...xs)-bx||1,bh=Math.max(...ys)-by||1,el=$('div','fp',layer);
  el.style.cssText=`left:${bx}px;top:${by}px;width:${bw}px;height:${bh}px;z-index:${++zc};clip-path:polygon(${poly.map(v=>(v[0]-bx)+'px '+(v[1]-by)+'px').join(',')})`;
  const c=content.cloneNode(true);c.style.left=-bx+'px';c.style.top=-by+'px';el.append(c);const tint=$('div','fp-tint',el),back=$('div','fp-back',el),sv=document.createElementNS(NS,'svg');
- sv.setAttribute('class','fp-edge');sv.innerHTML=`<polygon points="${poly.map(v=>(v[0]-bx)+','+(v[1]-by)).join(' ')}"/>`;el.append(sv);
+ sv.setAttribute('class','fp-edge');sv.innerHTML=`<polygon points="${poly.map(v=>(v[0]-bx)+','+(v[1]-by)).join(' ')}"/>`+(dots[g]?`<circle cx="${dots[g][0]-bx}" cy="${dots[g][1]-by}" r="4.5" fill="#111" stroke="#fff" stroke-width="1.5"/>`:'');el.append(sv);
  const p={el,poly,bx,by,g,M:M||[1,0,0,1,0,0],c,tint,back,fill:null};pieces.push(p);paint(p);el.onpointerdown=e=>down(e,p);return p}
 let rh,bar,pop,popOn=false,opened=[];const PAL=['#fde68a','#fecaca','#bfdbfe','#bbf7d0','#e9d5ff','#fed7aa','#cbd5e1'];
-function placeH(){if(!rh||!rh.isConnected){rh=$('div','fp-rot',layer);rh.textContent='↻';rh.title='Tutup çevirerek döndür';rh.onpointerdown=rotDown}
+function placeH(){drawMeas();if(!rh||!rh.isConnected){rh=$('div','fp-rot',layer);rh.textContent='↻';rh.title='Tutup çevirerek döndür';rh.onpointerdown=rotDown}
  if(!bar||!bar.isConnected){bar=$('div','fp-bar',layer);bar.innerHTML='<button data-a="un" title="Geri aç">↩</button><button data-a="re" title="Tekrar katla">↪</button><button data-a="fl" title="Çevir">⇋</button><button data-a="du" title="Çoğalt">⧉</button><button data-a="co" title="Renk">🎨</button><button data-a="de" title="Sil">🗑</button>';
   bar.onpointerdown=e=>e.stopPropagation();bar.onclick=e=>{const a=e.target.dataset.a;if(a==='un')unfold();else if(a==='re')refold();else if(a==='fl')flip();else if(a==='du')dup();else if(a==='de')del();else if(a==='co'){popOn=!popOn;placeH()}};
   pop=$('div','fp-pop',layer);pop.innerHTML='<div>Ön yüz</div><span data-r="f" data-c="">✕</span>'+PAL.map(c=>`<span data-r="f" data-c="${c}" style="background:${c}"></span>`).join('')+'<div>Arka yüz</div><span data-r="b" data-c="clear">◌</span>'+PAL.map(c=>`<span data-r="b" data-c="${c}" style="background:${c}"></span>`).join('');
@@ -3090,8 +3095,8 @@ function nudge(dx,dy){if(!sel)return;tgt(sel).forEach(p=>{p.M[4]+=dx;p.M[5]+=dy;
 function pick(p){sel=p;pieces.forEach(q=>q.el.classList.toggle('sel',q===p));placeH()}
 function newRegion(poly){if(poly.length<3||area(poly)<400){msg('Alan çok küçük, biraz daha büyük çiz.');return}
  const[W,H]=size(),g=++gid,cs=getComputedStyle(stage);{const gd=$('div','fg',layer);gd.dataset.g=g;gd._poly=poly;gd.style.cssText=`width:${W}px;height:${H}px;background-color:${cs.backgroundColor};background-image:${cs.backgroundImage};background-size:${cs.backgroundSize};background-position:${stage.scrollLeft}px ${stage.scrollTop}px;clip-path:polygon(${poly.map(v=>v[0]+'px '+v[1]+'px').join(',')})`}
- const p=mk(poly,g,snap());curG=g;armed=false;document.querySelectorAll('#foldPanel [data-k]').forEach(b=>b.classList.remove('on'));pick(p);msg('Şekil hazır. Katlamak için şeklin üstünden, kenardan kenara düz bir çizgi sürükle.')}
-function shapePoly(a,b){const s=SH[shape];let w=b[0]-a[0],h=b[1]-a[1];if(s[2]===2){const m=Math.max(Math.abs(w),Math.abs(h)*2);w=(w<0?-1:1)*m;h=(h<0?-1:1)*m/2}else if(s[2]){const m=Math.max(Math.abs(w),Math.abs(h));w=(w<0?-1:1)*m;h=(h<0?-1:1)*m}return s[1](Math.min(a[0],a[0]+w),Math.min(a[1],a[1]+h),Math.abs(w),Math.abs(h))}
+ dots[g]=poly.c||null;lastEnds=null;const p=mk(poly,g,snap());curG=g;armed=false;document.querySelectorAll('#foldPanel [data-k]').forEach(b=>b.classList.remove('on'));pick(p);msg('Şekil hazır. Katlamak için şeklin üstünden, kenardan kenara düz bir çizgi sürükle.')}
+function shapePoly(a,b){const s=SH[shape];let w=b[0]-a[0],h=b[1]-a[1];if(s[2]===2){const m=Math.max(Math.abs(w),Math.abs(h)*2);w=(w<0?-1:1)*m;h=(h<0?-1:1)*m/2}else if(s[2]){const m=Math.max(Math.abs(w),Math.abs(h));w=(w<0?-1:1)*m;h=(h<0?-1:1)*m}const X=Math.min(a[0],a[0]+w),Y=Math.min(a[1],a[1]+h),W=Math.abs(w),H=Math.abs(h),P=s[1](X,Y,W,H);P.c=s[3]?s[3](X,Y,W,H):[X+W/2,Y+H/2];return P}
 const poly2=(P,st)=>`<polygon points="${P.map(v=>v.join(',')).join(' ')}" ${st}/>`;
 function bindCatch(){
  catchEl.onpointerdown=e=>{if(busy)return;e.preventDefault();e.stopPropagation();catchEl.setPointerCapture(e.pointerId);const p=pt(e);tmp={s:p,pts:[p],e:p}};
@@ -3100,32 +3105,62 @@ function bindCatch(){
   else guide.innerHTML=`<line x1="${tmp.s[0]}" y1="${tmp.s[1]}" x2="${p[0]}" y2="${p[1]}" stroke="#dc2626" stroke-width="3" stroke-dasharray="10 6"/>`};
  catchEl.onpointerup=e=>{if(!tmp)return;const t=tmp;tmp=null;guide.innerHTML=line?lineSvg():'';const d=Math.hypot(t.e[0]-t.s[0],t.e[1]-t.s[1]);
   if(armed){if(shape==='free')newRegion(t.pts.filter((v,i,A)=>!i||Math.hypot(v[0]-A[i-1][0],v[1]-A[i-1][1])>4));else if(d>15)newRegion(shapePoly(t.s,t.e))}
-  else if(!pieces.length)msg('Önce yukarıdan bir şekil seç.');
-  else if(d<10&&line){const dl=Math.abs(line.n[0]*(t.e[0]-line.A[0])+line.n[1]*(t.e[1]-line.A[1]));if(dl<10){line=null;guide.innerHTML='';layer.classList.add('mv');placeH();msg('Çizgi iptal edildi.')}else doFold(Math.sign(line.n[0]*(t.e[0]-line.A[0])+line.n[1]*(t.e[1]-line.A[1]))||1)}
+  else if(ptMode)pointFold(t.s,t.e,d);else if(!pieces.length)msg('Önce yukarıdan bir şekil seç.');
+  else if(d<10&&line){const dl=Math.abs(line.n[0]*(t.e[0]-line.A[0])+line.n[1]*(t.e[1]-line.A[1]));if(dl<10){line=null;guide.innerHTML='';layer.classList.toggle('mv',!ptMode);placeH();msg('Çizgi iptal edildi.')}else doFold(Math.sign(line.n[0]*(t.e[0]-line.A[0])+line.n[1]*(t.e[1]-line.A[1]))||1)}
   else if(d>=25)setLine(t.s,t.e);else if(!line)msg('Şeklin üstünden geçen bir çizgi sürükle.')};
  catchEl.onpointercancel=()=>{tmp=null;guide.innerHTML=line?lineSvg():''}}
-function lineSvg(h){const{A,u,n}=line,B=1e4,a=[A[0]-u[0]*B,A[1]-u[1]*B],b=[A[0]+u[0]*B,A[1]+u[1]*B];let s='';
+const CMPX=37.8,fmt=(x,d)=>x.toFixed(d).replace('.',',');
+function hull(P){P=P.map(v=>[Math.round(v[0]*100)/100,Math.round(v[1]*100)/100]).sort((a,b)=>a[0]-b[0]||a[1]-b[1]);const cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]),h=S=>{const r=[];for(const p of S){while(r.length>1&&cr(r[r.length-2],r[r.length-1],p)<=0)r.pop();r.push(p)}return r.slice(0,-1)};return h(P).concat(h(P.slice().reverse()))}
+function simp(P){let ch=true;while(ch&&P.length>3){ch=false;for(let i=0;i<P.length;i++){const a=P[(i+P.length-1)%P.length],v=P[i],b=P[(i+1)%P.length],u=[a[0]-v[0],a[1]-v[1]],w=[b[0]-v[0],b[1]-v[1]],l=Math.hypot(...u)*Math.hypot(...w);
+ if(l<1e-6||(Math.abs(u[0]*w[1]-u[1]*w[0])/l<.07&&u[0]*w[0]+u[1]*w[1]<0)){P=P.filter((_,j)=>j!==i);ch=true;break}}}return P}
+function drawMeas(){drawMeas0();if(mz&&on&&ptMode&&lastEnds&&pieces.length)mz.innerHTML+=lastEnds.map(e=>`<circle cx="${e[0]}" cy="${e[1]}" r="9" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="4 3"/>`).join('')}
+function drawMeas0(){if(!mz)return;const g=sel?sel.g:curG,ps=pieces.filter(p=>p.g===g);if(!measOn||!on||!ps.length){mz.innerHTML='';return}
+ const P=simp(ps.length===1?cur(ps[0]):hull(ps.flatMap(cur))),c=[P.reduce((s,v)=>s+v[0],0)/P.length,P.reduce((s,v)=>s+v[1],0)/P.length],
+ tx=(x,y,t,f)=>`<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="central" font-size="12.5" font-weight="700" fill="${f}" stroke="#fff" stroke-width="3.5" paint-order="stroke" style="font-family:sans-serif">${t}</text>`;
+ if(P.length<3||P.length>12){mz.innerHTML=tx(c[0],c[1],'Eğri kenarlı şekil: kenar ve açı ölçülmez','#475569');return}
+ const or=P.reduce((s,p,i)=>{const q=P[(i+1)%P.length];return s+p[0]*q[1]-q[0]*p[1]},0)>0?1:-1;let h='';
+ P.forEach((v,i)=>{const a=P[(i+P.length-1)%P.length],b=P[(i+1)%P.length],u=[a[0]-v[0],a[1]-v[1]],w=[b[0]-v[0],b[1]-v[1]];
+  const ang=((or>0?-1:1)*Math.atan2(u[0]*w[1]-u[1]*w[0],u[0]*w[0]+u[1]*w[1])+2*Math.PI)%(2*Math.PI)*180/Math.PI,dv=[c[0]-v[0],c[1]-v[1]],dl=Math.hypot(...dv)||1;
+  h+=`<circle cx="${v[0]}" cy="${v[1]}" r="3.5" fill="#dc2626"/>`+tx(v[0]+dv[0]/dl*24,v[1]+dv[1]/dl*24,fmt(ang,Math.abs(ang-Math.round(ang))<.05?0:1)+'°','#dc2626');
+  const m=[(v[0]+b[0])/2,(v[1]+b[1])/2],dm=[m[0]-c[0],m[1]-c[1]],dd=Math.hypot(...dm)||1;h+=tx(m[0]+dm[0]/dd*16,m[1]+dm[1]/dd*16,fmt(Math.hypot(b[0]-v[0],b[1]-v[1])/CMPX,1)+' cm','#1d4ed8')});
+ mz.innerHTML=h}
+function circSeg(E,R,a,b){const dx=b[0]-a[0],dy=b[1]-a[1],fx=a[0]-E[0],fy=a[1]-E[1],A2=dx*dx+dy*dy,B2=2*(fx*dx+fy*dy),C2=fx*fx+fy*fy-R*R,D2=B2*B2-4*A2*C2,r=[];if(A2<1e-9||D2<0)return r;
+ for(const s of [-1,1]){const t=(-B2+s*Math.sqrt(D2))/(2*A2);if(t>=0&&t<=1)r.push([a[0]+dx*t,a[1]+dy*t])}return r}
+function snapPt(S){let bv=null,be=null;for(const p of pieces){const C=cur(p);C.forEach((a,i)=>{const b=C[(i+1)%C.length],dv=Math.hypot(a[0]-S[0],a[1]-S[1]);const pr=C[(i+C.length-1)%C.length];if(dv<22&&(!bv||dv<bv.d))bv={p:a,g:p.g,d:dv,arc:Math.hypot(a[0]-b[0],a[1]-b[1])<40&&Math.hypot(a[0]-pr[0],a[1]-pr[1])<40};
+ const vx=b[0]-a[0],vy=b[1]-a[1],t=Math.max(0,Math.min(1,((S[0]-a[0])*vx+(S[1]-a[1])*vy)/(vx*vx+vy*vy||1))),q=[a[0]+vx*t,a[1]+vy*t],de=Math.hypot(q[0]-S[0],q[1]-S[1]);if(de<30&&(!be||de<be.d))be={p:q,g:p.g,d:de,arc:Math.hypot(vx,vy)<40}})}return bv||be}
+function nearPoly(d,P){let o=false,m=1e9;for(let i=0,j=P.length-1;i<P.length;j=i++){const a=P[i],b=P[j];if((a[1]>d[1])!==(b[1]>d[1])&&d[0]<(b[0]-a[0])*(d[1]-a[1])/(b[1]-a[1])+a[0])o=!o;
+ const vx=b[0]-a[0],vy=b[1]-a[1],t=Math.max(0,Math.min(1,((d[0]-a[0])*vx+(d[1]-a[1])*vy)/(vx*vx+vy*vy||1)));m=Math.min(m,Math.hypot(a[0]+vx*t-d[0],a[1]+vy*t-d[1]))}return o||m<1.5}
+function dotNow(g){const d=dots[g];if(!d)return null;let best=null;for(const p of pieces)if(p.g===g&&nearPoly(d,p.poly)&&(!best||(+p.el.style.zIndex||0)>(+best.el.style.zIndex||0)))best=p;return best?ap(best.M,d[0],d[1]):null}
+async function pointFold(S,E,d){if(busy)return;if(!pieces.length)return msg('Önce yukarıdan bir şekil seç.');const sn=snapPt(S);if(!sn)return msg('Şeklin kenarına ya da köşesine yakın bir noktaya dokun.');
+ let P=sn.p;const g=sn.g,D=dotNow(g);let Q;if(d<12){Q=D;if(!Q)return msg('Bu şekilde merkez noktası yok. Noktayı götüreceğin yere doğru sürükle.')}else{Q=E;if(D&&Math.hypot(D[0]-Q[0],D[1]-Q[1])<18)Q=D}
+ let hi=null;if(lastEnds&&sn.arc){const ed=[];pieces.filter(p=>p.g===g).forEach(p=>{const C=cur(p);C.forEach((a,i)=>ed.push([a,C[(i+1)%C.length]]))});let bs=null;
+ for(const E of lastEnds){const R=Math.hypot(E[0]-Q[0],E[1]-Q[1]);if(R<8)continue;for(const[a,b]of ed)for(const X of circSeg(E,R,a,b)){const dd=Math.hypot(X[0]-S[0],X[1]-S[1]);if(dd<70&&Math.hypot(X[0]-E[0],X[1]-E[1])>10&&(!bs||dd<bs.d))bs={p:X,d:dd,E}}}
+ if(bs){P=bs.p;hi=bs.E}}
+ const L=Math.hypot(Q[0]-P[0],Q[1]-P[1]);if(L<8)return msg('Nokta zaten hedefte.');const n=[(Q[0]-P[0])/L,(Q[1]-P[1])/L],A=[(P[0]+Q[0])/2,(P[1]+Q[1])/2];
+ setLine(A,[A[0]+n[1]*100,A[1]-n[0]*100],true,g);if(!line)return;guide.innerHTML=lineSvg()+`<circle cx="${P[0]}" cy="${P[1]}" r="6" fill="#dc2626"/><circle cx="${Q[0]}" cy="${Q[1]}" r="6" fill="#16a34a"/>`+(hi?`<circle cx="${hi[0]}" cy="${hi[1]}" r="10" fill="none" stroke="#16a34a" stroke-width="3"/>`:'');
+ await new Promise(r=>setTimeout(r,500));await doFold(-1)}
+function lineSvg(h){const{A,u,n}=line,B=4000,a=[A[0]-u[0]*B,A[1]-u[1]*B],b=[A[0]+u[0]*B,A[1]+u[1]*B];let s='';
  if(h)s=poly2([a,b,[b[0]+h*n[0]*B,b[1]+h*n[1]*B],[a[0]+h*n[0]*B,a[1]+h*n[1]*B]],'fill="rgba(37,99,235,.13)"');
  return s+`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#dc2626" stroke-width="3" stroke-dasharray="10 6"/>`+(line.c?`<circle cx="${line.c[0]}" cy="${line.c[1]}" r="7" fill="#16a34a"/>`:'')}
 function hover(p){guide.innerHTML=lineSvg(Math.sign(line.n[0]*(p[0]-line.A[0])+line.n[1]*(p[1]-line.A[1]))||1)}
-function setLine(A,B){const dx=B[0]-A[0],dy=B[1]-A[1],L=Math.hypot(dx,dy);let u=[dx/L,dy/L];
- const hit=(A,u)=>{const n=[-u[1],u[0]];return pieces.filter(p=>{const F=cur(p).map(v=>n[0]*(v[0]-A[0])+n[1]*(v[1]-A[1]));return Math.min(...F)<-1e-6&&Math.max(...F)>1e-6})};
+function setLine(A,B,exact,only){const dx=B[0]-A[0],dy=B[1]-A[1],L=Math.hypot(dx,dy);let u=[dx/L,dy/L];
+ const hit=(A,u)=>{const n=[-u[1],u[0]];return pieces.filter(p=>{if(only&&p.g!==only)return false;const F=cur(p).map(v=>n[0]*(v[0]-A[0])+n[1]*(v[1]-A[1]));return Math.min(...F)<-1e-6&&Math.max(...F)>1e-6})};
  let H=hit(A,u);if(!H.length){line=null;guide.innerHTML='';msg('Çizgi hiçbir şekli kesmiyor. Şeklin üstünden, kenardan kenara geçecek şekilde çiz.');return}
  const P=H.flatMap(cur),xs=P.map(v=>v[0]),ys=P.map(v=>v[1]),C=[(Math.min(...xs)+Math.max(...xs))/2,(Math.min(...ys)+Math.max(...ys))/2];
  let ang=Math.atan2(u[1],u[0])*180/Math.PI,r=Math.round(ang/45)*45,M=[(A[0]+B[0])/2,(A[1]+B[1])/2],sn=null;
- if(Math.abs(ang-r)<6){ang=r;u=[Math.cos(ang*Math.PI/180),Math.sin(ang*Math.PI/180)]}
- let n=[-u[1],u[0]];if(Math.abs(n[0]*(C[0]-M[0])+n[1]*(C[1]-M[1]))<16){M=C;sn=C}
+ if(!exact&&Math.abs(ang-r)<6){ang=r;u=[Math.cos(ang*Math.PI/180),Math.sin(ang*Math.PI/180)]}
+ let n=[-u[1],u[0]];if(!exact&&Math.abs(n[0]*(C[0]-M[0])+n[1]*(C[1]-M[1]))<16){M=C;sn=C}
  if(!hit(M,u).length){M=[(A[0]+B[0])/2,(A[1]+B[1])/2];sn=null}
- A=M;H=hit(A,u);const f=v=>n[0]*(v[0]-A[0])+n[1]*(v[1]-A[1]),gs=new Set(H.map(p=>p.g));line={A,u,n,gs,c:sn};
+ A=M;H=hit(A,u);const f=v=>n[0]*(v[0]-A[0])+n[1]*(v[1]-A[1]),gs=new Set(H.map(p=>p.g));const ts=[];H.forEach(p=>{const C=cur(p);C.forEach((a,i)=>{const b=C[(i+1)%C.length],fa=f(a),fb=f(b);if(fa===0||fa*fb<0){const t=fa===0?0:fa/(fa-fb),X=[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];ts.push([(X[0]-A[0])*u[0]+(X[1]-A[1])*u[1],X])}})});ts.sort((x,y)=>x[0]-y[0]);line={A,u,n,gs,c:sn,ends:ts.length>1?[ts[0][1],ts[ts.length-1][1]]:null};
  for(const p of [...pieces]){if(!gs.has(p.g))continue;const F=v=>f(ap(p.M,v[0],v[1])),P1=clip(p.poly,F,1),P2=clip(p.poly,F,-1);
   if(area(P1)<2||area(P2)<2)continue;const was=sel===p;[P1,P2].forEach(Q=>{const k=mk(Q,p.g,p.c,p.M.slice());k.fill=p.fill;k.bk=p.bk;paint(k);if(was)pick(k)});p.el.remove();pieces.splice(pieces.indexOf(p),1)}
  layer.classList.remove('mv');guide.innerHTML=lineSvg();placeH();msg(sn?'Tam ortadan! Katlanacak tarafa dokun (çizgiye dokunursan iptal).':'Katlanacak tarafa dokun (çizgiye dokunursan iptal).')}
-async function doFold(sg){if(!line||busy)return;const{A,n,gs}=line,R=refl(A,n),items=pieces.filter(p=>gs.has(p.g)&&Math.sign(n[0]*(cen(p)[0]-A[0])+n[1]*(cen(p)[1]-A[1]))===sg).map(p=>({p,from:p.M.slice(),to:mul(R,p.M)}));
- line=null;guide.innerHTML='';layer.classList.add('mv');placeH();if(!items.length)return;hist.push({items,open:false});msg('Katlanıyor…');await anim(items,1);pick(items[0].p);msg('Katlandı. Yeni çizgi çizerek tekrar katlayabilir, parçayı sürükleyip taşıyabilir, ↻ ile döndürebilirsin.')}
+async function doFold(sg){if(!line||busy)return;const{A,n,gs}=line,R=refl(A,n),en=line.ends,items=pieces.filter(p=>gs.has(p.g)&&Math.sign(n[0]*(cen(p)[0]-A[0])+n[1]*(cen(p)[1]-A[1]))===sg).map(p=>({p,from:p.M.slice(),to:mul(R,p.M)}));
+ lastEnds=en;line=null;guide.innerHTML='';layer.classList.toggle('mv',!ptMode);placeH();if(!items.length)return;hist.push({items,open:false});msg('Katlanıyor…');await anim(items,1);pick(items[0].p);msg('Katlandı. Yeni çizgi çizerek tekrar katlayabilir, parçayı sürükleyip taşıyabilir, ↻ ile döndürebilirsin.')}
 function anim(items,shade){return new Promise(r=>{busy=true;const t0=performance.now();if(shade)items.forEach(i=>i.p.el.style.zIndex=++zc);
  const st=n=>{const t=Math.min(1,(n-t0)/750),k=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;items.forEach(i=>{i.p.M=i.from.map((v,j)=>v+(i.to[j]-v)*k);paint(i.p);i.p.el.style.filter=shade?`brightness(${1-.25*Math.sin(Math.PI*k)})`:''});
   if(t<1)requestAnimationFrame(st);else{items.forEach(i=>i.p.el.style.filter='');busy=false;r()}};requestAnimationFrame(st)})}
-function toggleEntry(en,open){if(busy)return;const items=en.items.filter(i=>pieces.includes(i.p));if(!items.length)return;en.open=open;line=null;guide.innerHTML='';layer.classList.add('mv');
+function toggleEntry(en,open){if(busy)return;lastEnds=null;const items=en.items.filter(i=>pieces.includes(i.p));if(!items.length)return;en.open=open;line=null;guide.innerHTML='';layer.classList.toggle('mv',!ptMode);
  const r=anim(items.map(i=>({p:i.p,from:i.p.M.slice(),to:open?i.from:i.to})),1);if(open){if(!opened.includes(en))opened.push(en)}else opened=opened.filter(x=>x!==en);return r}
 async function unfold(){if(busy)return;let en=null;for(let i=hist.length-1;i>=0;i--)if(!hist[i].open&&hist[i].items.some(x=>pieces.includes(x.p))){en=hist[i];break}
  if(!en){msg('Açılacak katlama yok.');return}await toggleEntry(en,true);msg('Geri açıldı. ↪ ile ya da katlı parçaya dokunarak tekrar katlayabilirsin.')}
@@ -3137,28 +3172,38 @@ function down(e,p){if(!on||line||busy)return;e.preventDefault();e.stopPropagatio
  for(const [t,f] of [['pointermove',mv],['pointerup',up],['pointercancel',up]])p.el.addEventListener(t,f)}
 function rot(deg){if(!sel)return msg('Önce bir parça seç (Seç/Taşı).');const T=tgt(sel),C=T.map(cen),cx=C.reduce((s,c)=>s+c[0],0)/C.length,cy=C.reduce((s,c)=>s+c[1],0)/C.length,a=deg*Math.PI/180,c=Math.cos(a),s=Math.sin(a),R=[c,s,-s,c,cx-c*cx+s*cy,cy-s*cx-c*cy];T.forEach(p=>{p.M=mul(R,p.M);paint(p)})}
 function flip(){if(!sel||busy)return msg('Önce bir parça seç.');const T=tgt(sel),cx=T.map(cen).reduce((s,c)=>s+c[0],0)/T.length;anim(T.map(p=>({p,from:p.M.slice(),to:mul(refl([cx,0],[1,0]),p.M)})),1)}
-function dup(){if(!sel)return msg('Önce bir parça seç.');const M=sel.M.slice();M[4]+=26;M[5]+=26;const q=mk(sel.poly,++gid,sel.c,M);q.fill=sel.fill;q.bk=sel.bk;paint(q);pick(q)}
+function dup(){if(!sel)return msg('Önce bir parça seç.');const M=sel.M.slice();M[4]+=26;M[5]+=26;const ng=++gid;dots[ng]=dots[sel.g];const q=mk(sel.poly,ng,sel.c,M);q.fill=sel.fill;q.bk=sel.bk;paint(q);pick(q)}
 function del(){if(!sel)return;const g=sel.g;sel.el.remove();pieces.splice(pieces.indexOf(sel),1);sel=null;placeH();if(!pieces.some(p=>p.g===g))layer.querySelectorAll('.fg').forEach(x=>x.dataset.g==g&&x.remove())}
 function clear(){if(!layer)return;layer.innerHTML='';pieces=[];hist=[];sel=null;line=null;guide.innerHTML='';msg('Hepsi kaldırıldı.')}
 function setMode(m){ensure();mode=m;line=null;tmp=null;guide.innerHTML='';size();placeH();catchEl.style.display=(m==='area'||m==='fold')?'block':'none';layer.classList.toggle('mv',m==='move')}
 /* ---- sade arayüz ---- */
 const GL={rect:'▭',square:'□',circle:'○',half:'◖',quarter:'◔',tri:'△'},MAIN=Object.keys(GL),tb=$('div');tb.id='foldPanel';const chips=$('div','fr',tb),mg=$('div','',tb);mg.id='fpMsg';document.body.append(tb);
-const arm=k=>{shape=k;armed=true;line=null;ensure();size();guide.innerHTML='';catchEl.style.display='block';document.querySelectorAll('#foldPanel [data-k]').forEach(b=>b.classList.toggle('on',b.dataset.k===k));msg(SH[k][0]+' alanını tahtada sürükleyerek çiz.')};
-MAIN.forEach(k=>{const b=$('button','',chips);b.dataset.k=k;b.textContent=GL[k]+' '+SH[k][0];b.onclick=()=>arm(k)});
-const sl=$('select','',chips);sl.innerHTML='<option value="">Diğer…</option>'+Object.keys(SH).filter(k=>!MAIN.includes(k)).map(k=>`<option value="${k}">${SH[k][0]}</option>`).join('');sl.onchange=()=>{if(sl.value)arm(sl.value);sl.value=''};
-const cb=$('button','',chips);cb.textContent='🧹 Katları sil';cb.onclick=()=>clearAll();const xb=$('button','',chips);xb.textContent='✕';xb.onclick=()=>toggle(false);
+const sync=()=>{document.querySelectorAll('#foldPanel [data-k]').forEach(b=>b.classList.toggle('on',armed&&b.dataset.k===shape));pb.classList.toggle('on',ptMode)};
+const arm=k=>{toMove();shape=k;armed=true;ptMode=false;line=null;ensure();size();guide.innerHTML='';catchEl.style.display='block';layer.classList.add('mv');sync();msg(SH[k][0]+' alanını tahtada sürükleyerek çiz.')};
+MAIN.forEach(k=>{const b=$('button','',chips);b.dataset.k=k;b.textContent=GL[k];b.title=SH[k][0];b.onclick=()=>arm(k)});
+const sl=$('select','',chips);sl.title='Diğer şekiller';sl.innerHTML='<option value="">＋</option>'+Object.keys(SH).filter(k=>!MAIN.includes(k)).map(k=>`<option value="${k}">${SH[k][0]}</option>`).join('');sl.onchange=()=>{if(sl.value)arm(sl.value);sl.value=''};
+const pb=$('button','',chips);pb.textContent='🎯';pb.title='Noktayı merkeze katla (kenardan bir noktaya dokun). Başka noktaya katlamak için o noktaya doğru sürükle.';
+pb.onclick=()=>{toMove();ptMode=!ptMode;armed=false;line=null;guide.innerHTML='';ensure();layer.classList.toggle('mv',!ptMode);sync();placeH();msg(ptMode?'Kenarda ya da köşede bir noktaya dokun: merkeze katlanır. Başka bir noktaya götürmek için o noktaya doğru sürükle.':'Çizgiyle katlama: şeklin üstünden düz bir çizgi sürükle.')};
+const ub=$('button','',chips);ub.textContent='↩';ub.title='Geri al: son katlamayı aç';ub.onclick=()=>unfold();const rb=$('button','',chips);rb.textContent='↪';rb.title='Yinele: tekrar katla';rb.onclick=()=>refold();
+const mb=$('button','',chips);mb.textContent='📏';mb.title='Ölç: şeklin kenar uzunluklarını (cm) ve açılarını göster';mb.onclick=()=>{measOn=!measOn;mb.classList.toggle('on',measOn);placeH();msg(measOn?'Kenar uzunlukları (mavi, yaklaşık cm) ve açılar (kırmızı) gösteriliyor. Katladıkça güncellenir.':'Ölçü kapatıldı.')};const cb=$('button','',chips);cb.textContent='🧹';cb.title='Tüm katlama parçalarını sil';cb.onclick=()=>clearAll();const xb=$('button','',chips);xb.textContent='✕';xb.title='Kapat';xb.onclick=()=>toggle(false);
 const q=i=>document.getElementById(i);
-function clearAll(){if(!layer)return;layer.innerHTML='';pieces=[];hist=[];opened=[];sel=null;line=null;rh=bar=pop=null;guide.innerHTML='';placeH();msg('Tüm katlama parçaları silindi.')}
+const pbtn=document.getElementById('penToggle'),isMove=()=>!pbtn||pbtn.classList.contains('active');
+function ySync(){if(!layer||!layer.isConnected)return;const y=on&&!isMove();layer.classList.toggle('yield',y);catchEl.classList.toggle('yield',y)}
+function toMove(){if(pbtn&&!pbtn.classList.contains('active'))pbtn.click();ySync()}
+if(pbtn&&typeof MutationObserver!=='undefined')new MutationObserver(ySync).observe(pbtn,{attributes:true,attributeFilter:['class']});
+function clearAll(){if(!layer)return;layer.innerHTML='';pieces=[];hist=[];opened=[];lastEnds=null;sel=null;line=null;rh=bar=pop=null;guide.innerHTML='';placeH();msg('Tüm katlama parçaları silindi.')}
 const hitBox=(P,b)=>{const xs=P.map(v=>v[0]),ys=P.map(v=>v[1]);return Math.min(...xs)<b.right&&Math.max(...xs)>b.left&&Math.min(...ys)<b.bottom&&Math.max(...ys)>b.top};
 q('delete')?.addEventListener('click',()=>{const b=window.areaBox;if(!b||!layer||!layer.isConnected)return;let n=0;for(const p of [...pieces])if(hitBox(cur(p),b)){p.el.remove();pieces.splice(pieces.indexOf(p),1);n++}
  layer.querySelectorAll('.fg').forEach(g=>{if(hitBox(g._poly,b)||!pieces.some(p=>String(p.g)===g.dataset.g)){g.remove();n++}});if(n){sel=null;placeH()}},true);
 q('clear')?.addEventListener('click',()=>{if(layer)clearAll()},true);
 document.querySelector('main')?.addEventListener('pointerup',()=>setTimeout(()=>{const b=window.areaBox;if(layer&&layer.isConnected)pieces.forEach(p=>p.el.classList.toggle('sel',!!b&&hitBox(cur(p),b)))},0));
 function toggle(v){ensure();on=v===undefined?!on:v;tb.classList.toggle('on',on);q('foldBtn').classList.toggle('on',on);
- if(on){document.getElementById('penToggle')?.click();size();catchEl.style.display='block';layer.classList.add('mv');msg(pieces.length?'Şeklin üstünden geçen çizgi sürükle = katla. Parçayı sürükle = taşı.':'Yukarıdan bir şekil seç.')}
- else{catchEl.style.display='none';layer.classList.remove('mv');guide.innerHTML='';line=null;armed=false}placeH()}
+ if(on){const r=q('foldBtn').getBoundingClientRect();tb.style.top=r.bottom+6+'px';tb.style.left=Math.max(8,Math.min(r.left,innerWidth-tb.offsetWidth-8))+'px';
+  size();ySync();catchEl.style.display='block';layer.classList.toggle('mv',!ptMode);msg(pieces.length?'Şeklin üstünden çizgi sürükle = katla. 🎯 = noktayı merkeze katla.':'Yukarıdan bir şekil seç.')}
+ else{catchEl.style.display='none';layer.classList.remove('mv');guide.innerHTML='';line=null;armed=false;ptMode=false;sync()}ySync();placeH()}
 q('foldBtn').onclick=()=>toggle();
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&line){line=null;guide.innerHTML='';layer.classList.add('mv');placeH()}});
+document.addEventListener('keydown',e=>{if(on&&(e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&hist.some(h=>!h.open&&h.items.some(x=>pieces.includes(x.p)))){e.preventDefault();e.stopImmediatePropagation();e.shiftKey?refold():unfold()}},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&line){line=null;guide.innerHTML='';layer.classList.toggle('mv',!ptMode);placeH()}});
 })();
 
 </script>
