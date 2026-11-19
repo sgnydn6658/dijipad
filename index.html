@@ -6009,6 +6009,22 @@ window.__tgMenu=()=>{const sec=[...menu.querySelectorAll(':scope > .menu-section
   P.append(r2);
   P.append(el('div','tgm-hint','Parçayı tut, tahtaya sürükle · Tahtada: ↻ ile döndür, çift dokun: ters çevir'));
   box.innerHTML='';box.append(P)}};
+/* ===== Yüzlük Tablo (Sayı ve İşlem) ===== */
+{const sec=[...menu.querySelectorAll(':scope > .menu-section')].find(x=>x.querySelector('.cat-label')?.textContent==='Sayı ve İşlem');
+ if(sec){const tools=sec.querySelector('.tools'),nm='Yüzlük Tablo',svg="<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"120\" height=\"80\" viewBox=\"0 0 120 80\"><rect width=\"120\" height=\"80\" rx=\"8\" fill=\"#fff\"/><rect x=\"6.0\" y=\"6.0\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#e2e8f0\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"10.8\" y=\"14.6\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#64748b\">1</text><rect x=\"16.8\" y=\"6.0\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"21.6\" y=\"14.6\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">2</text><rect x=\"27.6\" y=\"6.0\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"32.4\" y=\"14.6\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">3</text><rect x=\"38.4\" y=\"6.0\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"43.2\" y=\"14.6\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">4</text><line x1=\"39.9\" y1=\"15.5\" x2=\"46.5\" y2=\"9.0\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"49.2\" y=\"6.0\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"54.0\" y=\"14.6\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">5</text><rect x=\"60.0\" y=\"6.0\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"64.8\" y=\"14.6\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">6</text><line x1=\"61.5\" y1=\"15.5\" x2=\"68.1\" y2=\"9.0\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"70.8\" y=\"6.0\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"75.6\" y=\"14.6\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">7</text><rect x=\"81.6\" y=\"6.0\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"86.4\" y=\"14.6\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">8</text><line x1=\"83.1\" y1=\"15.5\" x2=\"89.7\" y2=\"9.0\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"92.4\" y=\"6.0\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"97.2\" y=\"14.6\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">9</text><line x1=\"93.9\" y1=\"15.5\" x2=\"100.5\" y2=\"9.0\" stroke=\"#3b82f6\" stroke-width=\"1\"/><rect x=\"103.2\" y=\"6.0\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"108.0\" y=\"14.6\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">10</text><line x1=\"104.7\" y1=\"15.5\" x2=\"111.3\" y2=\"9.0\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"6.0\" y=\"19.6\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"10.8\" y=\"28.2\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">11</text><rect x=\"16.8\" y=\"19.6\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"21.6\" y=\"28.2\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">12</text><line x1=\"18.3\" y1=\"29.1\" x2=\"24.9\" y2=\"22.6\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"27.6\" y=\"19.6\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"32.4\" y=\"28.2\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">13</text><rect x=\"38.4\" y=\"19.6\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"43.2\" y=\"28.2\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">14</text><line x1=\"39.9\" y1=\"29.1\" x2=\"46.5\" y2=\"22.6\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"49.2\" y=\"19.6\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"54.0\" y=\"28.2\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">15</text><line x1=\"50.7\" y1=\"29.1\" x2=\"57.3\" y2=\"22.6\" stroke=\"#3b82f6\" stroke-width=\"1\"/><rect x=\"60.0\" y=\"19.6\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"64.8\" y=\"28.2\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">16</text><line x1=\"61.5\" y1=\"29.1\" x2=\"68.1\" y2=\"22.6\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"70.8\" y=\"19.6\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"75.6\" y=\"28.2\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">17</text><rect x=\"81.6\" y=\"19.6\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"86.4\" y=\"28.2\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">18</text><line x1=\"83.1\" y1=\"29.1\" x2=\"89.7\" y2=\"22.6\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"92.4\" y=\"19.6\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"97.2\" y=\"28.2\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">19</text><rect x=\"103.2\" y=\"19.6\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"108.0\" y=\"28.2\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">20</text><line x1=\"104.7\" y1=\"29.1\" x2=\"111.3\" y2=\"22.6\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"6.0\" y=\"33.2\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"10.8\" y=\"41.8\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">21</text><line x1=\"7.5\" y1=\"42.7\" x2=\"14.1\" y2=\"36.2\" stroke=\"#3b82f6\" stroke-width=\"1\"/><rect x=\"16.8\" y=\"33.2\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"21.6\" y=\"41.8\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">22</text><line x1=\"18.3\" y1=\"42.7\" x2=\"24.9\" y2=\"36.2\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"27.6\" y=\"33.2\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"32.4\" y=\"41.8\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">23</text><rect x=\"38.4\" y=\"33.2\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"43.2\" y=\"41.8\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">24</text><line x1=\"39.9\" y1=\"42.7\" x2=\"46.5\" y2=\"36.2\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"49.2\" y=\"33.2\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"54.0\" y=\"41.8\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">25</text><line x1=\"50.7\" y1=\"42.7\" x2=\"57.3\" y2=\"36.2\" stroke=\"#16a34a\" stroke-width=\"1\"/><rect x=\"60.0\" y=\"33.2\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"64.8\" y=\"41.8\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">26</text><line x1=\"61.5\" y1=\"42.7\" x2=\"68.1\" y2=\"36.2\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"70.8\" y=\"33.2\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"75.6\" y=\"41.8\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">27</text><line x1=\"72.3\" y1=\"42.7\" x2=\"78.9\" y2=\"36.2\" stroke=\"#3b82f6\" stroke-width=\"1\"/><rect x=\"81.6\" y=\"33.2\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"86.4\" y=\"41.8\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">28</text><line x1=\"83.1\" y1=\"42.7\" x2=\"89.7\" y2=\"36.2\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"92.4\" y=\"33.2\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"97.2\" y=\"41.8\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">29</text><rect x=\"103.2\" y=\"33.2\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"108.0\" y=\"41.8\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">30</text><line x1=\"104.7\" y1=\"42.7\" x2=\"111.3\" y2=\"36.2\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"6.0\" y=\"46.8\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"10.8\" y=\"55.4\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">31</text><rect x=\"16.8\" y=\"46.8\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"21.6\" y=\"55.4\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">32</text><line x1=\"18.3\" y1=\"56.3\" x2=\"24.9\" y2=\"49.8\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"27.6\" y=\"46.8\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"32.4\" y=\"55.4\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">33</text><line x1=\"29.1\" y1=\"56.3\" x2=\"35.7\" y2=\"49.8\" stroke=\"#3b82f6\" stroke-width=\"1\"/><rect x=\"38.4\" y=\"46.8\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"43.2\" y=\"55.4\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">34</text><line x1=\"39.9\" y1=\"56.3\" x2=\"46.5\" y2=\"49.8\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"49.2\" y=\"46.8\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"54.0\" y=\"55.4\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">35</text><line x1=\"50.7\" y1=\"56.3\" x2=\"57.3\" y2=\"49.8\" stroke=\"#16a34a\" stroke-width=\"1\"/><rect x=\"60.0\" y=\"46.8\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"64.8\" y=\"55.4\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">36</text><line x1=\"61.5\" y1=\"56.3\" x2=\"68.1\" y2=\"49.8\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"70.8\" y=\"46.8\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"75.6\" y=\"55.4\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">37</text><rect x=\"81.6\" y=\"46.8\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"86.4\" y=\"55.4\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">38</text><line x1=\"83.1\" y1=\"56.3\" x2=\"89.7\" y2=\"49.8\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"92.4\" y=\"46.8\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"97.2\" y=\"55.4\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">39</text><line x1=\"93.9\" y1=\"56.3\" x2=\"100.5\" y2=\"49.8\" stroke=\"#3b82f6\" stroke-width=\"1\"/><rect x=\"103.2\" y=\"46.8\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"108.0\" y=\"55.4\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">40</text><line x1=\"104.7\" y1=\"56.3\" x2=\"111.3\" y2=\"49.8\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"6.0\" y=\"60.4\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"10.8\" y=\"69.0\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">41</text><rect x=\"16.8\" y=\"60.4\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"21.6\" y=\"69.0\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">42</text><line x1=\"18.3\" y1=\"69.9\" x2=\"24.9\" y2=\"63.4\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"27.6\" y=\"60.4\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"32.4\" y=\"69.0\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">43</text><rect x=\"38.4\" y=\"60.4\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"43.2\" y=\"69.0\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">44</text><line x1=\"39.9\" y1=\"69.9\" x2=\"46.5\" y2=\"63.4\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"49.2\" y=\"60.4\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"54.0\" y=\"69.0\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">45</text><line x1=\"50.7\" y1=\"69.9\" x2=\"57.3\" y2=\"63.4\" stroke=\"#3b82f6\" stroke-width=\"1\"/><rect x=\"60.0\" y=\"60.4\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"64.8\" y=\"69.0\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">46</text><line x1=\"61.5\" y1=\"69.9\" x2=\"68.1\" y2=\"63.4\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"70.8\" y=\"60.4\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#fef3c7\" stroke=\"#f59e0b\" stroke-width=\".8\"/><text x=\"75.6\" y=\"69.0\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#92400e\">47</text><rect x=\"81.6\" y=\"60.4\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"86.4\" y=\"69.0\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">48</text><line x1=\"83.1\" y1=\"69.9\" x2=\"89.7\" y2=\"63.4\" stroke=\"#ef4444\" stroke-width=\"1\"/><rect x=\"92.4\" y=\"60.4\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"97.2\" y=\"69.0\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">49</text><line x1=\"93.9\" y1=\"69.9\" x2=\"100.5\" y2=\"63.4\" stroke=\"#a855f7\" stroke-width=\"1\"/><rect x=\"103.2\" y=\"60.4\" width=\"9.6\" height=\"12.4\" rx=\"2\" fill=\"#f8fafc\" stroke=\"#cbd5e1\" stroke-width=\".8\"/><text x=\"108.0\" y=\"69.0\" font-family=\"system-ui\" font-size=\"5.6\" font-weight=\"800\" text-anchor=\"middle\" fill=\"#94a3b8\">50</text><line x1=\"104.7\" y1=\"69.9\" x2=\"111.3\" y2=\"63.4\" stroke=\"#ef4444\" stroke-width=\"1\"/></svg>";const P=palette('ntHzPal','',false),row=el('div','dv-grid');row.style.setProperty('--c',1);
+  const x=source(el('div','dv-t'),()=>({wd:'hz_chart',src:uri(svg),dw:180,dh:120}),nm);x.innerHTML=svg+'<span>Yüzlük Tablo</span>';x.setAttribute('aria-label',nm);row.append(x);P.append(row);
+  const hd=el('button','sub-h'),box=el('div','sub-box');hd.type='button';box.hidden=true;box.append(P);const set=()=>hd.textContent=(box.hidden?'▸ ':'▾ ')+nm;set();hd.onclick=()=>{box.hidden=!box.hidden;set()};
+  tools.append(hd,box);setTimeout(()=>tools.append(hd,box),0)}}
+/* ===== Örüntüler (Cebir) ===== */
+{const I={"ou_fig": ["Şekil örüntüleri", "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"120\" height=\"80\" viewBox=\"0 0 120 80\"><rect width=\"120\" height=\"80\" rx=\"8\" fill=\"#fff\"/><g stroke-linecap=\"round\" stroke-width=\"2.6\" fill=\"none\"><g stroke=\"#334155\"><path d=\"M8 30h12v12H8z\"/><path d=\"M30 30h24M30 42h24M30 30v12M42 30v12\"/><path d=\"M64 30h24M64 42h24M64 30v12M76 30v12\"/></g><g stroke=\"#f97316\"><path d=\"M54 30v12\"/><path d=\"M88 30h12M88 42h12M100 30v12M88 30v12\"/></g></g><g font-family=\"system-ui\" font-size=\"9\" font-weight=\"800\" fill=\"#334155\" text-anchor=\"middle\"><text x=\"14\" y=\"58\">4</text><text x=\"42\" y=\"58\">7</text><text x=\"82\" y=\"58\">10</text></g><text x=\"60\" y=\"72\" font-family=\"system-ui\" font-size=\"10\" font-weight=\"900\" fill=\"#1e40af\" text-anchor=\"middle\">3n + 1</text></svg>"], "ou_num": ["Sayı örüntüleri", "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"120\" height=\"80\" viewBox=\"0 0 120 80\"><rect width=\"120\" height=\"80\" rx=\"8\" fill=\"#fff\"/><g font-family=\"system-ui\" font-weight=\"900\" text-anchor=\"middle\"><rect x=\"6\" y=\"38\" width=\"22\" height=\"20\" rx=\"5\" fill=\"#fff\" stroke=\"#93c5fd\" stroke-width=\"1.8\"/><text x=\"17\" y=\"52\" font-size=\"10\" fill=\"#0f172a\">3</text><rect x=\"34\" y=\"38\" width=\"22\" height=\"20\" rx=\"5\" fill=\"#fff\" stroke=\"#93c5fd\" stroke-width=\"1.8\"/><text x=\"45\" y=\"52\" font-size=\"10\" fill=\"#0f172a\">7</text><rect x=\"62\" y=\"38\" width=\"22\" height=\"20\" rx=\"5\" fill=\"#fff\" stroke=\"#93c5fd\" stroke-width=\"1.8\"/><text x=\"73\" y=\"52\" font-size=\"10\" fill=\"#0f172a\">11</text><rect x=\"90\" y=\"38\" width=\"22\" height=\"20\" rx=\"5\" fill=\"#f5f3ff\" stroke=\"#a78bfa\" stroke-width=\"1.8\"/><text x=\"101\" y=\"52\" font-size=\"10\" fill=\"#7c3aed\">?</text><path d=\"M18 35 Q32 20 45 35\" fill=\"none\" stroke=\"#16a34a\" stroke-width=\"1.6\"/><text x=\"32\" y=\"22\" font-size=\"8\" fill=\"#16a34a\">+4</text><path d=\"M46 35 Q60 20 73 35\" fill=\"none\" stroke=\"#16a34a\" stroke-width=\"1.6\"/><text x=\"60\" y=\"22\" font-size=\"8\" fill=\"#16a34a\">+4</text><path d=\"M74 35 Q88 20 101 35\" fill=\"none\" stroke=\"#16a34a\" stroke-width=\"1.6\"/><text x=\"88\" y=\"22\" font-size=\"8\" fill=\"#16a34a\">+4</text></g></svg>"]};
+ const sec=[...menu.querySelectorAll(':scope > .menu-section')].find(x=>x.querySelector('.cat-label')?.textContent==='Cebir');
+ if(sec){const tools=sec.querySelector('.tools'),P=palette('ntOuPal','',false),row=el('div','dv-grid');row.style.setProperty('--c',2);
+  Object.entries(I).forEach(([k,[nm,svg]],i)=>{const x=source(el('div','dv-t'),()=>({wd:k,src:uri(svg),dw:180,dh:120}),nm);x.innerHTML=svg+'<span>'+nm+'</span>';x.setAttribute('aria-label',nm);row.append(x)});P.append(row);
+  const hd=el('button','sub-h'),box=el('div','sub-box');hd.type='button';box.hidden=true;box.append(P);const set=()=>hd.textContent=(box.hidden?'▸ ':'▾ ')+'Örüntüler';set();hd.onclick=()=>{box.hidden=!box.hidden;set()};tools.prepend(hd,box);const mv=()=>{const H=[...tools.querySelectorAll(':scope>.sub-h')].filter(h=>h!==hd);const ref=H[2];if(ref)tools.insertBefore(box,ref),tools.insertBefore(hd,box)};mv();setTimeout(mv,0)}}
+/* ===== Denklem: klasik yöntem kartı ===== */
+{const add2=()=>{const P=document.getElementById('ntImg_balance');if(!P||P.querySelector('[data-ec]'))return;const g=P.querySelector('.dv-grid');if(!g)return;g.style.setProperty('--c',2);
+ const im=g.querySelector('img');if(im){const c=im.closest('.dv-t');if(c&&!c.querySelector('span')){const sp=document.createElement('span');sp.textContent='Terazi ile';c.append(sp)}}
+ const nm='Karşıya atma',svg='<svg xmlns="http://www.w3.org/2000/svg" width="180" height="120" viewBox="0 0 180 120"><rect width="180" height="120" rx="10" fill="#f0f9ff"/><g font-family="Segoe UI,Arial" font-size="17" text-anchor="middle"><rect x="12" y="62" width="40" height="30" rx="8" fill="#e0f2fe" stroke="#7dd3fc"/><text x="32" y="83">3<tspan font-family="Times New Roman" font-style="italic">x</tspan></text><rect x="56" y="62" width="36" height="30" rx="8" fill="#fdf0e3" stroke="#f2c9a0" stroke-dasharray="3 2" opacity=".55"/><text x="74" y="83" opacity=".5">+ 5</text><text x="104" y="83" font-weight="700">=</text><rect x="116" y="62" width="30" height="30" rx="8" fill="#fdf0e3" stroke="#f2c9a0"/><text x="131" y="83">20</text><rect x="148" y="62" width="28" height="30" rx="8" fill="#fecaca" stroke="#ef4444"/><text x="162" y="83">−5</text></g><path d="M74 58 Q112 8 158 56" fill="none" stroke="#ef4444" stroke-width="2.4" stroke-dasharray="5 4"/><path d="M151 50l7 7 2-9" fill="none" stroke="#ef4444" stroke-width="2.4" stroke-linecap="round"/><text x="112" y="26" font-family="Segoe UI,Arial" font-size="11" font-weight="700" fill="#b45309" text-anchor="middle">karşıya at</text><text x="90" y="110" font-family="Segoe UI,Arial" font-size="10.5" fill="#64748b" text-anchor="middle">işaret değişir</text></svg>';const x=source(el('div','dv-t'),()=>({wd:'eq_cls',src:uri(svg),dw:180,dh:120}),nm);x.dataset.ec=1;x.innerHTML=svg+'<span>'+nm+'</span>';x.setAttribute('aria-label','Denklem çözümü: karşıya atma');g.append(x)};add2();setTimeout(add2,0)}
 /* ===== Birim Merdiveni: resimli, sürüklemeli menü kartı ===== */
 {const sec=[...menu.querySelectorAll(':scope > .menu-section')].find(x=>x.querySelector('.cat-label')?.textContent==='Geometri ve Ölçme');
  if(sec){const tools=sec.querySelector('.tools'),nm='Birim Merdiveni',src='data:image/jpeg;base64,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';
@@ -7855,3 +7871,743 @@ function panel(){const P=document.getElementById('foldPanel');if(!P||P.dataset.u
 panel();setTimeout(panel,500);
 })();
 </script>
+
+<style id="hz-css">
+.hz-card{transform-origin:0 0;position:relative;background:#fff;color:#172233;border:1px solid #e2e8f0;border-radius:20px;box-shadow:0 12px 32px rgba(15,23,42,.14);font-family:system-ui,"Segoe UI",sans-serif;padding:12px;box-sizing:border-box}
+.widget[data-type=hz_chart]>.body{padding:0!important}.widget[data-type=hz_chart] .art{overflow:visible}
+.hz-top{display:flex;align-items:center;gap:6px}
+.hz-seg{display:inline-flex;background:#f1f5f9;border-radius:10px;padding:3px;gap:1px}
+.hz-seg button{border:0;background:transparent;border-radius:8px;padding:5px 9px;font:700 12px system-ui;color:#475569;cursor:pointer;white-space:nowrap}
+.hz-seg button.on{background:#fff;color:#1e40af;box-shadow:0 1px 3px rgba(15,23,42,.15)}
+.hz-ib{width:28px;height:28px;border:0;border-radius:8px;background:#f1f5f9;color:#475569;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;flex:none}
+.hz-ib:hover{background:#e2e8f0}.hz-ib.on{background:#1e40af;color:#fff}
+.hz-ib svg{width:15px;height:15px}
+.hz-ctl{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;min-height:30px;margin-top:8px}
+.hz-btn{height:28px;border:0;background:#f1f5f9;color:#1e293b;border-radius:8px;padding:0 8px;font:700 12px system-ui;cursor:pointer;white-space:nowrap}
+.hz-btn:hover{background:#e2e8f0}.hz-btn.pri{background:#2563eb;color:#fff}.hz-btn.pri:hover{background:#1d4ed8}
+.hz-sw{width:17px;height:17px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #cbd5e1;cursor:pointer;padding:0;flex:none}
+.hz-sw.on{box-shadow:0 0 0 2px #0f172a}
+.hz-in{height:28px;width:40px;box-sizing:border-box;font:800 13px system-ui;border:1.5px solid #cbd5e1;border-radius:8px;color:#0f172a;text-align:center;padding:0}
+.hz-lab{font:700 12px system-ui;color:#64748b}
+.hz-sp{flex:1}
+.hz-wrap{position:relative;margin-top:8px}
+.hz-grid{display:grid;justify-content:center;grid-template-columns:repeat(5,44px) 5px repeat(5,44px);grid-template-rows:repeat(5,44px) 5px repeat(5,44px);gap:3px;touch-action:none;user-select:none;-webkit-user-select:none}
+.hz-c{position:relative;border-radius:9px;background:linear-gradient(180deg,#fff,#f8fafc);border:1px solid #e2e8f0;box-shadow:0 1px 1px rgba(15,23,42,.05);display:flex;align-items:center;justify-content:center;font:800 17px system-ui;color:#1e293b;cursor:pointer;transition:background .18s,color .18s,transform .12s,border-color .18s,box-shadow .18s;box-sizing:border-box}
+.hz-c:hover{border-color:#94a3b8}
+.hz-c.pop{animation:hzPop .3s ease-out}
+@keyframes hzPop{0%{transform:scale(1)}45%{transform:scale(1.16)}100%{transform:scale(1)}}
+.hz-c.shake{animation:hzShake .35s}
+@keyframes hzShake{20%,60%{transform:translateX(-4px)}40%,80%{transform:translateX(4px)}}
+.hz-c.x{color:#cbd5e1;background:#f8fafc}
+.hz-c.x::after{content:"";position:absolute;left:20%;right:20%;top:50%;height:2.5px;border-radius:2px;background:var(--xc,#ef4444);transform:rotate(-35deg)}
+.hz-c.pr{background:#fffbeb;border-color:#f59e0b;color:#b45309}
+.hz-c.pr::before{content:"";position:absolute;inset:5px;border-radius:50%;border:2.5px solid #f59e0b}
+.hz-c.one{background:#e2e8f0;color:#64748b}
+.hz-c.cur{box-shadow:0 0 0 3px #2563eb;z-index:1}
+.hz-c.hid{color:transparent}
+.hz-c.cov{background:linear-gradient(135deg,#6366f1,#8b5cf6);border-color:#6366f1;color:transparent}
+.hz-c.cov::after{content:"?";position:absolute;color:#fff;font:900 20px system-ui}
+.hz-c.open{background:#ede9fe;border-color:#8b5cf6;color:#6d28d9}
+.hz-c.ctr{background:#2563eb;border-color:#2563eb;color:#fff;box-shadow:0 4px 12px rgba(37,99,235,.4);z-index:1}
+.hz-c.nb{background:#eff6ff;border-color:#93c5fd;color:#1d4ed8}
+.hz-c .nbl{position:absolute;top:2px;right:4px;font:800 9px system-ui;color:#2563eb}
+.hz-ov{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.hz-info{margin-top:8px;background:#f8fafc;border-radius:10px;padding:6px 10px;font:600 12.5px/1.45 system-ui;color:#475569;min-height:20px}
+.hz-info b{color:#0f172a}
+.hz-tips{margin-top:6px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:6px 9px;font:500 12px/1.45 system-ui;color:#713f12}
+.hz-tips b{color:#92400e}.hz-tips ul{margin:0;padding-left:17px}
+</style>
+<script id="hz-js">
+(function(){
+const COLS=['#f87171','#fb923c','#fbbf24','#fde047','#a3e635','#4ade80','#2dd4bf','#38bdf8','#60a5fa','#818cf8','#c084fc','#f472b6'];
+const SIEVE={2:'#ef4444',3:'#3b82f6',5:'#16a34a',7:'#a855f7'};
+const PR=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97];const isP=n=>PR.includes(n);
+const S=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const IC={eye:S('<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'),eyeOff:S('<path d="M3 3l18 18"/><path d="M10.6 5.1A9.9 9.9 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.6 6.6C3.8 8.4 2 12 2 12s3.5 7 10 7c1.7 0 3.2-.5 4.5-1.1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>'),
+ tip:S('<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/>'),trash:S('<path d="M4 7h16"/><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"/><path d="M9 7V4h6v3"/>'),erase:S('<path d="M20 20H9L4 15l9-9 7 7-6 6"/><path d="M8 11l5 5"/>'),
+ reset:S('<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>')};
+function lock(w){w.classList.add('mus-lock');const h=w.querySelector(':scope>.handle');if(h&&!h.dataset.ml){h.dataset.ml=1;h.title='Taşımak için buradan tutup sürükle';const sp=h.querySelector('span');if(sp)sp.textContent='⠿  '+sp.textContent}
+ if(!document.getElementById('musLockCss')){const c=document.createElement('style');c.id='musLockCss';c.textContent='.widget.mus-lock>.handle{display:flex!important;background:#1e293b;border:0;color:#fff;font:700 13px/1.2 system-ui,sans-serif;padding:6px 8px 6px 12px;border-radius:12px 12px 0 0;margin:0 14px -2px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}.widget.mus-lock>.handle:active{cursor:grabbing}.widget.mus-lock>.handle button{background:#334155;color:#fff;border:0;border-radius:7px;font-size:15px;line-height:1;padding:3px 9px;cursor:pointer}';document.head.append(c)}}
+const TIPS={
+ paint:['Renk seç, sayılara dokun ya da parmağını sürükle. Aynı renkle tekrar dokununca boya kalkar.','Bir sayının katlarını boya ve deseni incele: 9’un katları çapraz, 10’un katları tek sütun olur.','İki sayının katlarını iki renkle boya: İki renkli kutular <b>ortak katlardır</b>, en küçüğü <b>EKOK</b>’tur.'],
+ sieve:['<b>Asal sayı</b>: 1’den büyük, yalnızca 1’e ve kendisine bölünen sayı. <b>1 asal değildir.</b>','<b>2</b>, çift olan tek asal sayıdır.','√100 = 10 olduğu için 2, 3, 5 ve 7’nin katlarını çizmek yeter; kalanlar kendiliğinden asal olarak işaretlenir. 1–100 arasında <b>25 asal</b> vardır.']
+
+};
+function setupHZ(w){const s=w.state;if(!['paint','sieve'].includes(s.mode))s.mode='paint';if(!Array.isArray(s.paint)||s.paint.length!==101)s.paint=Array(101).fill(null);s.col=s.col||COLS[0];
+ if(!s.sv)s.sv={x:{},pr:[],one:false};s.hideNums=!!s.hideNums;s.cov=s.cov||{};s.ctr=s.ctr||45;s.tips=!!s.tips;
+ const art=w.querySelector('.art'),BASE=520;
+ art.innerHTML=`<div class="hz-card" data-act="hz" style="width:${BASE}px"><div class="hz-top"><span class="hz-seg hz-mode"><button data-m="paint">🎨 Boya</button><button data-m="sieve">🔍 Asal sayı kalburu</button></span><span class="hz-sp"></span><button class="hz-ib hz-eye" title="Sayıları gizle / göster"></button><button class="hz-ib hz-tipb" title="İpuçları">${IC.tip}</button></div>
+ <div class="hz-ctl"></div><div class="hz-wrap"><div class="hz-grid"></div><svg class="hz-ov"></svg></div><div class="hz-info"></div><div class="hz-tips" hidden></div></div>`;
+ const card=art.firstElementChild,q=x=>card.querySelector(x),grid=q('.hz-grid'),ov=q('.hz-ov');lock(w);
+ s.sc=Math.max(.5,Math.min(2,+s.sc||1));const fit=()=>{card.style.transform=s.sc===1?'':`scale(${s.sc})`;w.style.width=BASE*s.sc+'px';art.style.height=card.offsetHeight*s.sc+'px'};
+ w.querySelector(':scope>.mb-grip')?.remove();const grip=document.createElement('div');grip.className='mb-grip';grip.title='Büyüt / küçült';grip.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#334155" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l8 8"/><path d="M8 8h4M8 8v4"/><path d="M16 16h-4M16 16v-4"/></svg>';w.append(grip);
+ grip.addEventListener('pointerdown',e=>{if(e.button!==0&&e.pointerType==='mouse')return;e.preventDefault();e.stopPropagation();select(w);const W0=w.getBoundingClientRect().width,sc0=s.sc,x0=e.clientX,y0=e.clientY,pid=e.pointerId;
+  const mv=ev=>{if(ev.pointerId!==pid)return;ev.preventDefault();s.sc=Math.round(Math.max(.5,Math.min(2,sc0*(W0+(ev.clientX-x0+(ev.clientY-y0)*1.4)*.85)/W0))*100)/100;fit()};
+  const up=ev=>{if(ev.pointerId!==pid)return;window.removeEventListener('pointermove',mv,true);window.removeEventListener('pointerup',up,true)};window.addEventListener('pointermove',mv,true);window.addEventListener('pointerup',up,true)});
+ if(window.ResizeObserver)new ResizeObserver(fit).observe(card);
+ const cells=[];for(let n=1;n<=100;n++){const r=Math.floor((n-1)/10),c=(n-1)%10,e=document.createElement('div');e.className='hz-c';e.textContent=n;e.dataset.n=n;e.style.gridColumn=(c<5?c+1:c+2);e.style.gridRow=(r<5?r+1:r+2);grid.append(e);cells[n]=e}
+ const pop=(n,cls='pop')=>{const c=cells[n];c.classList.remove(cls);void c.offsetWidth;c.classList.add(cls)};
+ const info=t=>q('.hz-info').innerHTML=t;
+ let tk=0,pending=null;
+ /* ---------- görünümler ---------- */
+ function base(c){c.className='hz-c'+(s.hideNums?' hid':'');c.style.background='';c.style.borderColor='';c.style.opacity='';c.querySelector('.nbl')?.remove()}
+ function view(){ov.innerHTML='';for(let n=1;n<=100;n++){const c=cells[n];base(c);
+   if(s.mode==='paint'){const v=s.paint[n];if(v&&v.includes('|')){const [a,b]=v.split('|');c.style.background=`linear-gradient(135deg,${a} 50%,${b} 50%)`;c.style.borderColor='#475569'}else if(v){c.style.background=v;c.style.borderColor=v}}
+   else if(s.mode==='sieve'){const sv=s.sv;if(n===1&&sv.one)c.classList.add('one');if(sv.x[n]){c.classList.add('x');c.style.setProperty('--xc',sv.x[n])}if(sv.pr.includes(n))c.classList.add('pr');if(n===pending)c.classList.add('cur')}
+   else if(s.mode==='hide'){if(s.cov[n]===1)c.classList.add('cov');else if(s.cov[n]===2)c.classList.add('open')}}
+}
+ function nbView(){const n=s.ctr,r=Math.floor((n-1)/10),col=(n-1)%10;cells[n].classList.add('ctr');
+  const D=[[0,1,'+1'],[0,-1,'−1'],[1,0,'+10'],[-1,0,'−10'],[1,1,'+11'],[1,-1,'+9'],[-1,1,'−9'],[-1,-1,'−11']];
+  const wr=q('.hz-wrap').getBoundingClientRect(),k=wr.width/q('.hz-wrap').offsetWidth||1,ctr=(m)=>{const b=cells[m].getBoundingClientRect();return[(b.left+b.width/2-wr.left)/k,(b.top+b.height/2-wr.top)/k]};
+  ov.innerHTML='<defs><marker id="hzA'+w.dataset.hid+'" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0L10,5L0,10z" fill="#2563eb"/></marker></defs>';
+  const list=[];D.forEach(([dr,dc,l],i)=>{const rr=r+dr,cc=col+dc;if(rr<0||rr>9||cc<0||cc>9)return;const m=rr*10+cc+1;const c=cells[m];c.classList.add('nb');if(i>=4)c.style.opacity='.75';const t=document.createElement('span');t.className='nbl';t.textContent=l;c.append(t);
+   const [x1,y1]=ctr(n),[x2,y2]=ctr(m),ux=x2-x1,uy=y2-y1,L=Math.hypot(ux,uy);const a=document.createElementNS('http://www.w3.org/2000/svg','line');Object.entries({x1:x1+ux/L*16,y1:y1+uy/L*16,x2:x2-ux/L*14,y2:y2-uy/L*14,stroke:'#2563eb','stroke-width':i<4?2.5:1.5,'stroke-dasharray':i<4?'':'3 3','marker-end':`url(#hzA${w.dataset.hid})`}).forEach(([a_,v])=>a.setAttribute(a_,v));ov.append(a);if(i<4)list.push(`${n} ${l.replace('−','− ').replace('+','+ ')} = <b>${m}</b>`)});
+  info(list.join(' · '))}
+ /* ---------- kalbur ---------- */
+ const nextCand=()=>{for(let n=2;n<=100;n++)if(!s.sv.x[n]&&!s.sv.pr.includes(n))return n;return null};
+ const remMult=p=>{const r=[];for(let m=p*2;m<=100;m+=p)if(!s.sv.x[m])r.push(m);return r};
+ function sieveInfo(){const sv=s.sv,nc=nextCand();
+  if(!sv.one)return info('Önce <b>1</b>’e dokun: 1 asal da değildir, bileşik de değildir.');
+  if(pending)return info(`<b>${pending}</b> asal! Şimdi ${pending}’nin katlarını çiz: ${pending*2}, ${pending*3}, ${pending*4}… <span style="color:#94a3b8">(kalan ${remMult(pending).length})</span>`);
+  if(nc&&nc*nc>100)return info(`Sıradaki <b>${nc}</b>. ${nc} × ${nc} = ${nc*nc} > 100 olduğu için kalan bütün sayılar asaldır.`);
+  if(nc)return info('Çizilmemiş <b>en küçük</b> sayıya dokun: o bir asal sayıdır.');
+  info(`🎉 1–100 arasında <b>${sv.pr.length}</b> asal sayı var: ${sv.pr.join(', ')}`)}
+ function finishPrimes(){const L=[];for(let n=2;n<=100;n++)if(!s.sv.x[n]&&!s.sv.pr.includes(n))L.push(n);const t=tk;let i=0;const go=()=>{if(t!==tk)return;if(i<L.length){s.sv.pr.push(L[i]);view();pop(L[i]);i++;setTimeout(go,40)}else sieveInfo()};go()}
+ function autoEnd(){const nc=nextCand();if(s.sv.one&&!pending&&nc&&nc*nc>100){const t=++tk;info(`Sıradaki sayı <b>${nc}</b>. ${nc} × ${nc} = ${nc*nc} > 100 olduğu için kalan bütün sayılar asaldır!`);setTimeout(()=>{if(t===tk)finishPrimes()},1600)}}
+ function autoStep(){const sv=s.sv;if(!sv.one){sv.one=true;view();pop(1);sieveInfo();return true}
+  if(pending){const r=remMult(pending);if(r.length){sv.x[r[0]]=SIEVE[pending]||'#ef4444';if(r.length===1)pending=null;view();pop(r[0]);sieveInfo();return true}pending=null}
+  const nc=nextCand();if(!nc){sieveInfo();return false}if(nc*nc>100){finishPrimes();return false}
+  sv.pr.push(nc);pending=nc;view();pop(nc);sieveInfo();return true}
+ function clickSieve(n){const sv=s.sv;tk++;
+  if(!sv.one){if(n===1){sv.one=true;view();pop(1);sieveInfo()}else{pop(n,'shake');info('⚠️ Önce <b>1</b>’i ayır: 1 asal değildir.')}return}
+  if(n===1)return;
+  if(pending){if(sv.x[n])return;if(n%pending===0&&n!==pending){sv.x[n]=SIEVE[pending]||'#ef4444';if(!remMult(pending).length)pending=null;view();pop(n);sieveInfo();autoEnd()}else{pop(n,'shake');info(`⚠️ <b>${n}</b>, ${pending}’nin katı değil.`)}return}
+  if(sv.x[n]||sv.pr.includes(n))return;const nc=nextCand();
+  if(n===nc){if(nc*nc>100){autoEnd();return}sv.pr.push(n);pending=n;view();pop(n);sieveInfo()}
+  else{pop(n,'shake');info(`⚠️ Çizilmemiş en küçük sayıdan başla: <b>${nc}</b>.`)}}
+ /* ---------- gizli sayı ---------- */
+ function newPuzzle(k){s.cov={};const all=[...Array(100).keys()].map(i=>i+1).sort(()=>Math.random()-.5).slice(0,k);all.forEach(n=>s.cov[n]=1);view();info(`<b>${k}</b> kutu kapandı. Kapalı kutudaki sayıyı bul, sonra dokunup kontrol et.`)}
+ /* ---------- boyama ---------- */
+ function fillAnim(L,label){const t=++tk;let i=0;const go=()=>{if(t!==tk)return;if(i<L.length){const n=L[i++],o=s.paint[n];s.paint[n]=s.col==='erase'?null:(o&&!o.includes('|')&&o!==s.col)?o+'|'+s.col:s.col;view();pop(n);setTimeout(go,Math.max(20,500/L.length))}
+  else{const both=[];for(let n=1;n<=100;n++)if((s.paint[n]||'').includes('|'))both.push(n);info(`<b>${label}</b> boyandı.`+(both.length?` Ortak (iki renkli): <b>${both.join(', ')}</b> · en küçüğü <b>${both[0]}</b>`:''))}};go()}
+ /* ---------- denetimler ---------- */
+ function ctl(){card.querySelectorAll('.hz-ctl+.hz-ctl').forEach(e=>e.remove());const C=q('.hz-ctl');C.innerHTML='';
+const add=(h)=>{const t=document.createElement('template');t.innerHTML=h.trim();const e=t.content.firstChild;C.append(e);return e};
+  const bt=(t,f,cls)=>{const b=add(`<button type="button" class="hz-btn ${cls||''}">${t}</button>`);b.onclick=f;return b};
+  if(s.mode==='paint'){COLS.forEach(c=>{const b=add(`<button type="button" class="hz-sw${c===s.col?' on':''}" style="background:${c}"></button>`);b.onclick=()=>{s.col=c;ctl()}});
+   const er=add(`<button type="button" class="hz-ib${s.col==='erase'?' on':''}" title="Silgi">${IC.erase}</button>`);er.onclick=()=>{s.col='erase';ctl()};
+   add('<span class="hz-sp"></span>');add('<span class="hz-lab">Katları</span>');const inp=add(`<input class="hz-in" inputmode="numeric" value="${s.mult||3}">`);
+   const go=bt('Boya',()=>{const k=parseInt(inp.value);if(!(k>=1&&k<=50)){inp.style.borderColor='#ef4444';return}inp.style.borderColor='';s.mult=k;fillAnim(Array.from({length:Math.floor(100/k)},(_,i)=>(i+1)*k),`${k}’in katları`)},'pri');inp.onkeydown=e=>{if(e.key==='Enter')go.click()};
+   const C2=document.createElement('div');C2.className='hz-ctl';C2.style.marginTop='5px';C.after(C2);const bt2=(t,f)=>{const b=document.createElement('button');b.type='button';b.className='hz-btn';b.textContent=t;b.onclick=f;C2.append(b);return b};
+   const lb=document.createElement('span');lb.className='hz-lab';lb.textContent='Hızlı boya:';C2.append(lb);
+   [['Çift sayılar',n=>n%2===0],['Tek sayılar',n=>n%2===1],['Asal sayılar',isP],['Kare sayılar',n=>Number.isInteger(Math.sqrt(n))]].forEach(([t,f])=>bt2(t,()=>{const L=[];for(let n=1;n<=100;n++)if(f(n))L.push(n);fillAnim(L,t)}));
+   const sp2=document.createElement('span');sp2.className='hz-sp';C2.append(sp2);const tr=document.createElement('button');tr.type='button';tr.className='hz-ib';tr.title='Temizle';tr.innerHTML=IC.trash;tr.onclick=()=>{tk++;s.paint=Array(101).fill(null);view();info('Temizlendi.')};C2.append(tr)}
+  else if(s.mode==='sieve'){bt('▶ Sıradaki adım',()=>{tk++;autoStep()},'pri');bt('⏩ Sonuna kadar göster',()=>{const t=++tk;const go=()=>{if(t!==tk)return;if(autoStep())setTimeout(go,pending?110:450)};go()});
+   add('<span class="hz-sp"></span>');Object.entries(SIEVE).forEach(([p,c])=>add(`<span class="hz-lab" style="display:inline-flex;align-items:center;gap:3px"><i style="width:10px;height:3px;border-radius:2px;background:${c};display:inline-block"></i>${p}</span>`));
+   const r=add(`<button type="button" class="hz-ib" title="Baştan">${IC.reset}</button>`);r.onclick=()=>{tk++;s.sv={x:{},pr:[],one:false};pending=null;view();sieveInfo()}}
+  card.querySelectorAll('.hz-mode button').forEach(x=>x.classList.toggle('on',x.dataset.m===s.mode));
+  const eye=q('.hz-eye');eye.innerHTML=s.hideNums?IC.eyeOff:IC.eye;eye.classList.toggle('on',s.hideNums);
+  q('.hz-tips').innerHTML='<ul>'+TIPS[s.mode].map(t=>'<li>'+t+'</li>').join('')+'</ul>';q('.hz-tips').hidden=!s.tips;q('.hz-tipb').classList.toggle('on',s.tips);requestAnimationFrame(fit)}
+ /* ---------- dokunma ---------- */
+ grid.addEventListener('pointerdown',e=>{const c=e.target.closest('.hz-c');if(!c)return;e.preventDefault();e.stopPropagation();select(w);const n=+c.dataset.n;
+  if(s.mode==='sieve')return clickSieve(n);
+  const val=s.col==='erase'||s.paint[n]===s.col?null:s.col,pid=e.pointerId;s.paint[n]=val;view();pop(n);
+  const mv=m=>{if(m.pointerId!==pid)return;const el=document.elementFromPoint(m.clientX,m.clientY),cc=el&&el.closest&&el.closest('.hz-c');if(cc&&grid.contains(cc)){const k=+cc.dataset.n;if(s.paint[k]!==val){s.paint[k]=val;view();pop(k)}}};
+  const up=u=>{if(u.pointerId!==pid)return;window.removeEventListener('pointermove',mv,true);window.removeEventListener('pointerup',up,true)};window.addEventListener('pointermove',mv,true);window.addEventListener('pointerup',up,true)});
+ card.querySelectorAll('.hz-mode button').forEach(x=>x.onclick=()=>{tk++;s.mode=x.dataset.m;render()});
+ q('.hz-eye').onclick=()=>{s.hideNums=!s.hideNums;ctl();view()};q('.hz-tipb').onclick=()=>{s.tips=!s.tips;ctl()};
+ function render(){ctl();view();if(s.mode==='paint')info('Renk seç ve sayılara dokun ya da bir sayının katlarını boya.');else sieveInfo()}
+ if(!w.dataset.hid)w.dataset.hid=Math.random().toString(36).slice(2,7);
+ render();requestAnimationFrame(fit)}
+names.hz_chart='Yüzlük Tablo';
+const _setupHZ=window.setup;window.setup=function(w,type){if(type==='hz_chart'){setupHZ(w);return}return _setupHZ.apply(this,arguments)};
+window.addHZ=function(st){const pb=document.getElementById('penToggle');if(pb&&!pb.classList.contains('active'))pb.click();const w=add('hz_chart',st);w.style.left=Math.max(10,(stage.clientWidth-w.offsetWidth)/2)+stage.scrollLeft+'px';w.style.top=20+stage.scrollTop+'px';return w};
+})();
+</script>
+
+<style id="ou-css">
+.ou-card{transform-origin:0 0;position:relative;background:#fff;color:#172233;border:1px solid #e2e8f0;border-radius:20px;box-shadow:0 12px 32px rgba(15,23,42,.14);font-family:system-ui,"Segoe UI",sans-serif;padding:12px;box-sizing:border-box}
+.widget[data-type^=ou_]>.body{padding:0!important}.widget[data-type^=ou_] .art{overflow:visible}
+.ou-card svg{display:block;overflow:visible;user-select:none;-webkit-user-select:none}
+.ou-top{display:flex;align-items:center;gap:6px}
+.ou-seg{display:inline-flex;background:#f1f5f9;border-radius:10px;padding:3px;gap:1px}
+.ou-seg button{border:0;background:transparent;border-radius:8px;padding:5px 10px;font:700 12.5px system-ui;color:#475569;cursor:pointer;white-space:nowrap}
+.ou-seg button.on{background:#fff;color:#1e40af;box-shadow:0 1px 3px rgba(15,23,42,.15)}
+.ou-ib{width:28px;height:28px;border:0;border-radius:8px;background:#f1f5f9;color:#475569;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;flex:none;font-size:14px}
+.ou-ib:hover{background:#e2e8f0}.ou-ib.on{background:#1e40af;color:#fff}
+.ou-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:8px}
+.ou-btn{height:28px;border:0;background:#f1f5f9;color:#1e293b;border-radius:8px;padding:0 10px;font:700 12.5px system-ui;cursor:pointer;white-space:nowrap}
+.ou-btn:hover{background:#e2e8f0}.ou-btn.pri{background:#2563eb;color:#fff}.ou-btn.pri:hover{background:#1d4ed8}.ou-btn.ok{background:#16a34a;color:#fff}.ou-btn.on{background:#1e40af;color:#fff}
+.ou-in{height:28px;box-sizing:border-box;font:800 13px system-ui;border:1.5px solid #cbd5e1;border-radius:8px;color:#0f172a;text-align:center;padding:0 4px;width:52px}
+.ou-in.bad{border-color:#ef4444;background:#fef2f2}.ou-in.good{border-color:#16a34a;background:#f0fdf4}
+.ou-lab{font:700 12.5px system-ui;color:#64748b}
+.ou-sp{flex:1}
+.ou-stage{margin-top:10px;background:linear-gradient(180deg,#f8fafc,#fff);border:1px solid #eef2f7;border-radius:14px;padding:8px;overflow:hidden}
+.ou-box{margin-top:8px;background:#f8fafc;border-radius:12px;padding:8px 10px;font:600 13px/1.5 system-ui;color:#475569}
+.ou-box b{color:#0f172a}
+.ou-rule{font:900 22px system-ui;color:#1e40af;letter-spacing:.3px}
+.ou-tbl{border-collapse:separate;border-spacing:0;font:700 13px system-ui;color:#1e293b}
+.ou-tbl th,.ou-tbl td{padding:4px 9px;text-align:center;border-bottom:1px solid #e2e8f0}
+.ou-tbl th{color:#64748b;font-weight:800;text-align:left;background:#f1f5f9}
+.ou-tbl td.q{color:#7c3aed}
+.ou-tbl .df{font:800 11px system-ui;color:#ea580c}
+.ou-tips{margin-top:8px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:6px 9px;font:500 12px/1.45 system-ui;color:#713f12}
+.ou-tips b{color:#92400e}.ou-tips ul{margin:0;padding-left:17px}
+.ou-fb{font:800 13px system-ui;border-radius:9px;padding:5px 9px;margin-top:6px}.ou-fb.ok{background:#dcfce7;color:#166534}.ou-fb.no{background:#fee2e2;color:#991b1b}
+.ou-fig{transition:opacity .35s,transform .45s cubic-bezier(.3,1.3,.5,1)}
+.ou-new{animation:ouNew .6s ease-out}
+@keyframes ouNew{0%{opacity:0}100%{opacity:1}}
+.ou-term{transition:transform .3s}
+.ou-pal{display:flex;gap:4px}
+.ou-pal button{width:30px;height:30px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;cursor:pointer;padding:3px;display:flex;align-items:center;justify-content:center}
+.ou-pal button:hover{border-color:#94a3b8}
+.ou-card [hidden]{display:none!important}
+.on-grid{display:grid;grid-template-columns:120px repeat(5,1fr) 30px 170px;gap:6px;align-items:center}
+.on-h{font:800 12.5px system-ui;color:#64748b}
+.on-c{height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font:900 24px system-ui;color:#0f172a;box-sizing:border-box;text-align:center;width:100%;border:0;transition:background .2s,box-shadow .2s}
+.on-c.n{height:24px;font:800 13px system-ui;color:#94a3b8;background:transparent}
+.on-c.tg{background:#fce7f3;box-shadow:inset 0 0 0 2px #f9a8d4}
+.on-c.my{background:#eff6ff;box-shadow:inset 0 0 0 2px #bfdbfe;color:#1d4ed8}
+.on-c.ok{background:#dcfce7;box-shadow:inset 0 0 0 2.5px #22c55e;color:#166534}
+.on-in{background:#fff;box-shadow:inset 0 0 0 2px #cbd5e1;font:900 22px system-ui;outline:none}
+.on-in:focus{box-shadow:inset 0 0 0 2.5px #2563eb}
+.on-in.good{background:#dcfce7;box-shadow:inset 0 0 0 2.5px #22c55e;color:#166534}.on-in.bad{background:#fee2e2;box-shadow:inset 0 0 0 2.5px #ef4444;color:#991b1b}.on-in.shown{background:#f5f3ff;box-shadow:inset 0 0 0 2px #a78bfa;color:#6d28d9}
+.on-dots{font:900 20px system-ui;color:#94a3b8;text-align:center}
+.on-q{border-radius:12px;padding:6px;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;font:800 13px system-ui;color:#0f172a}
+.on-q.tg{background:#ecfeff;box-shadow:inset 0 0 0 2px #67e8f9}.on-q.my{background:#ecfeff;box-shadow:inset 0 0 0 2px #67e8f9}
+.on-df{font:800 12px system-ui;color:#ea580c;text-align:left;margin-left:-14px}
+.on-arr{position:relative;height:38px;grid-column:2/7}.on-arr svg{position:absolute;left:0;top:0;overflow:visible}
+.on-ctl small{font:800 11.5px system-ui;color:var(--c);opacity:.85}
+.on-soz{font:700 12px system-ui;color:#0e7490;margin-top:2px}
+.on-ctl{display:flex;flex-direction:column;align-items:center;gap:3px}
+.on-ctl>span{font:800 12.5px system-ui;color:var(--c)}
+.on-ctl>div{display:flex;align-items:center;gap:4px}
+.on-ctl button{width:30px;height:30px;border:0;border-radius:8px;background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c);font:900 13px system-ui;cursor:pointer}
+.on-ctl button:hover{background:color-mix(in srgb,var(--c) 22%,#fff)}
+.on-ctl b{min-width:44px;height:36px;border:2.5px solid var(--c);border-radius:9px;display:flex;align-items:center;justify-content:center;font:900 18px system-ui;color:var(--c)}
+</style>
+<script id="ou-js">
+(function(){
+const NS='http://www.w3.org/2000/svg';
+const E=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.append(e);return e};
+const T=(p,x,y,t,o={})=>{const e=E('text',Object.assign({x,y,'text-anchor':'middle','font-size':13,'font-weight':800,fill:'#0f172a','font-family':'system-ui,sans-serif'},o),p);e.textContent=t;return e};
+const sgn=(v,first)=>v<0?(first?'−':' − ')+Math.abs(v):(first?'':' + ')+v;
+function lock(w){w.classList.add('mus-lock');const h=w.querySelector(':scope>.handle');if(h&&!h.dataset.ml){h.dataset.ml=1;h.title='Taşımak için buradan tutup sürükle';const sp=h.querySelector('span');if(sp)sp.textContent='⠿  '+sp.textContent}
+ if(!document.getElementById('musLockCss')){const c=document.createElement('style');c.id='musLockCss';c.textContent='.widget.mus-lock>.handle{display:flex!important;background:#1e293b;border:0;color:#fff;font:700 13px/1.2 system-ui,sans-serif;padding:6px 8px 6px 12px;border-radius:12px 12px 0 0;margin:0 14px -2px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}.widget.mus-lock>.handle:active{cursor:grabbing}.widget.mus-lock>.handle button{background:#334155;color:#fff;border:0;border-radius:7px;font-size:15px;line-height:1;padding:3px 9px;cursor:pointer}';document.head.append(c)}}
+
+/* ======== 1) ŞEKİL ÖRÜNTÜLERİ ======== */
+const OLD='#334155',NEW='#f97316';
+const FIG={
+ sq:{t:'Kibritten kareler',u:'kibrit',f:n=>3*n+1,lin:[3,1],draw(g,n,s,hl){const L=[];for(let i=0;i<n;i++){const nw=hl&&i===n-1;L.push([i,0,i+1,0,nw],[i,1,i+1,1,nw])}for(let i=0;i<=n;i++)L.push([i,0,i,1,hl&&i===n]);return stick(g,L,s)},why:'Her yeni kareye <b>3 kibrit</b> eklenir (üst, alt, sağ). İlk kare 4 kibrittir.'},
+ tri:{t:'Kibritten üçgenler',u:'kibrit',f:n=>2*n+1,lin:[2,1],draw(g,n,s,hl){const P=k=>[k/2,k%2?0:.866];const L=[];for(let k=0;k<=n;k++){const a=P(k),b=P(k+1);L.push([a[0],a[1],b[0],b[1],hl&&k===n])}for(let i=0;i<n;i++){const a=P(i),b=P(i+2);L.push([a[0],a[1],b[0],b[1],hl&&i===n-1])}return stick(g,L,s,.866)},why:'Her yeni üçgene <b>2 kibrit</b> eklenir. İlk üçgen 3 kibrittir.'},
+ ev:{t:'Kibritten evler',u:'kibrit',f:n=>5*n+1,lin:[5,1],draw(g,n,s,hl){const L=[];for(let i=0;i<n;i++){const nw=hl&&i===n-1;L.push([i,.6,i+1,.6,nw],[i,1.6,i+1,1.6,nw],[i,.6,i+.5,0,nw],[i+.5,0,i+1,.6,nw])}for(let i=0;i<=n;i++)L.push([i,.6,i,1.6,hl&&i===n]);return stick(g,L,s)},why:'Her yeni eve <b>5 kibrit</b> eklenir (2 çatı, üst, alt, sağ duvar). İlk ev 6 kibrittir.'},
+ plus:{t:'Noktalardan artı',u:'nokta',f:n=>4*n+1,lin:[4,1],draw(g,n,s,hl){const D=[[n,n,false]];for(let k=1;k<=n;k++){const nw=hl&&k===n;D.push([n+k,n,nw],[n-k,n,nw],[n,n+k,nw],[n,n-k,nw])}return dots(g,D,s)},why:'Her adımda dört kola birer nokta eklenir: <b>+4</b>. Ortada 1 nokta hep vardır.'},
+ L:{t:'Noktalardan L harfi',u:'nokta',f:n=>2*n-1,lin:[2,-1],draw(g,n,s,hl){const D=[];for(let i=0;i<n;i++)D.push([0,i,hl&&i===n-1]);for(let i=1;i<n;i++)D.push([i,n-1,hl&&i===n-1]);return dots(g,D,s)},why:'Her adımda iki kola birer nokta eklenir: <b>+2</b>. Bunlar tek sayılardır.'},
+ sqr:{t:'Kare sayılar',u:'nokta',f:n=>n*n,draw(g,n,s,hl){const D=[];for(let r=0;r<n;r++)for(let c=0;c<n;c++)D.push([c,r,hl&&(r===n-1||c===n-1)]);return dots(g,D,s)},why:'Her adımda bir “L” eklenir: +3, +5, +7… Fark sabit değil! Kural: <b>n.n = n²</b>.',rule:'n²',ex:n=>`${n}.${n}`},
+ rect:{t:'Dikdörtgen sayılar',u:'nokta',f:n=>n*(n+1),draw(g,n,s,hl){const D=[];for(let r=0;r<n;r++)for(let c=0;c<=n;c++)D.push([c,r,hl&&(r===n-1||c===n)]);return dots(g,D,s)},why:'n sıra, her sırada n + 1 nokta. Fark +4, +6, +8… sabit değil! Kural: <b>n.(n + 1)</b>.',rule:'n.(n + 1)',ex:n=>`${n}.${n+1}`},
+ trg:{t:'Üçgensel sayılar',u:'nokta',f:n=>n*(n+1)/2,draw(g,n,s,hl){const D=[];for(let r=0;r<n;r++)for(let c=0;c<=r;c++)D.push([c-r/2+(n-1)/2,r,hl&&r===n-1]);return dots(g,D,s)},why:'Her adımda bir sıra eklenir: +2, +3, +4… Fark sabit değil! Kural: <b>n.(n + 1) ÷ 2</b>.',rule:'n.(n + 1) ÷ 2',ex:n=>`${n}.${n+1} ÷ 2`}};
+function stick(g,L,s,h=1){L.forEach(([x1,y1,x2,y2,nw])=>{const a=[x1*s,y1*s],b=[x2*s,y2*s];E('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:nw?NEW:OLD,'stroke-width':Math.max(3,s*.11),'stroke-linecap':'round'},g);E('circle',{cx:b[0],cy:b[1],r:Math.max(2.4,s*.07),fill:nw?'#b91c1c':'#dc2626'},g)});const xs=L.flatMap(l=>[l[0],l[2]]),ys=L.flatMap(l=>[l[1],l[3]]);return[Math.max(...xs)*s,Math.max(...ys)*s]}
+function dots(g,D,s){D.forEach(([x,y,nw])=>E('circle',{cx:x*s,cy:y*s,r:s*.32,fill:nw?NEW:'#3b82f6',stroke:nw?'#c2410c':'#1d4ed8','stroke-width':1.5},g));const xs=D.map(d=>d[0]),ys=D.map(d=>d[1]);return[Math.max(...xs)*s,Math.max(...ys)*s]}
+function ruleStr([a,b]){return(a===1?'':a)+'n'+(b?sgn(b):'')}
+
+function figTab(w,box,fit){const s=w.state;if(!FIG[s.fig])s.fig='sq';s.fn=Math.max(3,Math.min(6,s.fn||4));
+ box.innerHTML=`<div class="ou-row"><select class="ou-in ou-fs" style="width:auto;text-align:left;padding:0 6px"></select><span class="ou-sp"></span><span class="ou-lab">Adım</span><button class="ou-btn ou-m">−</button><b class="ou-nn" style="font:900 15px system-ui;min-width:16px;text-align:center"></b><button class="ou-btn ou-p">+</button><button class="ou-ib ou-hl on" title="Eklenen parçayı renklendir">✨</button></div>
+ <div class="ou-stage"><svg class="ou-svg" width="736" height="230" viewBox="0 0 736 230"></svg></div>
+ <div class="ou-row ou-pred"><span class="ou-lab">Tahmin et:</span><span class="ou-pq" style="font:800 13px system-ui;color:#7c3aed"></span><input class="ou-in ou-pg" inputmode="numeric"><button class="ou-btn ok ou-pc">Kontrol et</button><span class="ou-pf" style="font:800 13px system-ui"></span></div>
+ <div style="display:flex;gap:10px;margin-top:8px;align-items:flex-start"><div class="ou-tw"></div><div class="ou-box" style="flex:1;margin-top:0"><div class="ou-why"></div><div class="ou-row" style="margin-top:6px"><button class="ou-btn pri ou-rb">Kuralı göster</button><span class="ou-rule ou-rv"></span></div><div class="ou-row"><span class="ou-lab">Kaçıncı adım?</span><input class="ou-in ou-k" value="10" inputmode="numeric"><button class="ou-btn ok ou-kb">Hesapla</button><span class="ou-kr" style="font:800 14px system-ui;color:#0f172a"></span></div></div></div>`;
+ const q=x=>box.querySelector(x),sel=q('.ou-fs');Object.entries(FIG).forEach(([k,f])=>{const o=document.createElement('option');o.value=k;o.textContent=f.t;sel.append(o)});sel.value=s.fig;let showR=false,hl=true;
+ let rev=false;const rs=()=>{rev=false;q('.ou-pg').value='';q('.ou-pg').className='ou-in ou-pg';q('.ou-pf').textContent=''};
+ sel.onchange=()=>{s.fig=sel.value;showR=false;rs();draw()};q('.ou-m').onclick=()=>{s.fn=Math.max(3,s.fn-1);rs();draw()};q('.ou-p').onclick=()=>{s.fn=Math.min(6,s.fn+1);rs();draw(true)};
+ const pc=()=>{const F=FIG[s.fig],v=parseInt(q('.ou-pg').value),ok=v===F.f(s.fn+1);q('.ou-pg').className='ou-in ou-pg '+(ok?'good':'bad');q('.ou-pf').innerHTML=ok?'<span style="color:#16a34a">🎉 Doğru! İşte '+(s.fn+1)+'. adım.</span>':'<span style="color:#dc2626">Tekrar dene: Tablodaki farka bak.</span>';if(ok){rev=true;draw(false,true)}};q('.ou-pc').onclick=pc;q('.ou-pg').onkeydown=e=>{if(e.key==='Enter')pc()};q('.ou-hl').onclick=e=>{hl=!hl;e.currentTarget.classList.toggle('on',hl);draw()};
+ q('.ou-rb').onclick=()=>{showR=!showR;draw()};
+ const calc=()=>{const F=FIG[s.fig],k=parseInt(q('.ou-k').value);if(!(k>=1&&k<=1000)){q('.ou-k').classList.add('bad');return}q('.ou-k').classList.remove('bad');const v=F.f(k);q('.ou-kr').innerHTML=F.lin?`${F.lin[0]}.${k}${sgn(F.lin[1])} = <span style="color:#1e40af">${v}</span> ${F.u}`:`${F.ex(k)} = <span style="color:#1e40af">${v}</span> ${F.u}`};q('.ou-kb').onclick=calc;q('.ou-k').onkeydown=e=>{if(e.key==='Enter')calc()};
+ function draw(grow,rv){const F=FIG[s.fig],svg=q('.ou-svg');svg.innerHTML='';q('.ou-nn').textContent=s.fn;q('.ou-pq').textContent=`${s.fn+1}. adımda kaç ${F.u} olur?`;const N=s.fn,slot=736/(N+1),H=170;
+  for(let n=1;n<=N+1;n++){const x0=(n-1)*slot,g=E('g',{},svg),last=n===N+1;
+   if(last&&rev){svg.insertBefore(E('rect',{x:x0+8,y:14,width:slot-16,height:H,rx:14,fill:'#f0fdf4',stroke:'#86efac'}),g)}
+   if(last&&!rev){E('rect',{x:x0+8,y:14,width:slot-16,height:H,rx:14,fill:'#f5f3ff',stroke:'#c4b5fd','stroke-dasharray':'6 5'},svg);T(svg,x0+slot/2,14+H/2+12,'?',{'font-size':40,fill:'#8b5cf6'});T(svg,x0+slot/2,H+42,`${n}. adım`,{'font-size':12.5,fill:'#7c3aed'});T(svg,x0+slot/2,H+60,'kaç '+F.u+'?',{'font-size':12,fill:'#7c3aed','font-weight':700});continue}
+   const tmp=E('g',{},svg);const [bw,bh]=F.draw(tmp,n,1,false);tmp.remove();if(last&&rev)grow=true;const sc=Math.min((slot-30)/Math.max(bw,.01),(H-20)/Math.max(bh,.01),46);
+   const inner=E('g',{},g);const [ww,hh]=F.draw(inner,n,sc,hl&&n>1);inner.setAttribute('transform',`translate(${x0+(slot-ww)/2},${14+(H-hh)/2})`);
+   if(grow&&(n===N||last))inner.classList.add('ou-new');
+   T(svg,x0+slot/2,H+42,`${n}. adım`,{'font-size':12.5,fill:last?'#16a34a':'#64748b'});T(svg,x0+slot/2,H+62,F.f(n)+' '+F.u,{'font-size':15,fill:last?'#16a34a':'#0f172a'})}
+  const v=[...Array(N)].map((_,i)=>F.f(i+1));
+  q('.ou-tw').innerHTML=`<table class="ou-tbl"><tr><th>Adım (n)</th>${v.map((_,i)=>`<td>${i+1}</td>`).join('')}<td class="q">…</td><td class="q">n</td></tr><tr><th>${F.u[0].toUpperCase()+F.u.slice(1)} sayısı</th>${v.map(x=>`<td>${x}</td>`).join('')}<td class="q">…</td><td class="q">${showR?(F.lin?ruleStr(F.lin):F.rule):'?'}</td></tr><tr><th>Fark</th><td></td>${v.slice(1).map((x,i)=>`<td class="df">+${x-v[i]}</td>`).join('')}<td></td><td></td></tr></table>`;
+  q('.ou-why').innerHTML=F.why;q('.ou-rb').textContent=showR?'Kuralı gizle':'Kuralı göster';
+  q('.ou-rv').innerHTML=showR?(F.lin?`${ruleStr(F.lin)} <span style="font:600 12px system-ui;color:#64748b">(fark ${F.lin[0]} → ${F.lin[0]}n; 1. adım ${F.f(1)} = ${F.lin[0]}.1${sgn(F.lin[1])})</span>`:`${F.rule} <span style="font:600 12px system-ui;color:#64748b">(doğrusal değil)</span>`):'';
+  calc();requestAnimationFrame(fit)}
+ draw()}
+
+/* ======== 2) SAYI ÖRÜNTÜLERİ ======== */
+const mn=v=>String(v).replace('-','−');
+const ruleOf=(d,b)=>d===0?mn(b):(d===1?'':d===-1?'−':mn(d))+'n'+(b?sgn(b):'');
+const gen=v=>{v=Math.abs(v);const o=v%10,t=Math.floor(v/10)%10;if(o)return["","in","nin","ün","ün","in","nın","nin","in","un"][o];return["ın","un","nin","un","ın","nin","ın","in","in","ın"][t]};
+const katOf=k=>`${mn(k)}’${gen(k)} katı`;
+const fazOf=b=>b===0?'tam katı':b>0?`${b} fazlası`:`${-b} eksiği`;
+const sozOf=(k,b)=>b===0?katOf(k):`${katOf(k)}nın ${fazOf(b)}`;
+const pint=v=>parseInt(String(v).replace('−','-'));
+function numTab(w,box,fit){const s=w.state;if(!['match','rule','find'].includes(s.nm))s.nm='match';
+ if(!s.tg)s.tg={d:3,b:2};s.k=s.k??1;s.sh=s.sh??0;s.ra=s.ra??4;s.rb=s.rb??-1;
+ box.innerHTML=`<div class="ou-row"><span class="ou-seg ou-nmode"><button data-m="match">Örüntü oluştur</button><button data-m="rule">Kuraldan terimleri bul</button><button data-m="find">Kuralı bul (oyun)</button></span></div><div class="ou-nbody" style="margin-top:10px"></div>`;
+ const q=x=>box.querySelector(x),B=q('.ou-nbody');let quiz=null,showDiff=true;
+ box.querySelectorAll('.ou-nmode button').forEach(b=>b.onclick=()=>{s.nm=b.dataset.m;if(s.nm==='find')newQuiz();render()});
+ const cell=(v,cls='',st='')=>`<div class="on-c ${cls}" style="${st}">${v}</div>`;
+ function render(){box.querySelectorAll('.ou-nmode button').forEach(b=>b.classList.toggle('on',b.dataset.m===s.nm));({match,rule,find})[s.nm]();requestAnimationFrame(fit)}
+ /* ---- 1) Örüntü oluştur ---- */
+ function match(){const {d,b}=s.tg,T=[1,2,3,4,5].map(n=>d*n+b),M=[1,2,3,4,5].map(n=>s.k*n+s.sh),ok=M.every((v,i)=>v===T[i]);
+  B.innerHTML=`<div class="on-grid"><div class="on-h">Sıra (n)</div>${[1,2,3,4,5].map(n=>cell(n,'n')).join('')}<div></div><div class="on-h" style="text-align:center">?</div>
+  ${showDiff?'<div></div><div class="on-arr" data-r="tg"></div><div></div><div></div>':''}
+  <div class="on-h" style="color:#be185d">Hedef örüntü</div>${T.map(v=>cell(mn(v),'tg')).join('')}<div class="on-dots">…</div><div class="on-q tg"><div class="ou-row" style="margin:0;justify-content:center;gap:3px"><input class="ou-in on-qn" value="${s.qn||10}" inputmode="numeric" style="width:44px"><b>. terim =</b></div><div class="ou-row" style="margin:4px 0 0;justify-content:center;gap:3px"><input class="ou-in on-qa" placeholder="?" inputmode="numeric" style="width:64px"><button class="ou-btn ok on-qc" style="height:28px">✓</button></div></div>
+  <div class="on-h" style="color:#1d4ed8">Senin örüntün</div>${M.map((v,i)=>cell(mn(v),v===T[i]?'ok':'my')).join('')}<div class="on-dots">…</div><div class="on-q my">${ok?`<span class="ou-rule" style="font-size:20px">${ruleOf(s.k,s.sh)}</span><span class="on-soz">${sozOf(s.k,s.sh)}</span>`:`<span style="font:800 15px system-ui;color:#1d4ed8">${mn(s.k)}.n${s.sh?(s.sh<0?' − ':' + ')+Math.abs(s.sh):''}</span><span class="on-soz">${sozOf(s.k,s.sh)}</span>`}</div>${showDiff?'<div></div><div class="on-arr" data-r="my"></div><div></div><div></div>':''}</div>
+  <div class="ou-row" style="margin-top:12px;justify-content:space-between"><div class="ou-row" style="margin:0;gap:14px"><div class="on-ctl" style="--c:#2563eb"><span>Kaçın katı?</span><div><button data-a="k-">◀</button><b>${mn(s.k)}</b><button data-a="k+">▶</button></div><small>${katOf(s.k)}</small></div><div class="on-ctl" style="--c:#dc2626"><span>Kaç fazlası / eksiği?</span><div><button data-a="s-">◀</button><b>${s.sh>0?'+'+s.sh:mn(s.sh)}</b><button data-a="s+">▶</button></div><small>${fazOf(s.sh)}</small></div></div>
+  <div class="ou-row" style="margin:0"><button class="ou-btn ${showDiff?'on':''} on-sd">↷ Artışları göster</button><button class="ou-btn pri on-new">🎲 Yeni örüntü</button><button class="ou-btn on-own">✎ Kendi örüntün</button></div></div>
+  <div class="on-own-row ou-row" hidden><span class="ou-lab">İlk terim</span><input class="ou-in on-oa" inputmode="numeric" value="${d+b}"><span class="ou-lab">Her adımda</span><input class="ou-in on-od" inputmode="numeric" value="${d}"><button class="ou-btn ok on-oset">Hedef yap</button></div>
+  <div class="ou-fbw"></div>`;
+  B.querySelectorAll('.on-arr').forEach(a=>{const tg=a.dataset.r==='tg',V=tg?T:M,cells=[...B.querySelectorAll(tg?'.on-c.tg':'.on-c.my,.on-c.ok')].slice(tg?0:0,5);if(!tg){const all=[...B.querySelectorAll('.on-c')].filter(c=>!c.classList.contains('n')&&!c.classList.contains('tg'));cells.length=0;cells.push(...all.slice(0,5))}
+   const x0=a.offsetLeft,W=a.offsetWidth,col=tg?'#db2777':'#2563eb',sv=E('svg',{width:W,height:38});a.append(sv);
+   const cx=cells.map(c=>c.offsetLeft+c.offsetWidth/2-x0);
+   for(let i=1;i<5;i++){const x1=cx[i-1]+8,x2=cx[i]-8,m=(x1+x2)/2,up=tg,yb=up?35:3,yc=up?9:29,dv=V[i]-V[i-1];
+    E('path',{d:`M${x1} ${yb} Q${m} ${yc} ${x2} ${yb}`,fill:'none',stroke:col,'stroke-width':2.2,'stroke-linecap':'round'},sv);
+    const ang=Math.atan2(yb-yc,x2-m),hx=x2,hy=yb,a1=ang+2.6,a2=ang-2.6;
+    E('path',{d:`M${hx+7*Math.cos(a1)} ${hy+7*Math.sin(a1)} L${hx} ${hy} L${hx+7*Math.cos(a2)} ${hy+7*Math.sin(a2)}`,fill:'none',stroke:col,'stroke-width':2.2,'stroke-linecap':'round','stroke-linejoin':'round'},sv);
+    E('text',{x:m,y:up?14:36,'text-anchor':'middle',fill:col,'font-size':13.5,'font-weight':900,'font-family':'system-ui,sans-serif',stroke:'#fff','stroke-width':4,'paint-order':'stroke','stroke-linejoin':'round'},sv).textContent=(dv>=0?'+':'−')+Math.abs(dv)}});
+  if(ok){const f=q('.ou-fbw');f.className='ou-fbw ou-fb ok';f.innerHTML=`🎉 Oluşturdun! Kural: <b>${mn(d)}.n${sgn(b)}</b> → “${sozOf(d,b)}”`}
+  B.querySelectorAll('[data-a]').forEach(x=>x.onclick=()=>{const a=x.dataset.a;if(a==='k-')s.k=Math.max(-9,s.k-1);if(a==='k+')s.k=Math.min(12,s.k+1);if(a==='s-')s.sh=Math.max(-30,s.sh-1);if(a==='s+')s.sh=Math.min(30,s.sh+1);match()});
+  q('.on-sd').onclick=()=>{showDiff=!showDiff;match()};
+  q('.on-new').onclick=()=>{const dd=[2,3,4,5,6,7,8,9][Math.floor(Math.random()*8)],bb=Math.floor(Math.random()*11)-4;s.tg={d:dd,b:bb};s.k=1;s.sh=0;match()};
+  q('.on-own').onclick=()=>{const r=q('.on-own-row');r.hidden=!r.hidden;fit()};
+  q('.on-oset').onclick=()=>{const a=pint(q('.on-oa').value),dd=pint(q('.on-od').value);if(!Number.isFinite(a)||!Number.isFinite(dd)||Math.abs(dd)>20||Math.abs(a)>200){q('.on-oa').classList.add('bad');return}s.tg={d:dd,b:a-dd};s.k=1;s.sh=0;match()};
+  const qc=()=>{const n=pint(q('.on-qn').value),v=pint(q('.on-qa').value);if(!(n>=1&&n<=1000)){q('.on-qn').classList.add('bad');return}s.qn=n;const good=v===d*n+b;q('.on-qa').className='ou-in on-qa '+(good?'good':'bad');const f=q('.ou-fbw');f.className='ou-fbw ou-fb '+(good?'ok':'no');f.innerHTML=good?`🎉 Doğru! ${n}. terim = ${mn(d)}.${n}${sgn(b)} = <b>${mn(d*n+b)}</b>`:`Henüz değil. ${ok?'Kuralda n yerine '+n+' yaz.':'Önce örüntüyü oluştur: “Kaçın katı?” ve “Kaç fazlası / eksiği?” ile alt satırı üsttekine eşitle.'}`};
+  q('.on-qc').onclick=qc;q('.on-qa').onkeydown=e=>{if(e.key==='Enter')qc()};requestAnimationFrame(fit)}
+ /* ---- 2) Kuraldan terimleri bul ---- */
+ function rule(){const a=s.ra,b=s.rb,T=[...Array(6)].map((_,i)=>a*(i+1)+b);
+  B.innerHTML=`<div class="ou-row" style="margin-top:0"><span class="ou-lab">Kural: n. terim =</span><input class="ou-in on-ra" value="${mn(a)}" inputmode="numeric"><b style="font:900 16px system-ui">n +</b><input class="ou-in on-rb" value="${mn(b)}" inputmode="numeric"><span class="ou-rule on-rr" style="font-size:20px;margin-left:8px">${ruleOf(a,b)}</span></div>
+  <div class="on-grid" style="grid-template-columns:120px repeat(6,1fr);margin-top:10px"><div class="on-h">Sıra (n)</div>${[1,2,3,4,5,6].map(n=>cell(n,'n')).join('')}<div class="on-h" style="color:#1d4ed8">Terim</div>${T.map((v,i)=>`<input class="on-c on-in" data-i="${i}" inputmode="numeric" placeholder="?">`).join('')}</div>
+  <div class="ou-row" style="margin-top:10px"><button class="ou-btn ok on-ck">✓ Kontrol et</button><button class="ou-btn on-one">Bir tane göster</button><button class="ou-btn on-all">Hepsini göster</button><button class="ou-btn on-clr">Temizle</button><span class="ou-sp"></span><button class="ou-btn pri on-rnd">🎲 Yeni kural</button></div><div class="ou-fbw"></div>`;
+  const ins=[...B.querySelectorAll('.on-in')],f=q('.ou-fbw');
+  const upd=()=>{const A=pint(q('.on-ra').value),Bb=pint(q('.on-rb').value);if(!Number.isFinite(A)||!Number.isFinite(Bb)||Math.abs(A)>50||Math.abs(Bb)>500)return;s.ra=A;s.rb=Bb;rule();q('.on-ra').focus()};
+  q('.on-ra').onchange=upd;q('.on-rb').onchange=upd;q('.on-ra').onkeydown=q('.on-rb').onkeydown=e=>{if(e.key==='Enter')upd()};
+  const show=i=>{ins[i].value=mn(T[i]);ins[i].className='on-c on-in shown';ins[i].title=`${mn(a)}.${i+1}${sgn(b)} = ${mn(T[i])}`};
+  q('.on-ck').onclick=()=>{let ok=0,emp=0;ins.forEach((inp,i)=>{if(inp.value===''){emp++;inp.className='on-c on-in';return}const g=pint(inp.value)===T[i];inp.className='on-c on-in '+(g?'good':'bad');if(g)ok++});
+   f.className='ou-fbw ou-fb '+(ok===6?'ok':'no');f.innerHTML=ok===6?'🎉 Hepsi doğru! Terimler arası fark '+mn(a)+': n’nin katsayısı!':`${ok} doğru${emp?', '+emp+' boş':''}. İpucu: n yerine sıra sayısını yaz → ${mn(a)}.1${sgn(b)} = ?`};
+  q('.on-one').onclick=()=>{const i=ins.findIndex((x,i)=>pint(x.value)!==T[i]);if(i>=0){show(i);f.className='ou-fbw ou-box';f.innerHTML=`${i+1}. terim: ${mn(a)}.${i+1}${sgn(b)} = <b>${mn(T[i])}</b>`}};
+  q('.on-all').onclick=()=>{ins.forEach((_,i)=>show(i));f.className='ou-fbw ou-box';f.innerHTML=T.map((v,i)=>`n=${i+1} → ${mn(a)}.${i+1}${sgn(b)} = <b>${mn(v)}</b>`).join(' · ')};
+  q('.on-clr').onclick=()=>{ins.forEach(x=>{x.value='';x.className='on-c on-in'});f.className='ou-fbw';f.innerHTML=''};
+  q('.on-rnd').onclick=()=>{s.ra=[2,3,4,5,6,7,8,9,-2,-3][Math.floor(Math.random()*10)];s.rb=Math.floor(Math.random()*15)-5;if(s.ra<0)s.rb+=30;rule()};
+  ins.forEach(x=>x.onkeydown=e=>{if(e.key==='Enter')q('.on-ck').click()});requestAnimationFrame(fit)}
+ /* ---- 3) Kuralı bul (oyun) ---- */
+ function newQuiz(){const d=[2,3,4,5,6,7,8,9,-2,-3,-4,-5][Math.floor(Math.random()*12)],a=d<0?30+Math.floor(Math.random()*30):1+Math.floor(Math.random()*12);const opts=[[4,5],[2,5],[1,4],[3,5],[0,5]];quiz={a,d,hide:opts[Math.floor(Math.random()*opts.length)]};quiz.orig=quiz.hide.slice()}
+ function strip(svg,T_,hideIdx){svg.innerHTML='';const n=T_.length,sl=736/n,y=92;
+  T_.forEach((v,i)=>{const x=i*sl+sl/2,h=hideIdx.includes(i);const g=E('g',{},svg);E('rect',{x:x-34,y:y-26,width:68,height:52,rx:14,fill:h?'#f5f3ff':'#fff',stroke:h?'#a78bfa':'#93c5fd','stroke-width':2.5,'stroke-dasharray':h?'6 4':''},g);T(g,x,y+8,h?'?':mn(v),{'font-size':22,fill:h?'#7c3aed':'#0f172a'});T(svg,x,y+44,`${i+1}. terim`,{'font-size':11,fill:'#94a3b8','font-weight':700});
+   if(i<n-1){const x2=x+sl,d=T_[i+1]-v,hd=hideIdx.includes(i)||hideIdx.includes(i+1);E('path',{d:`M${x+10},${y-30} Q${(x+x2)/2},${y-66} ${x2-10},${y-30}`,fill:'none',stroke:hd?'#c4b5fd':d>=0?'#16a34a':'#dc2626','stroke-width':2.2},svg);E('path',{d:`M${x2-10},${y-30} l-7,-5 l1,8z`,fill:hd?'#c4b5fd':d>=0?'#16a34a':'#dc2626'},svg);T(svg,(x+x2)/2,y-52,hd?'?':(d>=0?'+':'−')+Math.abs(d),{'font-size':13,fill:hd?'#7c3aed':d>=0?'#16a34a':'#dc2626'})}})}
+ function find(){if(!quiz)newQuiz();const {a,d}=quiz,T_=[...Array(6)].map((_,i)=>a+i*d),b0=a-d,H=quiz.orig;
+  B.innerHTML=`<div class="ou-row" style="margin-top:0;justify-content:flex-end"><button class="ou-btn pri on-nq">🎲 Yeni örüntü</button></div><div class="ou-stage"><svg width="736" height="150" viewBox="0 0 736 150"></svg></div><div class="ou-box"><div class="ou-row" style="margin-top:0">${H.map(i=>`<span class="ou-lab">${i+1}. terim</span><input class="ou-in ou-g" data-i="${i}" inputmode="numeric">`).join('')}<span class="ou-lab">Kural: n. terim =</span><input class="ou-in ou-g3" style="width:110px" placeholder="ör. 3n + 2"><button class="ou-btn ok ou-ck">Kontrol et</button><button class="ou-btn ou-sh">Cevabı göster</button></div><div class="ou-fbw"></div></div>`;
+  const svg=B.querySelector('svg');strip(svg,T_,quiz.hide);q('.on-nq').onclick=()=>{newQuiz();find()};
+  const parseRule=t=>{t=t.replace(/\s/g,'').replace(/−/g,'-').replace(/[x×·*.]/g,'').toLowerCase();const m=t.match(/^([+-]?\d*)n([+-]\d+)?$/);if(!m){return/^[+-]?\d+$/.test(t)?[0,+t]:null}const k=m[1]===''||m[1]==='+'?1:m[1]==='-'?-1:+m[1];return[k,m[2]?+m[2]:0]};
+  q('.ou-ck').onclick=()=>{let all=true;B.querySelectorAll('.ou-g').forEach(inp=>{const i=+inp.dataset.i,ok=inp.value!==''&&pint(inp.value)===T_[i];inp.className='ou-in ou-g '+(ok?'good':'bad');if(!ok)all=false});
+   const r=parseRule(q('.ou-g3').value),o3=!!r&&r[0]===d&&r[1]===b0;q('.ou-g3').className='ou-in ou-g3 '+(q('.ou-g3').value?(o3?'good':'bad'):'');
+   const f=q('.ou-fbw');f.className='ou-fbw ou-fb '+(all&&o3?'ok':'no');f.innerHTML=all&&o3?'🎉 Harika! Hepsi doğru.':all?'Terimler doğru! Şimdi kuralı yaz: farkı n’nin önüne yaz, sonra 1. terime göre ekle ya da çıkar.':'Farka bak: Her terim bir öncekinden kaç fazla ya da eksik?';if(all){quiz.hide=[];strip(svg,T_,[])}};
+  q('.ou-sh').onclick=()=>{quiz.hide=[];strip(svg,T_,[]);const f=q('.ou-fbw');f.className='ou-fbw ou-box';f.innerHTML=`Fark <b>${d>0?'+':'−'}${Math.abs(d)}</b> → kural <b>${ruleOf(d,b0)}</b>. Kontrol: 1. terim = ${mn(d)}.1${sgn(b0)} = ${mn(a)} ✓`};requestAnimationFrame(fit)}
+ render()}
+
+/* ======== 3) TEKRARLAYAN ÖRÜNTÜLER ======== */
+const SH={r:['circle','#ef4444'],b:['circle','#3b82f6'],y:['circle','#eab308'],g:['circle','#22c55e'],T:['tri','#f97316'],S:['sq','#8b5cf6'],H:['heart','#ec4899'],St:['star','#f59e0b']};
+const PRE=[['r','b'],['r','b','b'],['T','S','r'],['y','g','g','y'],['St','H','St','St'],['r','y','b','g','T']];
+function shape(g,k,x,y,r,hl){const [t,c]=SH[k];const st={fill:c,stroke:hl?'#0f172a':'#fff','stroke-width':hl?3:2};
+ if(t==='circle')E('circle',Object.assign({cx:x,cy:y,r},st),g);else if(t==='sq')E('rect',Object.assign({x:x-r*.85,y:y-r*.85,width:r*1.7,height:r*1.7,rx:r*.25},st),g);else if(t==='tri')E('path',Object.assign({d:`M${x},${y-r} L${x+r*1.05},${y+r*.8} L${x-r*1.05},${y+r*.8}Z`,'stroke-linejoin':'round'},st),g);
+ else if(t==='heart')E('path',Object.assign({d:`M${x},${y+r*.85} C${x-r*1.5},${y-r*.1} ${x-r*.6},${y-r*1.2} ${x},${y-r*.35} C${x+r*.6},${y-r*1.2} ${x+r*1.5},${y-r*.1} ${x},${y+r*.85}Z`},st),g);
+ else{let d='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r*1.05;d+=(i?'L':'M')+(x+rr*Math.cos(a))+','+(y+rr*Math.sin(a))}E('path',Object.assign({d:d+'Z','stroke-linejoin':'round'},st),g)}}
+function repTab(w,box,fit){const s=w.state;if(!Array.isArray(s.core)||!s.core.length)s.core=PRE[1].slice();s.rk=s.rk||23;s.br=s.br!==false;
+ box.innerHTML=`<div class="ou-row"><span class="ou-lab">Hazır:</span><span class="ou-pre ou-row" style="margin-top:0"></span><span class="ou-sp"></span><button class="ou-ib ou-br on" title="Tekrar eden kısmı (çekirdeği) göster">[ ]</button></div>
+ <div class="ou-row"><span class="ou-lab">Çekirdeği kendin kur:</span><span class="ou-pal"></span><button class="ou-btn ou-bs">⌫</button><button class="ou-btn ou-cl">Temizle</button></div>
+ <div class="ou-stage"><svg class="ou-svg" width="736" height="190" viewBox="0 0 736 190"></svg></div>
+ <div class="ou-box"><div class="ou-row" style="margin-top:0"><span class="ou-lab">Kaçıncı sırada ne var?</span><input class="ou-in ou-k" inputmode="numeric"><button class="ou-btn ok ou-kb">Bul</button></div><div class="ou-ans" style="margin-top:4px"></div></div>`;
+ const q=x=>box.querySelector(x);q('.ou-k').value=s.rk;
+ const pre=q('.ou-pre');PRE.forEach(p=>{const b=document.createElement('button');b.type='button';b.className='ou-btn';b.style.padding='0 5px';const sv=E('svg',{width:p.length*18+2,height:20,viewBox:`0 0 ${p.length*18+2} 20`});p.forEach((k,i)=>shape(sv,k,10+i*18,10,7));b.append(sv);b.onclick=()=>{s.core=p.slice();draw()};pre.append(b)});
+ const pal=q('.ou-pal');Object.keys(SH).forEach(k=>{const b=document.createElement('button');b.type='button';const sv=E('svg',{width:22,height:22,viewBox:'0 0 22 22'});shape(sv,k,11,11,8);b.append(sv);b.onclick=()=>{if(s.core.length>=6)return;s.core.push(k);draw()};pal.append(b)});
+ q('.ou-bs').onclick=()=>{s.core.pop();if(!s.core.length)s.core=['r'];draw()};q('.ou-cl').onclick=()=>{s.core=['r'];draw()};q('.ou-br').onclick=e=>{s.br=!s.br;e.currentTarget.classList.toggle('on',s.br);draw()};
+ const find=()=>{const k=parseInt(q('.ou-k').value),c=s.core,L=c.length;if(!(k>=1&&k<=9999)){q('.ou-k').classList.add('bad');return}q('.ou-k').classList.remove('bad');s.rk=k;const r=k%L,pos=r===0?L:r;
+  const sv=E('svg',{width:30,height:26,viewBox:'0 0 30 26',style:'display:inline-block;vertical-align:middle;width:30px;height:26px'});shape(sv,c[pos-1],15,13,10);
+  q('.ou-ans').innerHTML=`Çekirdekte <b>${L}</b> öge var. ${k} ÷ ${L} = <b>${Math.floor(k/L)}</b>, kalan <b>${r}</b> → ${r===0?`kalan 0 olduğu için çekirdeğin <b>son</b> (${L}.) ögesi`:`çekirdeğin <b>${r}.</b> ögesi`}: `;q('.ou-ans').append(sv);if(k>24)q('.ou-ans').insertAdjacentHTML('beforeend','<span style="font:600 12px system-ui;color:#7c3aed;margin-left:6px">(Bu sıra tabloda yok ama bölme ile bulduk!)</span>');draw(k)};
+ q('.ou-kb').onclick=find;q('.ou-k').onkeydown=e=>{if(e.key==='Enter')find()};
+ function draw(mark){const svg=q('.ou-svg');svg.innerHTML='';const c=s.core,L=c.length,N=Math.max(L*Math.ceil(24/L),24),per=Math.ceil(N/2),sl=736/per,r=Math.min(14,sl*.34);
+  for(let i=0;i<N;i++){const row=Math.floor(i/per),col=i%per,x=col*sl+sl/2,y=row?140:52;
+   if(s.br&&i%L===0){const e=Math.min(i+L,(row+1)*per)-1,x1=x-sl/2+3,x2=(e%per)*sl+sl/2+sl/2-3,blk=Math.floor(i/L);E('rect',{x:x1,y:y-26,width:x2-x1,height:52,rx:12,fill:blk%2?'#eef2ff':'#fef3c7',stroke:blk%2?'#c7d2fe':'#fde68a'},svg)}
+   const g=E('g',{},svg);shape(g,c[i%L],x,y,r,mark&&mark<=N&&mark-1===i);T(svg,x,y+(row?40:-32),i+1,{'font-size':10,fill:'#94a3b8','font-weight':700})}
+  requestAnimationFrame(fit)}
+ draw();find()}
+
+/* ======== çerçeve ======== */
+const TABS=[['fig','Şekil örüntüleri'],['num','Sayı örüntüleri']];
+const TIPS={fig:['<b>Örüntü</b>: Belli bir kurala göre devam eden şekil ya da sayı dizisi.','Adımlar arası fark <b>sabitse</b> kural “fark.n + sayı” şeklindedir: Fark 3 ise 3n ile başla, 1. adıma bakarak eklenecek sayıyı bul.','Turuncu parçalar her adımda <b>eklenenleri</b> gösterir. Fark sabit değilse (kare, üçgensel sayılar) kural farklıdır.'],
+ num:['Artan örüntüde her terim bir öncekinden fazla, azalan örüntüde eksiktir.','Kuraldaki <b>n’nin katsayısı</b>, terimler arasındaki farka eşittir: 4n − 1 → fark 4.','<b>Örüntü oluştur</b>: Artış kaçsa “Kaçın katı?” ile o sayıyı seç, sonra “Kaç fazlası / eksiği?” ile ilk terimi eşitle. Örn. 5, 8, 11 → 3’ün katının 2 fazlası.','<b>n. terim</b> kuralı ile istediğin terimi tek tek yazmadan bulursun: 100. terim için n yerine 100 yaz.','Kuralı kontrol et: n = 1 yazınca ilk terimi vermeli.'],
+ rep:['Tekrar eden en küçük kısma <b>örüntünün çekirdeği</b> denir.','Kaçıncı sırada ne olduğunu bulmak için sıra sayısını çekirdekteki öge sayısına böl; <b>kalan</b> çekirdekteki yeri gösterir.','Kalan 0 ise çekirdeğin <b>son</b> ögesidir.']};
+function setupOU(w,type){const s=w.state;s.tab=type.slice(3);if(s.tab!=='num')s.tab='fig';const art=w.querySelector('.art'),BASE=760;
+ art.innerHTML=`<div class="ou-card" data-act="ou" style="width:${BASE}px"><div class="ou-top"><b class="ou-ttl" style="font:900 16px system-ui;color:#0f172a"></b><span class="ou-sp"></span><button class="ou-ib ou-tipb" title="İpuçları">💡</button></div><div class="ou-body"></div><div class="ou-tips" hidden></div></div>`;
+ const card=art.firstElementChild,q=x=>card.querySelector(x);lock(w);
+ s.sc=Math.max(.5,Math.min(2,+s.sc||1));const fit=()=>{card.style.transform=s.sc===1?'':`scale(${s.sc})`;w.style.width=BASE*s.sc+'px';art.style.height=card.offsetHeight*s.sc+'px'};
+ w.querySelector(':scope>.mb-grip')?.remove();const grip=document.createElement('div');grip.className='mb-grip';grip.title='Büyüt / küçült';grip.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#334155" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l8 8"/><path d="M8 8h4M8 8v4"/><path d="M16 16h-4M16 16v-4"/></svg>';w.append(grip);
+ grip.addEventListener('pointerdown',e=>{if(e.button!==0&&e.pointerType==='mouse')return;e.preventDefault();e.stopPropagation();select(w);const W0=w.getBoundingClientRect().width,sc0=s.sc,x0=e.clientX,y0=e.clientY,pid=e.pointerId;
+  const mv=ev=>{if(ev.pointerId!==pid)return;ev.preventDefault();s.sc=Math.round(Math.max(.5,Math.min(2,sc0*(W0+(ev.clientX-x0+(ev.clientY-y0)*1.4)*.85)/W0))*100)/100;fit()};
+  const up=ev=>{if(ev.pointerId!==pid)return;window.removeEventListener('pointermove',mv,true);window.removeEventListener('pointerup',up,true)};window.addEventListener('pointermove',mv,true);window.addEventListener('pointerup',up,true)});
+ if(window.ResizeObserver)new ResizeObserver(fit).observe(card);
+ let tips=false;q('.ou-tipb').onclick=()=>{tips=!tips;q('.ou-tips').hidden=!tips;q('.ou-tipb').classList.toggle('on',tips);fit()};
+ function show(){q('.ou-ttl').textContent=s.tab==='fig'?'🔷 Şekil örüntüleri':'🔢 Sayı örüntüleri';q('.ou-tips').innerHTML='<ul>'+TIPS[s.tab].map(t=>'<li>'+t+'</li>').join('')+'</ul>';const B=q('.ou-body');({fig:figTab,num:numTab,rep:repTab})[s.tab](w,B,fit);fit()}
+ show()}
+names.ou_fig='Şekil Örüntüleri';names.ou_num='Sayı Örüntüleri';names.ou_rep='Örüntüler';
+const _setupOU=window.setup;window.setup=function(w,type){if(/^ou_(fig|num|rep)$/.test(type)){setupOU(w,type);return}return _setupOU.apply(this,arguments)};
+window.addOU=function(t){const pb=document.getElementById('penToggle');if(pb&&!pb.classList.contains('active'))pb.click();const w=add(t||'ou_fig');w.style.left=Math.max(10,(stage.clientWidth-w.offsetWidth)/2)+stage.scrollLeft+'px';w.style.top=20+stage.scrollTop+'px';return w};
+})();
+</script>
+<style id="eq-css">
+.widget[data-type=balance]>.body{padding:0!important}.widget[data-type=balance] .art{overflow:visible}
+.eq-card{transform-origin:0 0;position:relative;background:#fff;color:#172233;border:1px solid #e2e8f0;border-radius:20px;box-shadow:0 12px 32px rgba(15,23,42,.14);font-family:system-ui,"Segoe UI",sans-serif;padding:12px;box-sizing:border-box}
+.eq-card [hidden]{display:none!important}
+.eq-card svg{display:block;user-select:none;-webkit-user-select:none}
+.eq-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.eq-lab{font:800 13px system-ui;color:#334155;white-space:nowrap}
+.eq-lab i{font-family:"Times New Roman",serif;font-size:17px}
+.eq-box{flex:1;min-height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:10px;font:500 25px "Segoe UI",system-ui;color:#0f172a;padding:2px 12px;box-sizing:border-box}
+.eq-box i{font-family:"Times New Roman",serif;font-size:28px}
+.eq-box .eqs{font-weight:800;margin:0 6px}
+.eq-orig{background:#fdf2f8;box-shadow:inset 0 0 0 1.5px #fbcfe8}
+.eq-cur{background:#fff;box-shadow:inset 0 0 0 2px #cbd5e1}
+.eq-cur.done{background:#f0fdf4;box-shadow:inset 0 0 0 2.5px #22c55e}
+.eq-cur.off{background:#fff7ed;box-shadow:inset 0 0 0 2.5px #fb923c}
+.eq-f{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.62em;line-height:1.05;margin:0 2px}
+.eq-f b{font-weight:600;border-bottom:1.5px solid currentColor;padding:0 2px}.eq-f b+b{border:0}
+.eq-ib{width:30px;height:30px;border:0;border-radius:9px;background:#f1f5f9;color:#475569;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;flex:none;font-size:14px}
+.eq-ib:hover{background:#e2e8f0}.eq-ib.on{background:#1e40af;color:#fff}
+.eq-new{background:#fde047;color:#1e293b;font-size:16px}.eq-new:hover{background:#facc15}
+.eq-seg{display:inline-flex;background:#f1f5f9;border-radius:10px;padding:3px;gap:2px}
+.eq-seg button{border:0;background:transparent;border-radius:7px;min-width:30px;height:28px;padding:0 8px;font:800 15px system-ui;color:#475569;cursor:pointer;white-space:nowrap}
+.eq-seg.sm button{font:700 12px system-ui;height:24px;min-width:24px}
+.eq-seg button.on{background:#fff;color:#1e40af;box-shadow:0 1px 3px rgba(15,23,42,.18)}
+.eq-spin{display:inline-flex;flex-direction:column;align-items:center}
+.eq-spin button{border:0;background:transparent;color:#475569;cursor:pointer;height:13px;width:40px;padding:0;font-size:10px;line-height:1}
+.eq-spin button:hover{color:#1e40af}
+.eq-spin input{width:58px;height:30px;box-sizing:border-box;border:1.5px solid #cbd5e1;border-radius:9px;text-align:center;font:800 17px system-ui;color:#0f172a;outline:none}
+.eq-spin input:focus{border-color:#2563eb}.eq-spin input.bad{border-color:#ef4444;background:#fef2f2}
+.eq-xt{width:32px;height:32px;margin-left:-6px;border:1.5px dashed #cbd5e1;border-radius:9px;background:#fff;color:#94a3b8;cursor:pointer;padding:0;font:italic 20px 'Times New Roman',serif}.eq-xt:hover{border-color:#94a3b8}.eq-xt.on{border:1.5px solid #0284c7;background:#38bdf8;color:#0f172a}.eq-xt:disabled{opacity:.3;cursor:default}
+.eq-go{height:36px;border:0;border-radius:18px;background:#fde047;color:#1e293b;font:800 13px system-ui;padding:0 14px 0 10px;cursor:pointer;box-shadow:0 2px 0 #eab308;display:inline-flex;align-items:center;gap:5px}
+.eq-go:hover{background:#facc15}.eq-go:active{transform:translateY(1px);box-shadow:0 1px 0 #eab308}
+.eq-btn{height:28px;border:0;background:#f1f5f9;color:#1e293b;border-radius:8px;padding:0 10px;font:700 12.5px system-ui;cursor:pointer;white-space:nowrap}
+.eq-btn:hover{background:#e2e8f0}
+.eq-stage{margin-top:8px;background:linear-gradient(180deg,#fdf2f8 0%,#fff 75%);border-radius:14px;overflow:hidden}
+.eq-msg{font:800 13px system-ui;border-radius:9px;padding:6px 10px;margin-top:6px}
+.eq-msg.ok{background:#dcfce7;color:#166534}.eq-msg.no{background:#ffedd5;color:#9a3412}.eq-msg.inf{background:#f1f5f9;color:#334155}
+.eq-hist{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:6px;font:700 13px system-ui;color:#334155}
+.eq-hist .h{background:#f8fafc;border-radius:8px;padding:3px 8px}
+.eq-hist .o{color:#b45309;font-weight:900;font-size:12px}
+.eq-hist i{font-family:"Times New Roman",serif;font-size:15px}
+.eq-edit{flex:1;height:44px;border-radius:12px;border:2px solid #f472b6;font:600 22px system-ui;text-align:center;outline:none;box-sizing:border-box;min-width:0}
+.eq-tips{margin-top:8px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:6px 9px;font:500 12px/1.45 system-ui;color:#713f12}
+.eq-tips ul{margin:0;padding-left:17px}.eq-tips b{color:#92400e}
+
+.ec-stage{margin-top:8px;background:linear-gradient(180deg,#f0f9ff,#fff);border:1px solid #e0f2fe;border-radius:14px;padding:22px 10px 8px;position:relative}
+.ec-eq{display:flex;align-items:center;justify-content:center;gap:10px;min-height:96px;flex-wrap:nowrap}
+.ec-sd{display:flex;align-items:center;gap:6px}
+.ec-eqs{font:800 40px system-ui;color:#334155;padding:0 10px;border-radius:12px;transition:background .2s,color .2s}
+.ec-eqs.on{background:#fef3c7;color:#b45309}
+.ec-t{display:inline-flex;align-items:center;gap:4px;height:58px;padding:0 12px;border-radius:14px;font:500 32px "Segoe UI",system-ui;color:#0f172a;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;box-sizing:border-box;white-space:nowrap}
+.ec-t i{font-family:"Times New Roman",serif;font-size:36px}
+.ec-t.x{background:#e0f2fe;box-shadow:inset 0 0 0 2px #7dd3fc}
+.ec-t.u{background:#fdf0e3;box-shadow:inset 0 0 0 2px #f2c9a0}
+.ec-t.z{background:#f8fafc;color:#94a3b8;cursor:default}
+.ec-t.d{background:#fef9c3;box-shadow:inset 0 0 0 2px #facc15;height:46px;font-size:26px;cursor:default}
+.ec-t.sel{box-shadow:inset 0 0 0 3px #2563eb,0 4px 12px rgba(37,99,235,.25)}
+.ec-t.hl,.ec-k.hl{animation:ecPulse 1s ease-in-out infinite}
+@keyframes ecPulse{50%{box-shadow:0 0 0 6px rgba(250,204,21,.6)}}
+.ec-t.drag{z-index:20;position:relative;cursor:grabbing;box-shadow:0 10px 24px rgba(15,23,42,.25)}
+.ec-sg{font-weight:700;margin-right:2px}
+.ec-k{border-radius:9px;padding:0 3px}
+.ec-k.dr{background:#fde68a;box-shadow:inset 0 0 0 2px #f59e0b;cursor:grab;padding:0 7px;display:inline-block;position:relative}
+.ec-k.dr.sel{box-shadow:inset 0 0 0 3px #2563eb}
+.ec-k.drag{z-index:20;cursor:grabbing}
+.ec-fr{display:inline-flex;flex-direction:column;align-items:center;gap:6px}
+.ec-nu{display:flex;gap:6px;padding-bottom:6px;border-bottom:3px solid #334155}
+.ec-ghost{position:absolute;z-index:30;pointer-events:none;box-shadow:0 10px 24px rgba(15,23,42,.25)}
+.ec-ghost.k{background:#fde68a;box-shadow:inset 0 0 0 2px #f59e0b,0 10px 24px rgba(15,23,42,.25)}
+.ec-ghost.flip{background:#fecaca!important;box-shadow:inset 0 0 0 2.5px #ef4444,0 10px 24px rgba(15,23,42,.25)!important}
+.ec-ghost.fade{opacity:.4}
+.ec-t.pop{animation:ecPop .45s ease-out}
+@keyframes ecPop{40%{transform:scale(1.15)}}
+.eq-go.pop{animation:ecPop .5s ease-out}
+.eq-go:disabled{opacity:.4;cursor:default;box-shadow:none}
+.ec-eq.done .ec-t{background:#dcfce7;box-shadow:inset 0 0 0 2px #22c55e}
+.ec-card .eq-go{height:32px;font-size:12.5px;padding:0 12px}.ec-card .eq-row{gap:5px}
+.ec-help{text-align:center;font:600 11.5px system-ui;color:#64748b;margin-top:6px}
+.ec-book{margin-top:8px;border-radius:12px;background:#fffef7;border:1px solid #f1e7c8;padding:6px 12px 8px;background-image:repeating-linear-gradient(180deg,transparent 0 29px,#e9ddb8 29px 30px);background-position:0 26px}
+.ec-bh{font:800 12px system-ui;color:#92400e;height:22px}
+.ec-ln{display:flex;align-items:center;gap:12px;min-height:30px;font:500 18px "Segoe UI",system-ui;color:#334155}
+.ec-ln .e{min-width:230px}.ec-ln .e i{font-family:"Times New Roman",serif;font-size:20px}
+.ec-ln .n{font:600 11.5px system-ui;color:#b45309}.ec-ln .n em{color:#64748b;font-style:normal}
+.ec-ln.cur{color:#0f172a;font-weight:700}.ec-ln.cur .n{color:#16a34a;font-size:18px}
+.widget[data-type=eq_cls]>.body{padding:0!important}.widget[data-type=eq_cls] .art{overflow:visible}
+</style>
+<script id="eq-js">
+(function(){
+const NS='http://www.w3.org/2000/svg';
+const E=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.append(e);return e};
+const TX=(p,x,y,t,o={})=>{const e=E('text',Object.assign({x,y,'text-anchor':'middle','font-family':'"Segoe UI",system-ui,sans-serif','font-size':26,fill:'#0f172a'},o),p);e.textContent=t;return e};
+/* kesir aritmetiği */
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+const F=(n,d=1)=>{if(d<0){n=-n;d=-d}const k=gcd(n,d)||1;return[n/k,d/k]};
+const add=(p,q)=>F(p[0]*q[1]+q[0]*p[1],p[1]*q[1]),sub=(p,q)=>add(p,[-q[0],q[1]]),mul=(p,q)=>F(p[0]*q[0],p[1]*q[1]),dvd=(p,q)=>F(p[0]*q[1],p[1]*q[0]);
+const z=p=>p[0]===0,one=p=>p[0]===p[1],nv=p=>p[0]/p[1],big=p=>Math.abs(p[0])>99999||p[1]>999;
+const mn=v=>String(v).replace('-','−');
+const fH=(p,abs)=>{const n=abs?Math.abs(p[0]):p[0];return p[1]===1?mn(n):(n<0?'−':'')+`<span class="eq-f"><b>${Math.abs(n)}</b><b>${p[1]}</b></span>`};
+const fT=(p,abs)=>{const n=abs?Math.abs(p[0]):p[0];return p[1]===1?mn(n):mn(n)+'/'+p[1]};
+const X='<i>x</i>';
+function exH(sd){let h='';const{a,b}=sd;if(!z(a))h+=(a[0]<0?'−':'')+(one([Math.abs(a[0]),a[1]])?'':fH(a,1))+X;if(!z(b))h+=h?(b[0]<0?' − ':' + ')+fH(b,1):fH(b);return h||'0'}
+const eqH=(L,R)=>`<span>${exH(L)}</span><span class="eqs">=</span><span>${exH(R)}</span>`;
+const dat=p=>{if(p[1]!==1)return' sayısına';let v=Math.abs(p[0]);if(v===0)return'’a';const o=v%10;if(o)return'’'+['','e','ye','e','e','e','ya','ye','e','a'][o];if(v%1000===0)return'’e';if(v%100===0)return'’e';return'’'+['','a','ye','a','a','ye','a','e','e','a'][Math.floor(v/10)%10]};
+const coefT=a=>one(a)?'x':one([-a[0],a[1]])?'−x':fT(a)+'x';
+/* denklem çözümleme: "3x+5=2x-1", "3.x - 4 = 11", "2,5x = 10" */
+function parseSide(t){t=t.replace(/\s/g,'').replace(/[−–]/g,'-').replace(/[.·×*](?=x)/gi,'').replace(/,/g,'.').toLowerCase();if(!t)return null;if(!/^[+-]/.test(t))t='+'+t;
+ const re=/([+-])(\d+(?:\.\d+)?)?(x)?/g;let m,a=F(0),b=F(0),pos=0;
+ while((m=re.exec(t))&&m[0]){if(m.index!==pos)return null;pos=re.lastIndex;if(!m[2]&&!m[3])return null;
+  let v=F(1);if(m[2]){const s=m[2].split('.'),d=s[1]?10**s[1].length:1;v=F(Math.round(+m[2]*d),d)}if(m[1]==='-')v=[-v[0],v[1]];if(m[3])a=add(a,v);else b=add(b,v)}
+ return pos===t.length?{a,b}:null}
+const LV=[[1,'x + a = b'],[2,'ax = b'],[3,'ax + b = c'],[4,'ax + b = cx + d']];
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+function rnd(lv){const x=R(1,12);let L,Rt;
+ if(lv===1){const b=R(1,15)*(Math.random()<.7?1:-1);L={a:F(1),b:F(b)};Rt={a:F(0),b:F(x+b)}}
+ else if(lv===2){const a=R(2,9);L={a:F(a),b:F(0)};Rt={a:F(0),b:F(a*x)}}
+ else if(lv===3){const a=R(2,10),b=R(1,15)*(Math.random()<.7?1:-1);L={a:F(a),b:F(b)};Rt={a:F(0),b:F(a*x+b)}}
+ else{const c=R(1,5),a=c+R(1,5),b=R(-10,12),d=(a-c)*x+b;L={a:F(a),b:F(b)};Rt={a:F(c),b:F(d)}}
+ return{L,R:Rt}}
+const cp=sd=>({a:[...sd.a],b:[...sd.b]});
+const TIPS=['Terazinin <b>dengesini korumak</b> için her işlemi iki tarafa da uygula.','Sabit sayıdan kurtulmak için <b>ters işlem</b> yap: + 6 varsa iki taraftan 6 çıkar.','x’in katsayısından kurtulmak için iki tarafı <b>o sayıya böl</b>: 10x = 110 → ÷ 10.','x her iki tarafta varsa önce küçük olanı iki taraftan çıkar (sayının yanındaki <b>x</b> düğmesine bas).','Bulduğun değeri ilk denklemde x yerine koyarak <b>kontrol et</b>.'];
+
+function setupEq(w){const s=w.state;const art=w.querySelector('.art'),BASE=640;
+ if(!s.eq||!s.eq.L||!Array.isArray(s.eq.L.a)){s.lv=3;const r=rnd(3);s.eq={L:r.L,R:r.R};s.cur={L:cp(r.L),R:cp(r.R)};s.hist=[]}
+ s.op=s.op||'−';s.n=s.n??6;s.u=s.u||'';s.sd=s.sd||'B';s.lv=s.lv||3;
+ art.innerHTML=`<div class="eq-card" data-act="eq" style="width:${BASE}px">
+ <div class="eq-row"><span class="eq-lab"><i>x</i>’i bulunuz</span><div class="eq-box eq-orig"></div><input class="eq-edit" hidden placeholder="Örn. 3x + 5 = 2x + 9"><button class="eq-ib eq-new" title="Yeni denklem">⟳</button><button class="eq-ib eq-pen" title="Kendi denklemini yaz">✎</button><button class="eq-ib eq-tipb" title="İpuçları">💡</button></div>
+ <div class="eq-row" style="margin-top:6px"><span class="eq-lab" style="visibility:hidden"><i>x</i>’i bulunuz</span><div class="eq-box eq-cur"></div><span style="width:102px"></span></div>
+ <div class="eq-row" style="margin-top:8px;justify-content:center;gap:10px">
+  <span class="eq-seg eq-ops">${['+','−','×','÷'].map(o=>`<button data-o="${o}">${o}</button>`).join('')}</span>
+  <span class="eq-spin"><button data-d="1" title="Artır">▲</button><input class="eq-n" inputmode="decimal"><button data-d="-1" title="Azalt">▼</button></span>
+  <button class="eq-xt" title="x ile işlem (örn. − 4x)"><i>x</i></button>
+  <span class="eq-seg sm eq-sds"><button data-s="B">İki tarafa</button><button data-s="L">Sola</button><button data-s="R">Sağa</button></span>
+  <button class="eq-go" title="İşlemi uygula">⤵ Uygula</button></div>
+ <div class="eq-stage"><svg class="eq-svg" viewBox="0 0 616 236" width="616" height="236"></svg></div>
+ <div class="eq-row" style="margin-top:6px"><button class="eq-btn eq-undo">↶ Geri al</button><button class="eq-btn eq-reset">⟲ Baştan</button><button class="eq-btn eq-hint">💡 Sonraki adım?</button><span style="flex:1"></span><span class="eq-lab" style="font-size:12px;color:#64748b">Seviye</span><span class="eq-seg sm eq-lvs">${LV.map(([n,t])=>`<button data-l="${n}" title="${t}">${n}</button>`).join('')}</span></div>
+ <div class="eq-msg" hidden></div><div class="eq-hist"></div>
+ <div class="eq-tips" hidden><ul>${TIPS.map(t=>'<li>'+t+'</li>').join('')}</ul></div></div>`;
+ const card=art.firstElementChild,q=x=>card.querySelector(x),svg=q('.eq-svg');lockW(w);
+ s.sc=Math.max(.5,Math.min(2,+s.sc||1));const fit=()=>{card.style.transform=s.sc===1?'':`scale(${s.sc})`;w.style.width=BASE*s.sc+'px';art.style.height=card.offsetHeight*s.sc+'px'};
+ addGrip(w,s,fit);if(window.ResizeObserver)new ResizeObserver(fit).observe(card);
+ const X0=()=>{const{L,R}=s.eq;return dvd(sub(R.b,L.b),sub(L.a,R.a))};
+ const val=sd=>nv(add(mul(sd.a,X0()),sd.b));
+ const msg=(t,c)=>{const m=q('.eq-msg');m.hidden=!t;m.className='eq-msg '+(c||'inf');m.innerHTML=t||''};
+ /* ---- terazi ---- */
+ let ang=0,tAng=0,raf=0,chip=null;
+ const tiltT=()=>{const d=val(s.cur.L)-val(s.cur.R);if(Math.abs(d)<1e-9)return 0;const m=Math.abs(val(s.cur.L))+Math.abs(val(s.cur.R))+1;return(d>0?-1:1)*(3+9*Math.tanh(Math.abs(d)/m*3))};
+ function items(sd){const o=[];if(!z(sd.a))o.push({k:'x',t:coefT(sd.a),neg:sd.a[0]<0});if(!z(sd.b))o.push({k:'u',t:fT(sd.b),neg:sd.b[0]<0});return o}
+ function drawItem(g,it,cx,by){const fs=it.t.length>5?18:it.t.length>3?22:27;
+  if(it.k==='x'){const S=86;E('rect',{x:cx-S/2,y:by-S,width:S,height:S,fill:it.neg?'#f87171':'#38bdf8',stroke:'#0f172a','stroke-width':1.2},g);const t=TX(g,cx,by-S/2+fs*.36,'',{'font-size':fs});const m=it.t.match(/^(.*?)(x)$/);if(m[1]){const a=E('tspan',{},t);a.textContent=m[1]}const xx=E('tspan',{'font-family':'"Times New Roman",serif','font-style':'italic','font-size':fs+4},t);xx.textContent='x'}
+  else{const r=44;E('circle',{cx,cy:by-r,r,fill:it.neg?'#fecaca':'#f5e6d8',stroke:'#0f172a','stroke-width':1.2},g);TX(g,cx,by-r+fs*.36,it.t,{'font-size':fs})}}
+ const W=(it)=>it.k==='x'?86:88;
+ function draw(){svg.innerHTML='';const PX=308,PY=168,HL=168,a=ang*Math.PI/180,cs=Math.cos(a),sn=Math.sin(a);
+  E('path',{d:'M250 236 l10 -36 h96 l10 36z',fill:'#6b7280',stroke:'#374151','stroke-width':1.2},svg);
+  E('path',{d:`M${PX-9} 201 l5 -${201-PY-4} h8 l5 ${201-PY-4}z`,fill:'#d1d5db',stroke:'#6b7280'},svg);
+  const g=E('g',{transform:`rotate(${ang} ${PX} ${PY})`},svg);E('rect',{x:PX-232,y:PY-4,width:464,height:8,fill:'#9ca3af',stroke:'#4b5563','stroke-width':1.2},g);
+  /* gösterge oku */
+  const bal=Math.abs(tAng)<1e-9,col=bal?'#16a34a':'#ea580c';
+  E('line',{x1:PX,y1:PY-6,x2:PX,y2:PY-92,stroke:'#475569','stroke-dasharray':'3 3','stroke-width':1},svg);
+  const ag=E('g',{transform:`rotate(${ang} ${PX} ${PY})`},svg);E('path',{d:`M${PX} ${PY-4}V${PY-66}`,stroke:col,'stroke-width':5},ag);E('path',{d:`M${PX-9} ${PY-60}L${PX} ${PY-78}L${PX+9} ${PY-60}z`,fill:col,stroke:'#14532d','stroke-width':.8},ag);
+  for(const[side,sg]of[['L',-1],['R',1]]){const ex=PX+sg*HL*cs,ey=PY+sg*HL*sn,top=ey-46;
+   E('rect',{x:ex-5,y:top,width:10,height:46,fill:'#d1d5db',stroke:'#6b7280'},svg);E('circle',{cx:ex,cy:ey,r:6,fill:'#e5e7eb',stroke:'#4b5563'},svg);
+   E('path',{d:`M${ex-128} ${top-6} Q${ex} ${top+12} ${ex+128} ${top-6} L${ex+132} ${top-11} Q${ex} ${top+3} ${ex-132} ${top-11}z`,fill:'#9ca3af',stroke:'#4b5563','stroke-width':1.2},svg);
+   E('ellipse',{cx:ex,cy:top-11,rx:132,ry:6,fill:'#e5e7eb',stroke:'#6b7280','stroke-width':1.2},svg);
+   const it=items(s.cur[side]),ch=chip&&chip.sides.includes(side)?chip:null,pm=ch&&(ch.k==='+'||ch.k==='−');if(pm)it.push({k:ch.u?'x':'u',t:ch.lab,neg:ch.k==='−',chip:1});
+   const sc=it.length>2?.8:1,gap=8*sc,tw=it.reduce((v,i)=>v+W(i)*sc,0)+(it.length-1)*gap;let x=ex-tw/2;const gi=E('g',{},svg);
+   for(const i of it){const cx=x+W(i)*sc/2;let g=gi,by=top-12;if(i.chip){by=(top-12)-(1-ch.t)*90;g=E('g',{opacity:Math.min(1,ch.t*2.5)},svg)}
+    const gg=E('g',{transform:`translate(${cx} ${by}) scale(${sc})`},g);drawItem(gg,i,0,0);x+=W(i)*sc+gap}
+   if(ch&&!pm){const yy=(top-12)-110+ (1-ch.t)*-20,cg=E('g',{opacity:Math.min(1,ch.t*2.5)},svg);E('rect',{x:ex-46,y:yy,width:92,height:34,rx:17,fill:'#fde047',stroke:'#a16207'},cg);TX(cg,ex,yy+24,ch.lab,{'font-size':20,'font-weight':800})}}
+ }
+ const anim=()=>{cancelAnimationFrame(raf);const st=()=>{ang+=(tAng-ang)*.16;if(Math.abs(tAng-ang)<.03)ang=tAng;draw();if(ang!==tAng&&w.isConnected)raf=requestAnimationFrame(st)};st()};
+ /* ---- metinler ---- */
+ function solved(){const{L,R}=s.cur;if(Math.abs(tiltT())>0)return false;return(one(L.a)&&z(L.b)&&z(R.a))||(one(R.a)&&z(R.b)&&z(L.a))}
+ function chk(){const x=X0(),{L,R}=s.eq,xs=x[1]===1?(x[0]<0?'('+mn(x[0])+')':mn(x[0])):'('+fT(x)+')';
+  const sideS=sd=>{let t='';if(!z(sd.a))t+=(one(sd.a)?'':one([-sd.a[0],sd.a[1]])?'−':fT(sd.a)+'.')+xs;if(!z(sd.b))t+=t?(sd.b[0]<0?' − ':' + ')+fT(sd.b,1):fT(sd.b);return t||'0'};
+  const vL=fT(add(mul(L.a,x),L.b)),vR=fT(add(mul(R.a,x),R.b));if(z(R.a))return `${sideS(L)} = ${vL}`;if(z(L.a))return `${vR} = ${sideS(R)}`;return `${sideS(L)} = ${vL} &nbsp;ve&nbsp; ${sideS(R)} = ${vR}`}
+ function ui(){q('.eq-orig').innerHTML=eqH(s.eq.L,s.eq.R);const c=q('.eq-cur');c.innerHTML=eqH(s.cur.L,s.cur.R);
+  const off=Math.abs(tiltT())>0,ok=solved();c.className='eq-box eq-cur'+(ok?' done':off?' off':'');
+  card.querySelectorAll('.eq-ops button').forEach(b=>b.classList.toggle('on',b.dataset.o===s.op));
+  card.querySelectorAll('.eq-sds button').forEach(b=>b.classList.toggle('on',b.dataset.s===s.sd));
+  card.querySelectorAll('.eq-lvs button').forEach(b=>b.classList.toggle('on',+b.dataset.l===s.lv));
+  const md=s.op==='×'||s.op==='÷',xt=q('.eq-xt');xt.disabled=md;xt.classList.toggle('on',!!s.u&&!md);
+  const ni=q('.eq-n');if(document.activeElement!==ni)ni.value=mn(s.n).replace('.',',');
+  q('.eq-hist').innerHTML=s.hist.length?s.hist.map(h=>`<span class="h">${eqH(h.L,h.R).replace(/class="eqs"/,'style="margin:0 4px"')}</span><span class="o">${h.op} →</span>`).join('')+`<span class="h">${eqH(s.cur.L,s.cur.R).replace(/class="eqs"/,'style="margin:0 4px"')}</span>`:'';
+  if(ok)msg(`🎉 Buldun: <b><i style="font-family:'Times New Roman',serif">x</i> = ${fH(X0())}</b> &nbsp;·&nbsp; Kontrol: ${chk()} ✓`,'ok');
+  else if(off)msg('⚖️ Denge bozuldu! İşlemi yalnızca bir tarafa uyguladın. Aynı işlemi diğer tarafa da uygula ya da geri al.','no');
+  else if(one([-s.cur.L.a[0],s.cur.L.a[1]])&&z(s.cur.L.b)&&z(s.cur.R.a)||one([-s.cur.R.a[0],s.cur.R.a[1]])&&z(s.cur.R.b)&&z(s.cur.L.a))msg('Neredeyse! −x kaldı: iki tarafı −1 ile çarp (ya da böl).','inf');
+  else msg('');
+  tAng=tiltT();anim();requestAnimationFrame(fit)}
+ /* ---- işlem ---- */
+ const rdN=()=>{const t=q('.eq-n').value.trim().replace(/[−–]/g,'-').replace(',','.');if(!/^-?\d+(\.\d+)?$/.test(t))return null;const s1=t.split('.'),d=s1[1]?10**s1[1].length:1;return F(Math.round(+t*d),d)};
+ function apply(){if(chip)return;const v=rdN();if(!v){q('.eq-n').classList.add('bad');return}q('.eq-n').classList.remove('bad');
+  const k=s.op,u=(k==='×'||k==='÷')?'':s.u;if((k==='×'||k==='÷')&&z(v)){msg(k==='÷'?'Sıfıra bölme yapılamaz.':'Sıfırla çarparsan x kaybolur! Başka sayı seç.','no');return}
+  const nx={L:cp(s.cur.L),R:cp(s.cur.R)},sides=s.sd==='B'?['L','R']:[s.sd];
+  for(const sd of sides){const o=nx[sd];if(k==='+'){u?o.a=add(o.a,v):o.b=add(o.b,v)}else if(k==='−'){u?o.a=sub(o.a,v):o.b=sub(o.b,v)}else if(k==='×'){o.a=mul(o.a,v);o.b=mul(o.b,v)}else{o.a=dvd(o.a,v);o.b=dvd(o.b,v)}}
+  if([nx.L.a,nx.L.b,nx.R.a,nx.R.b].some(big)){msg('Sayılar çok büyüdü; geri alıp başka bir işlem dene.','no');return}
+  if(z(nx.L.a)&&z(nx.R.a)){msg('Bu işlemle x tamamen kayboluyor. Başka bir işlem dene.','no');return}
+  const opT=k+' '+(u?(one(v)?'':fT(v))+'x':fT(v))+(s.sd==='L'?' (sol)':s.sd==='R'?' (sağ)':'');
+  chip={k,u,lab:(k==='×'||k==='÷')?k+' '+fT(v):(k==='−'?'−':'+')+(u?(one(v)?'':fT(v))+'x':fT(v)),sides,t:0};const t0=performance.now();
+  const st=now=>{chip.t=Math.min(1,(now-t0)/520);draw();if(chip.t<1&&w.isConnected)requestAnimationFrame(st);else{chip=null;s.hist.push({L:s.cur.L,R:s.cur.R,op:opT});s.cur=nx;ui()}};requestAnimationFrame(st)}
+ function hint(){const{L,R}=s.cur;if(Math.abs(tiltT())>0){msg('Önce dengeyi düzelt: geri al.','no');return}if(solved())return;
+  const set=(o,n,u,t)=>{s.op=o;s.n=n;s.u=u;s.sd='B';ui();msg('💡 '+t+' Hazırladım; <b>⤵ Uygula</b>’ya bas.','inf')};
+  if(!z(L.a)&&!z(R.a)){const small=Math.abs(nv(L.a))<=Math.abs(nv(R.a))?L.a:R.a;const n=Math.abs(nv(small));set(small[0]>0?'−':'+',n,'x',`x’leri bir tarafta topla: iki taraftan ${n===1?'':n}x ${small[0]>0?'çıkar':'ekle'}.`);return}
+  const xs=z(L.a)?R:L;if(!z(xs.b)){const n=Math.abs(nv(xs.b));set(xs.b[0]>0?'−':'+',n,'',`x’in yanındaki ${fT(xs.b)} sayısından kurtul: iki taraftan ${xs.b[0]>0?n+' çıkar':n+' ekle (ters işlem)'}.`);return}
+  if(xs.a[1]!==1){set('×',xs.a[1],'',`Paydadan kurtulmak için iki tarafı ${xs.a[1]} ile çarp.`);return}
+  set('÷',nv(xs.a),'',`x’in katsayısı ${fT(xs.a)}: iki tarafı ${fT(xs.a)}${dat(xs.a)} böl.`)}
+ /* ---- olaylar ---- */
+ card.querySelectorAll('.eq-ops button').forEach(b=>b.onclick=()=>{s.op=b.dataset.o;ui()});
+ q('.eq-xt').onclick=()=>{s.u=s.u?'':'x';ui()};
+ card.querySelectorAll('.eq-sds button').forEach(b=>b.onclick=()=>{s.sd=b.dataset.s;ui()});
+ card.querySelectorAll('.eq-spin button').forEach(b=>b.onclick=()=>{const v=rdN();const n=v?nv(v):0;s.n=Math.round((n+ +b.dataset.d)*1000)/1000;q('.eq-n').value=mn(s.n).replace('.',',');q('.eq-n').classList.remove('bad')});
+ q('.eq-n').oninput=()=>{const v=rdN();if(v)s.n=nv(v)};q('.eq-n').onkeydown=e=>{if(e.key==='Enter')apply();if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();card.querySelector(`.eq-spin [data-d="${e.key==='ArrowUp'?1:-1}"]`).click()}};
+ q('.eq-go').onclick=apply;
+ q('.eq-undo').onclick=()=>{if(chip||!s.hist.length)return;const h=s.hist.pop();s.cur={L:h.L,R:h.R};msg('');ui()};
+ q('.eq-reset').onclick=()=>{if(chip)return;s.cur={L:cp(s.eq.L),R:cp(s.eq.R)};s.hist=[];msg('');ui()};
+ q('.eq-hint').onclick=hint;
+ const newEq=()=>{if(chip)return;const r=rnd(s.lv);s.eq={L:r.L,R:r.R};s.cur={L:cp(r.L),R:cp(r.R)};s.hist=[];msg('');ui()};
+ q('.eq-new').onclick=newEq;card.querySelectorAll('.eq-lvs button').forEach(b=>b.onclick=()=>{s.lv=+b.dataset.l;newEq()});
+ q('.eq-tipb').onclick=()=>{const t=q('.eq-tips');t.hidden=!t.hidden;q('.eq-tipb').classList.toggle('on',!t.hidden);fit()};
+ const ed=q('.eq-edit'),ob=q('.eq-orig');
+ const commit=()=>{const p=ed.value.split('=');if(p.length!==2){ed.style.borderColor='#ef4444';return}const L=parseSide(p[0]),Rr=parseSide(p[1]);
+  if(!L||!Rr){ed.style.borderColor='#ef4444';msg('Denklemi anlayamadım. Örnek: 3x + 5 = 2x + 9','no');return}
+  if(nv(sub(L.a,Rr.a))===0){ed.style.borderColor='#ef4444';msg('Bu denklemin tek bir çözümü yok (x’ler birbirini götürüyor). Başka bir denklem yaz.','no');return}
+  s.eq={L,R:Rr};s.cur={L:cp(L),R:cp(Rr)};s.hist=[];ed.hidden=true;ob.hidden=false;q('.eq-pen').classList.remove('on');msg('');ui()};
+ q('.eq-pen').onclick=()=>{const on=ed.hidden;ed.hidden=!on;ob.hidden=on;q('.eq-pen').classList.toggle('on',on);if(on){ed.value='';ed.style.borderColor='';ed.focus()}};
+ ed.onkeydown=e=>{if(e.key==='Enter')commit();if(e.key==='Escape')q('.eq-pen').click()};
+ ang=tAng=tiltT();ui()}
+
+function lockW(w){w.classList.add('mus-lock');const h=w.querySelector(':scope>.handle');if(h&&!h.dataset.ml){h.dataset.ml=1;h.title='Taşımak için buradan tutup sürükle';const sp=h.querySelector('span');if(sp)sp.textContent='⠿  '+sp.textContent}
+ if(!document.getElementById('musLockCss')){const c=document.createElement('style');c.id='musLockCss';c.textContent='.widget.mus-lock>.handle{display:flex!important;background:#1e293b;border:0;color:#fff;font:700 13px/1.2 system-ui,sans-serif;padding:6px 8px 6px 12px;border-radius:12px 12px 0 0;margin:0 14px -2px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}.widget.mus-lock>.handle:active{cursor:grabbing}.widget.mus-lock>.handle button{background:#334155;color:#fff;border:0;border-radius:7px;font-size:15px;line-height:1;padding:3px 9px;cursor:pointer}';document.head.append(c)}}
+function addGrip(w,s,fit){w.querySelector(':scope>.mb-grip')?.remove();const grip=document.createElement('div');grip.className='mb-grip';grip.title='Büyüt / küçült';grip.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#334155" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l8 8"/><path d="M8 8h4M8 8v4"/><path d="M16 16h-4M16 16v-4"/></svg>';w.append(grip);
+ grip.addEventListener('pointerdown',e=>{if(e.button!==0&&e.pointerType==='mouse')return;e.preventDefault();e.stopPropagation();select(w);const W0=w.getBoundingClientRect().width,sc0=s.sc,x0=e.clientX,y0=e.clientY,pid=e.pointerId;
+  const mv=ev=>{if(ev.pointerId!==pid)return;ev.preventDefault();s.sc=Math.round(Math.max(.5,Math.min(2,sc0*(W0+(ev.clientX-x0+(ev.clientY-y0)*1.4)*.85)/W0))*100)/100;fit()};
+  const up=ev=>{if(ev.pointerId!==pid)return;window.removeEventListener('pointermove',mv,true);window.removeEventListener('pointerup',up,true)};window.addEventListener('pointermove',mv,true);window.addEventListener('pointerup',up,true)})}
+
+/* ================= KLASİK YÖNTEM: KARŞIYA ATMA ================= */
+const EC_TIPS=['Bir terim eşittirin <b>karşısına geçerken işareti değişir</b>: + 9 → − 9, − 4 → + 4.','Bu aslında <b>her iki taraftan aynı sayıyı çıkarmak / eklemek</b> demektir.','x ile <b>çarpım</b> durumundaki katsayı karşıya <b>bölen</b> olarak geçer: 3x = 27 → x = 27 ÷ 3.','Aynı tarafta kalan benzer terimleri <b>Sadeleştir</b> ile topla.','Sonucu ilk denklemde x yerine koyup <b>kontrol et</b>.'];
+function setupEqC(w){const s=w.state,art=w.querySelector('.art'),BASE=640;
+ const toSide=sd=>{const t=[];if(!z(sd.a))t.push({id:++s.nid,c:[...sd.a],x:1});if(!z(sd.b))t.push({id:++s.nid,c:[...sd.b],x:0});return{t,den:null}};
+ const start=()=>{s.nid=s.nid||0;s.c={L:toSide(s.eq.L),R:toSide(s.eq.R)};s.lines=[]};
+ if(!s.eq||!s.eq.L||!Array.isArray(s.eq.L.a)){s.lv=3;const r=rnd(3);s.eq={L:r.L,R:r.R};s.nid=0;start()}
+ s.lv=s.lv||3;
+ art.innerHTML=`<div class="eq-card ec-card" data-act="eq" style="width:${BASE}px">
+ <div class="eq-row"><span class="eq-lab"><i>x</i>’i bulunuz</span><div class="eq-box eq-orig"></div><input class="eq-edit" hidden placeholder="Örn. 3x + 5 = 2x + 9"><button class="eq-ib eq-new" title="Yeni denklem">⟳</button><button class="eq-ib eq-pen" title="Kendi denklemini yaz">✎</button><button class="eq-ib eq-tipb" title="İpuçları">💡</button></div>
+ <div class="ec-stage"><div class="ec-eq"></div><div class="ec-help">Terimi sürükleyip eşittirin karşısına bırak · ya da terime dokun, <b>⇄ Karşıya at</b>’a bas</div></div>
+ <div class="eq-row" style="margin-top:8px"><button class="eq-go ec-mv" disabled>⇄ Karşıya at</button><button class="eq-go ec-sum" style="background:#bae6fd;box-shadow:0 2px 0 #38bdf8">Σ Sadeleştir</button><button class="eq-ib eq-undo" title="Geri al">↶</button><button class="eq-ib eq-reset" title="Baştan">⟲</button><button class="eq-btn eq-hint">💡 Sonraki adım?</button><span style="flex:1"></span><span class="eq-seg sm eq-lvs" title="Seviye">${LV.map(([n,t])=>`<button data-l="${n}" title="Seviye ${n}: ${t}">${n}</button>`).join('')}</span></div>
+ <div class="eq-msg" hidden></div>
+ <div class="ec-book"><div class="ec-bh">✏️ Çözüm adımları</div><div class="ec-lines"></div></div>
+ <div class="eq-tips" hidden><ul>${EC_TIPS.map(t=>'<li>'+t+'</li>').join('')}</ul></div></div>`;
+ const card=art.firstElementChild,q=x=>card.querySelector(x),EQ=q('.ec-eq');lockW(w);
+ s.sc=Math.max(.5,Math.min(2,+s.sc||1));const fit=()=>{card.style.transform=s.sc===1?'':`scale(${s.sc})`;w.style.width=BASE*s.sc+'px';art.style.height=card.offsetHeight*s.sc+'px'};
+ addGrip(w,s,fit);if(window.ResizeObserver)new ResizeObserver(fit).observe(card);
+ const msg=(t,c)=>{const m=q('.eq-msg');m.hidden=!t;m.className='eq-msg '+(c||'inf');m.innerHTML=t||''};
+ const X0=()=>{const{L,R}=s.eq;return dvd(sub(R.b,L.b),sub(L.a,R.a))};
+ const other=k=>k==='L'?'R':'L',cl=o=>JSON.parse(JSON.stringify(o));
+ let sel=null,busy=false,hl=null;
+ /* ---- yazım ---- */
+ const tH=(t,first,kOK)=>{const sg=t.c[0]<0?'−':'+',ab=[Math.abs(t.c[0]),t.c[1]],pre=first&&t.c[0]>0?'':`<span class="ec-sg">${sg}</span>`;
+  if(!t.x)return pre+`<span>${fH(ab)}</span>`;if(kOK)return `<span class="ec-k dr${sel==='k'+t.id?' sel':''}${hl==='k'+t.id?' hl':''}">${t.c[0]<0?'−':''}${fH(ab)}</span><i>x</i>`;return pre+(one(ab)?'':`<span class="ec-k">${fH(ab)}</span>`)+'<i>x</i>'};
+ const coefOK=k=>{const sd=s.c[k],o=s.c[other(k)];return sd.t.length===1&&sd.t[0].x&&!sd.den&&!o.den&&!one(sd.t[0].c)&&!(o.t.some(t=>t.x))};
+ const sideH=k=>{const sd=s.c[k],ok=coefOK(k);let h=sd.t.length?sd.t.map((t,i)=>`<span class="ec-t ${t.x?'x':'u'}${sel===t.id?' sel':''}${hl===t.id?' hl':''}" data-id="${t.id}" data-s="${k}">${tH(t,i===0,ok&&t.x)}</span>`).join(''):'<span class="ec-t z" data-s="'+k+'">0</span>';
+  if(sd.den)h=`<span class="ec-fr"><span class="ec-nu">${h}</span><span class="ec-de"><span class="ec-t d" data-den="${k}">${fH(sd.den)}</span></span></span>`;return `<span class="ec-sd" data-side="${k}">${h}</span>`};
+ const txt=c=>{const f=k=>{const sd=c[k];let h=sd.t.length?sd.t.map((t,i)=>{const sg=t.c[0]<0?'−':'+',ab=[Math.abs(t.c[0]),t.c[1]];const v=t.x?(one(ab)?'':fH(ab))+'<i>x</i>':fH(ab);return i===0?(t.c[0]<0?'−':'')+v:` ${sg} ${v}`}).join(''):'0';if(sd.den)h=`<span class="eq-f" style="font-size:.8em"><b>${h}</b><b>${fH(sd.den)}</b></span>`;return h};return `${f('L')} <span style="margin:0 5px">=</span> ${f('R')}`};
+ /* ---- durum ---- */
+ const needSum=()=>['L','R'].some(k=>{const sd=s.c[k];return !!sd.den||sd.t.filter(t=>t.x).length>1||sd.t.filter(t=>!t.x).length>1});
+ const solved=()=>{for(const k of['L','R']){const a=s.c[k],b=s.c[other(k)];if(!a.den&&!b.den&&a.t.length===1&&a.t[0].x&&one(a.t[0].c)&&b.t.every(t=>!t.x)&&b.t.length<=1)return true}return false};
+ function chk(){const x=X0(),{L,R}=s.eq,xs=x[1]===1?(x[0]<0?'('+mn(x[0])+')':mn(x[0])):'('+fT(x)+')';
+  const sideS=sd=>{let t='';if(!z(sd.a))t+=(one(sd.a)?'':one([-sd.a[0],sd.a[1]])?'−':fT(sd.a)+'.')+xs;if(!z(sd.b))t+=t?(sd.b[0]<0?' − ':' + ')+fT(sd.b,1):fT(sd.b);return t||'0'};
+  const vL=fT(add(mul(L.a,x),L.b)),vR=fT(add(mul(R.a,x),R.b));if(z(R.a))return `${sideS(L)} = ${vL}`;if(z(L.a))return `${vR} = ${sideS(R)}`;return `${sideS(L)} = ${vL} &nbsp;ve&nbsp; ${sideS(R)} = ${vR}`}
+ function render(){q('.eq-orig').innerHTML=eqH(s.eq.L,s.eq.R);
+  EQ.innerHTML=sideH('L')+'<span class="ec-eqs">=</span>'+sideH('R');EQ.classList.toggle('done',solved());
+  card.querySelectorAll('.eq-lvs button').forEach(b=>b.classList.toggle('on',+b.dataset.l===s.lv));
+  q('.ec-mv').disabled=!sel;q('.ec-sum').disabled=!needSum();
+  const L=q('.ec-lines');L.innerHTML=[...s.lines.map(l=>`<div class="ec-ln"><span class="e">${txt(l.c)}</span><span class="n">${l.note}</span></div>`),`<div class="ec-ln cur"><span class="e">${txt(s.c)}</span><span class="n">${solved()?'✓':''}</span></div>`].join('');
+  if(solved())msg(`🎉 Buldun: <b><i style="font-family:'Times New Roman',serif">x</i> = ${fH(X0())}</b> &nbsp;·&nbsp; Kontrol: ${chk()} ✓`,'ok');
+  requestAnimationFrame(fit)}
+ /* ---- animasyon yardımcıları ---- */
+ const sc=()=>card.getBoundingClientRect().width/card.offsetWidth||1;
+ const loc=r=>{const c=card.getBoundingClientRect(),k=sc();return{x:(r.left-c.left)/k,y:(r.top-c.top)/k,w:r.width/k,h:r.height/k}};
+ const rects=()=>{const m={};EQ.querySelectorAll('.ec-t[data-id]').forEach(e=>m[e.dataset.id]=loc(e.getBoundingClientRect()));return m};
+ function shift(before,skip){EQ.querySelectorAll('.ec-t[data-id]').forEach(e=>{const id=e.dataset.id;if(skip.includes(id)||!before[id])return;const a=before[id],b=loc(e.getBoundingClientRect()),dx=a.x-b.x,dy=a.y-b.y;if(Math.abs(dx)+Math.abs(dy)<1)return;
+  e.style.transition='none';e.style.transform=`translate(${dx}px,${dy}px)`;requestAnimationFrame(()=>{e.style.transition='transform .45s cubic-bezier(.3,.9,.4,1)';e.style.transform=''})})}
+ function fly(html,cls,a,b,dur,mid,done){const g=document.createElement('span');g.className='ec-t ec-ghost '+cls;g.innerHTML=html;Object.assign(g.style,{left:a.x+'px',top:a.y+'px'});card.append(g);const t0=performance.now(),arc=Math.min(90,40+Math.abs(b.x-a.x)*.25);let sw=false;
+  const st=now=>{let t=Math.min(1,(now-t0)/dur),e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;g.style.left=a.x+(b.x-a.x)*e+'px';g.style.top=a.y+(b.y-a.y)*e-Math.sin(Math.PI*e)*arc+'px';g.style.transform=`scale(${1+.18*Math.sin(Math.PI*e)})`;
+   if(!sw&&t>=.5){sw=true;if(mid)mid(g)}if(t<1&&w.isConnected)requestAnimationFrame(st);else{g.remove();done&&done()}};requestAnimationFrame(st)}
+ const push=note=>{s.lines.push({c:cl(s.c),note})};
+ /* ---- işlemler ---- */
+ function moveTerm(id,fromRect){if(busy)return;let k=null,i=-1;for(const kk of['L','R']){const j=s.c[kk].t.findIndex(t=>t.id==id);if(j>=0){k=kk;i=j}}if(!k)return;
+  const o=other(k);if(s.c[k].den||s.c[o].den){msg('Önce <b>Σ Sadeleştir</b> ile bölmeyi yap.','no');return}
+  const el=EQ.querySelector(`.ec-t[data-id="${id}"]`),a=fromRect||loc(el.getBoundingClientRect()),before=rects(),t=s.c[k].t[i],oldH=tH(t,false,false);
+  const ab=[Math.abs(t.c[0]),t.c[1]],v=t.x?(one(ab)?'':fT(ab))+'x':fT(ab),inc=t.c[0]>0;
+  const note=`${inc?'+':'−'} ${v} karşıya ${inc?'−':'+'} ${v} olarak geçti <em>(her iki taraftan ${v} ${inc?'çıkarmak':'eklemek'} gibi)</em>`;
+  push(note);s.c[k].t.splice(i,1);const nt={...t,c:[-t.c[0],t.c[1]]};s.c[o].t.push(nt);sel=null;hl=null;busy=true;msg('');render();
+  const ne=EQ.querySelector(`.ec-t[data-id="${id}"]`);ne.style.visibility='hidden';const b=loc(ne.getBoundingClientRect());shift(before,[String(id)]);
+  fly(oldH,t.x?'x':'u',a,b,700,g=>{g.innerHTML=tH(nt,false,false);g.classList.add('flip')},()=>{ne.style.visibility='';ne.classList.add('pop');busy=false;setTimeout(()=>ne.classList.remove('pop'),500)})}
+ function moveCoef(k,fromRect){if(busy||!coefOK(k))return;const o=other(k),t=s.c[k].t[0],kel=EQ.querySelector(`.ec-t[data-id="${t.id}"] .ec-k`),a=fromRect||loc(kel.getBoundingClientRect()),before=rects();
+  const c=t.c,cT=fT(c),kh=fH(c);push(`${cT}x’teki ${cT} karşıya bölen olarak geçti <em>(her iki tarafı ${cT}${dat(c)} bölmek gibi)</em>`);
+  s.c[k].t[0]={...t,c:F(1)};s.c[o].den=[...c];sel=null;hl=null;busy=true;msg('');render();
+  const de=EQ.querySelector(`.ec-t.d[data-den="${o}"]`);de.style.visibility='hidden';const b=loc(de.getBoundingClientRect());shift(before,[]);
+  fly(kh,'k',a,b,750,g=>g.classList.add('flip'),()=>{de.style.visibility='';de.classList.add('pop');busy=false;setTimeout(()=>de.classList.remove('pop'),500)})}
+ function sum(){if(busy||!needSum())return;const before=rects(),groups=[],notes=[];
+  const nc=cl(s.c);for(const k of['L','R']){const sd=nc[k],nt=[];
+   for(const isx of[1,0]){const ts=sd.t.filter(t=>t.x===isx);if(!ts.length)continue;let c=F(0);ts.forEach(t=>c=add(c,t.c));if(sd.den)c=dvd(c,sd.den);
+    if(ts.length>1)notes.push('Benzer terimler toplandı');
+    if(!z(c)){nt.push({id:ts[0].id,c,x:isx});groups.push({to:ts[0].id,from:ts.slice(1).map(t=>t.id)})}else groups.push({to:null,from:ts.map(t=>t.id)})}
+   if(sd.den){const top=sd.t.length===1?fT(sd.t[0].c)+(sd.t[0].x?'x':''):'pay';notes.push(nt.length===1&&!nt[0].x?`Bölme yapıldı: ${top} ÷ ${fT(sd.den)} = ${fT(nt[0].c)}`:'Bölme yapıldı')}sd.t=nt;sd.den=null}
+  if(!nc.L.t.some(t=>t.x)&&!nc.R.t.some(t=>t.x)){msg('x kayboldu, bu denklemin tek çözümü yok.','no');return}
+  push([...new Set(notes)].join(' · '));s.c=nc;sel=null;hl=null;busy=true;msg('');
+  const oldEls={};EQ.querySelectorAll('.ec-t[data-id]').forEach(e=>oldEls[e.dataset.id]={h:e.innerHTML,c:e.classList.contains('x')?'x':'u'});
+  const dens=[...EQ.querySelectorAll('.ec-t.d')].map(e=>({r:loc(e.getBoundingClientRect()),h:e.innerHTML,k:e.dataset.den}));
+  render();let n=0;const end=()=>{if(--n<=0){busy=false}};
+  for(const g of groups){const te=g.to&&EQ.querySelector(`.ec-t[data-id="${g.to}"]`);const tb=te?loc(te.getBoundingClientRect()):null;
+   for(const f of g.from){const a=before[f];if(!a)continue;n++;if(tb)fly(oldEls[f].h,oldEls[f].c,a,tb,550,null,()=>{te.classList.add('pop');setTimeout(()=>te.classList.remove('pop'),450);end()});else fly(oldEls[f].h,oldEls[f].c+' fade',a,{x:a.x,y:a.y-30},500,null,end)}}
+  for(const d of dens){const te=EQ.querySelector(`.ec-sd[data-side="${d.k}"] .ec-t`);if(!te)continue;n++;fly(d.h,'k',d.r,loc(te.getBoundingClientRect()),550,null,()=>{te.classList.add('pop');setTimeout(()=>te.classList.remove('pop'),450);end()})}
+  shift(before,groups.flatMap(g=>g.from.map(String)));if(!n)busy=false}
+ function hint(){if(solved())return;if(needSum()){hl=null;render();msg('💡 Aynı tarafta benzer terimler (ya da bölme) var: <b>Σ Sadeleştir</b>’e bas.','inf');q('.ec-sum').classList.add('pop');setTimeout(()=>q('.ec-sum').classList.remove('pop'),600);return}
+  const xs=['L','R'].filter(k=>s.c[k].t.some(t=>t.x));
+  if(xs.length===2){const t=s.c.R.t.find(t=>t.x);hl=t.id;sel=t.id;render();msg('💡 x’ler iki tarafta. Sağdaki x’li terimi sola taşı (işareti değişecek).','inf');return}
+  const k=xs[0],c=s.c[k].t.find(t=>!t.x);if(c){hl=c.id;sel=c.id;render();msg(`💡 x’in yanındaki sayıyı karşıya at: işaretine dikkat!`,'inf');return}
+  const t=s.c[k].t[0];if(coefOK(k)){hl='k'+t.id;sel='k'+t.id;render();msg(`💡 x’in katsayısı ${fT(t.c)}: katsayıyı (vurgulu sayı) sürükleyip karşıya at, bölen olur.`,'inf')}}
+ /* ---- sürükleme ---- */
+ EQ.addEventListener('pointerdown',e=>{if(busy||e.button>0)return;const ch=e.target.closest('.ec-t[data-id]');if(!ch)return;e.preventDefault();e.stopPropagation();select(w);
+  const kk=e.target.closest('.ec-k.dr'),k=ch.dataset.s,cm=kk&&coefOK(k),el=cm?kk:ch,x0=e.clientX,y0=e.clientY,pid=e.pointerId,eqs=EQ.querySelector('.ec-eqs');let mv=false;
+  const move=ev=>{if(ev.pointerId!==pid)return;const dx=ev.clientX-x0,dy=ev.clientY-y0;if(!mv&&Math.hypot(dx,dy)<6)return;mv=true;const f=sc();el.classList.add('drag');el.style.transform=`translate(${dx/f}px,${dy/f}px)`;
+   const r=eqs.getBoundingClientRect(),cx=r.left+r.width/2,cross=k==='L'?ev.clientX>cx:ev.clientX<cx;eqs.classList.toggle('on',cross)};
+  const up=ev=>{if(ev.pointerId!==pid)return;window.removeEventListener('pointermove',move,true);window.removeEventListener('pointerup',up,true);window.removeEventListener('pointercancel',up,true);eqs.classList.remove('on');
+   if(!mv){const id=cm?'k'+ch.dataset.id:+ch.dataset.id;sel=sel===id?null:id;hl=null;render();return}
+   const r=eqs.getBoundingClientRect(),cx=r.left+r.width/2,cross=k==='L'?ev.clientX>cx:ev.clientX<cx,from=loc(el.getBoundingClientRect());el.classList.remove('drag');
+   if(cross&&ev.type==='pointerup'){if(cm)moveCoef(k,from);else moveTerm(+ch.dataset.id,from)}else{el.style.transition='transform .3s';el.style.transform='';setTimeout(()=>{el.style.transition=''},320)}};
+  window.addEventListener('pointermove',move,true);window.addEventListener('pointerup',up,true);window.addEventListener('pointercancel',up,true)});
+ /* ---- düğmeler ---- */
+ q('.ec-mv').onclick=()=>{if(!sel)return;if(typeof sel==='string'){const k=['L','R'].find(k=>s.c[k].t[0]&&'k'+s.c[k].t[0].id===sel);if(k)moveCoef(k)}else moveTerm(sel)};q('.ec-sum').onclick=sum;q('.eq-hint').onclick=hint;
+ q('.eq-undo').onclick=()=>{if(busy||!s.lines.length)return;s.c=s.lines.pop().c;sel=hl=null;msg('');render()};
+ q('.eq-reset').onclick=()=>{if(busy)return;start();sel=hl=null;msg('');render()};
+ const newEq=()=>{if(busy)return;const r=rnd(s.lv);s.eq={L:r.L,R:r.R};start();sel=hl=null;msg('');render()};
+ q('.eq-new').onclick=newEq;card.querySelectorAll('.eq-lvs button').forEach(b=>b.onclick=()=>{s.lv=+b.dataset.l;newEq()});
+ q('.eq-tipb').onclick=()=>{const t=q('.eq-tips');t.hidden=!t.hidden;q('.eq-tipb').classList.toggle('on',!t.hidden);fit()};
+ const ed=q('.eq-edit'),ob=q('.eq-orig');
+ const commit=()=>{const p=ed.value.split('=');if(p.length!==2){ed.style.borderColor='#ef4444';return}const L=parseSide(p[0]),Rr=parseSide(p[1]);
+  if(!L||!Rr){ed.style.borderColor='#ef4444';msg('Denklemi anlayamadım. Örnek: 3x + 5 = 2x + 9','no');return}
+  if(nv(sub(L.a,Rr.a))===0){ed.style.borderColor='#ef4444';msg('Bu denklemin tek bir çözümü yok (x’ler birbirini götürüyor). Başka bir denklem yaz.','no');return}
+  s.eq={L,R:Rr};start();ed.hidden=true;ob.hidden=false;q('.eq-pen').classList.remove('on');sel=hl=null;msg('');render()};
+ q('.eq-pen').onclick=()=>{const on=ed.hidden;ed.hidden=!on;ob.hidden=on;q('.eq-pen').classList.toggle('on',on);if(on){ed.value='';ed.style.borderColor='';ed.focus()}};
+ ed.onkeydown=e=>{if(e.key==='Enter')commit();if(e.key==='Escape')q('.eq-pen').click()};
+ render()}
+names.eq_cls='Denklem Çözümü (Karşıya Atma)';
+
+window.setupBalance=setupEq;
+const _sEq=window.setup;window.setup=function(w,type){if(type==='balance'){setupEq(w);return}if(type==='eq_cls'){setupEqC(w);return}return _sEq.apply(this,arguments)};
+/* menü resmi */
+const TH_SVG='<svg xmlns="http://www.w3.org/2000/svg" width="180" height="120" viewBox="0 0 180 120"><rect width="180" height="120" rx="10" fill="#fdf2f8"/><rect x="30" y="8" width="120" height="22" rx="6" fill="#fff" stroke="#cbd5e1"/><text x="90" y="24" text-anchor="middle" font-family="Segoe UI,Arial" font-size="13" fill="#0f172a">2<tspan font-family="Times New Roman" font-style="italic">x</tspan> + 3 = 11</text><path d="M72 116l4-12h28l4 12z" fill="#6b7280"/><path d="M87 104l2-26h2l2 26z" fill="#d1d5db" stroke="#6b7280"/><rect x="22" y="76" width="136" height="4" fill="#9ca3af" stroke="#4b5563"/><g fill="#d1d5db" stroke="#6b7280"><rect x="40" y="62" width="4" height="15"/><rect x="136" y="62" width="4" height="15"/></g><ellipse cx="42" cy="60" rx="34" ry="3" fill="#e5e7eb" stroke="#6b7280"/><ellipse cx="138" cy="60" rx="34" ry="3" fill="#e5e7eb" stroke="#6b7280"/><rect x="18" y="36" width="22" height="22" fill="#38bdf8" stroke="#0f172a" stroke-width=".8"/><text x="29" y="51" text-anchor="middle" font-family="Segoe UI,Arial" font-size="10">2<tspan font-family="Times New Roman" font-style="italic">x</tspan></text><circle cx="54" cy="47" r="11" fill="#f5e6d8" stroke="#0f172a" stroke-width=".8"/><text x="54" y="51" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11">3</text><circle cx="138" cy="47" r="11" fill="#f5e6d8" stroke="#0f172a" stroke-width=".8"/><text x="138" y="51" text-anchor="middle" font-family="Segoe UI,Arial" font-size="11">11</text><path d="M90 76V58" stroke="#16a34a" stroke-width="3"/><path d="M85 60l5-8 5 8z" fill="#16a34a"/></svg>';
+const setImg=()=>{const im=document.querySelector('#ntImg_balance img');if(im&&!im.dataset.eq){im.dataset.eq=1;im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(TH_SVG)}};setImg();setTimeout(setImg,0);setTimeout(setImg,500);
+})();
+</script>
+
