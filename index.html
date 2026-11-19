@@ -6034,6 +6034,12 @@ window.__tgMenu=()=>{const sec=[...menu.querySelectorAll(':scope > .menu-section
   const hd=el('button','sub-h'),box=el('div','sub-box');hd.type='button';box.hidden=true;box.append(P);
   const set=()=>hd.textContent=(box.hidden?'▸ ':'▾ ')+nm;set();hd.onclick=()=>{box.hidden=!box.hidden;set()};tools.append(hd,box)}}
 
+/* ===== Çarpan Ağacı (Sayı ve İşlem) ===== */
+{const sec=[...menu.querySelectorAll(':scope > .menu-section')].find(x=>x.querySelector('.cat-label')?.textContent==='Sayı ve İşlem');
+ if(sec){const tools=sec.querySelector('.tools'),nm='Çarpan Ağacı',svg='<svg xmlns="http://www.w3.org/2000/svg" width="180" height="120" viewBox="0 0 180 120"><rect width="180" height="120" rx="10" fill="#f0fdf4"/><g stroke="#334155" stroke-width="2"><path d="M90 22L52 56M90 22L128 56M52 56L32 92M52 56L72 92M128 56L110 92M128 56L148 92"/></g><rect x="72" y="10" width="36" height="24" rx="12" fill="#cffafe" stroke="#0f172a" stroke-width="2"/><g fill="#fff" stroke="#334155" stroke-width="2"><circle cx="52" cy="56" r="12"/><circle cx="128" cy="56" r="12"/></g><g fill="#fff7ed" stroke="#f97316" stroke-width="2.6"><circle cx="32" cy="92" r="11"/><circle cx="72" cy="92" r="11"/><circle cx="110" cy="92" r="11"/><circle cx="148" cy="92" r="11"/></g><g font-family="Segoe UI,Arial" font-weight="800" text-anchor="middle"><text x="90" y="27" font-size="13" fill="#0f172a">60</text><text x="52" y="61" font-size="12" fill="#0f172a">6</text><text x="128" y="61" font-size="12" fill="#0f172a">10</text><g font-size="12" fill="#c2410c"><text x="32" y="96">2</text><text x="72" y="96">3</text><text x="110" y="96">2</text><text x="148" y="96">5</text></g><text x="90" y="114" font-size="10.5" fill="#1d4ed8">2²·3·5</text></g></svg>';const P=palette('ntFtPal','',false),row=el('div','dv-grid');row.style.setProperty('--c',1);
+  const x=source(el('div','dv-t'),()=>({wd:'ft_tree',src:uri(svg),dw:180,dh:120}),nm);x.innerHTML=svg+'<span>Çarpan Ağacı</span>';x.setAttribute('aria-label',nm);row.append(x);P.append(row);
+  const hd=el('button','sub-h'),box=el('div','sub-box');hd.type='button';box.hidden=true;box.append(P);const set=()=>hd.textContent=(box.hidden?'▸ ':'▾ ')+nm;set();hd.onclick=()=>{box.hidden=!box.hidden;set()};
+  tools.append(hd,box);setTimeout(()=>tools.append(hd,box),0)}}
 })();
 </script>
 
@@ -8610,4 +8616,377 @@ const TH_SVG='<svg xmlns="http://www.w3.org/2000/svg" width="180" height="120" v
 const setImg=()=>{const im=document.querySelector('#ntImg_balance img');if(im&&!im.dataset.eq){im.dataset.eq=1;im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(TH_SVG)}};setImg();setTimeout(setImg,0);setTimeout(setImg,500);
 })();
 </script>
+<style id="ft-css">
+.widget[data-type=ft_tree]>.body{padding:0!important}.widget[data-type=ft_tree] .art{overflow:visible}
+.ft-card{transform-origin:0 0;position:relative;background:#fff;color:#172233;border:1px solid #e2e8f0;border-radius:20px;box-shadow:0 12px 32px rgba(15,23,42,.14);font-family:system-ui,"Segoe UI",sans-serif;padding:12px;box-sizing:border-box;outline:none}
+.ft-card [hidden]{display:none!important}
+.ft-card svg{display:block;user-select:none;-webkit-user-select:none}
+.ft-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ft-ttl{font:900 16px system-ui;color:#0f172a;margin-right:4px}
+.ft-seg{display:inline-flex;background:#f1f5f9;border-radius:10px;padding:3px;gap:1px}
+.ft-seg button{border:0;background:transparent;border-radius:8px;padding:5px 10px;font:700 12.5px system-ui;color:#475569;cursor:pointer;white-space:nowrap}
+.ft-seg button.on{background:#fff;color:#1e40af;box-shadow:0 1px 3px rgba(15,23,42,.15)}
+.ft-sp{flex:1}
+.ft-btn{height:30px;border:0;background:#f1f5f9;color:#1e293b;border-radius:8px;padding:0 10px;font:700 12.5px system-ui;cursor:pointer;white-space:nowrap}
+.ft-btn:hover{background:#e2e8f0}.ft-btn.pri{background:#2563eb;color:#fff}.ft-btn.pri:hover{background:#1d4ed8}
+.ft-btn.ok{background:#16a34a;color:#fff}.ft-btn.ok:hover{background:#15803d}.ft-btn.on{background:#1e40af;color:#fff}
+.ft-btn.pink{background:#fce7f3;color:#9d174d}.ft-btn.pink:hover{background:#fbcfe8}
+.ft-btn.yel{background:#fef9c3;color:#713f12}.ft-btn.yel:hover{background:#fef08a}
+.ft-btn.cy{background:#cffafe;color:#155e75}.ft-btn.cy:hover{background:#a5f3fc}
+.ft-btn.grn{background:#dcfce7;color:#166534}.ft-btn.grn:hover{background:#bbf7d0}
+.ft-btn:disabled{opacity:.4;cursor:default}
+.ft-ib{width:30px;height:30px;border:0;border-radius:8px;background:#f1f5f9;color:#475569;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;flex:none;font-size:15px}
+.ft-ib:hover{background:#e2e8f0}.ft-ib.on{background:#1e40af;color:#fff}
+.ft-main{display:flex;gap:10px;margin-top:10px;align-items:flex-start}
+.ft-left{flex:1;min-width:0}
+.ft-stage{background:linear-gradient(180deg,#f8fafc,#fff);border:1.5px solid #0f172a;border-radius:12px;padding:8px;min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow:hidden}
+.ft-side{width:206px;flex:none;display:flex;flex-direction:column;gap:6px}
+.ft-pad{background:#fefce8;border:2px solid #0f172a;border-radius:10px;padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:0;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.ft-pad button{height:44px;border:1.5px solid #1d4ed8;margin:-.75px;border-radius:0;background:#fff;color:#1d4ed8;font:500 23px system-ui;cursor:pointer;padding:0;touch-action:manipulation}
+.ft-pad button:hover{background:#eff6ff}.ft-pad button:active{background:#dbeafe}
+.ft-pad button.w2{grid-column:span 2;font-size:18px;font-weight:700}
+.ft-pad button.okk{background:#16a34a;color:#fff;border-color:#1d4ed8}.ft-pad button.okk:hover{background:#15803d}
+.ft-pad button.dis{color:#cbd5e1;cursor:default;background:#f8fafc}
+.ft-side .ft-btn{width:100%;text-align:left}
+.ft-msg{margin-top:8px;border-radius:10px;padding:7px 11px;font:700 13.5px/1.45 system-ui;min-height:22px;background:#f8fafc;color:#334155}
+.ft-msg.ok{background:#dcfce7;color:#166534}.ft-msg.no{background:#fee2e2;color:#991b1b}.ft-msg.info{background:#eff6ff;color:#1e3a8a}
+.ft-msg b{font-weight:900}
+.ft-steps{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.ft-st{display:flex;gap:10px;align-items:flex-start;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:8px 10px;transition:opacity .2s}
+.ft-st.lock{opacity:.45;pointer-events:none}
+.ft-st.cur{border-color:#93c5fd;background:#f8fbff;box-shadow:0 0 0 3px #dbeafe}
+.ft-st.done{border-color:#86efac;background:#f0fdf4}
+.ft-no{width:26px;height:26px;border-radius:50%;background:#e2e8f0;color:#334155;font:900 13px system-ui;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px}
+.ft-st.cur .ft-no{background:#2563eb;color:#fff}.ft-st.done .ft-no{background:#16a34a;color:#fff}
+.ft-sb{flex:1;min-width:0;font:700 13.5px/1.5 system-ui;color:#0f172a}
+.ft-sb small{display:block;font:600 12.5px/1.45 system-ui;color:#64748b;margin-top:2px}
+.ft-sb small b{color:#c2410c;font-weight:900}
+.ft-line{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:5px}
+.ft-box{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:34px;padding:0 9px;border:2px solid #cbd5e1;border-radius:9px;background:#fff;font:800 18px system-ui;color:#1d4ed8;cursor:pointer;box-sizing:border-box;position:relative}
+.ft-box em{font:600 13px system-ui;color:#94a3b8;font-style:normal}
+.ft-box.foc{border-color:#2563eb;box-shadow:0 0 0 3px #dbeafe}
+.ft-box.bad{border-color:#ef4444;background:#fef2f2;color:#b91c1c;animation:ftShake .35s}
+.ft-box.good{border-color:#22c55e;background:#f0fdf4;color:#166534;cursor:default}
+.ft-pf{min-width:160px;justify-content:flex-start}
+.ft-eq{font:900 22px system-ui;color:#0f172a;display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ft-pw{display:inline-flex;align-items:flex-start}
+.ft-base{font:900 24px system-ui;color:#c2410c;line-height:34px;margin-top:8px}
+.ft-e{min-width:30px;height:28px;font-size:15px;padding:0 5px;margin-left:1px}
+.ft-dot{font:900 22px system-ui;color:#64748b;margin-top:6px}
+.ft-cr{display:inline-block;width:2px;height:20px;background:#2563eb;margin-left:2px;animation:ftBlink 1s steps(1) infinite;vertical-align:middle}
+.ft-caret{animation:ftBlink 1s steps(1) infinite}
+@keyframes ftBlink{50%{opacity:0}}
+@keyframes ftShake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+@keyframes ftPop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+.ft-in{transform-box:fill-box;transform-origin:center}
+.ft-shk{animation:ftShake .35s}
+.ft-pop{animation:ftPop .4s ease-out}
+.ft-node{cursor:pointer}
+.ft-pill{cursor:pointer}
+.ft-pill:hover rect{filter:brightness(.95)}
+.ft-res{margin-top:4px;background:linear-gradient(135deg,#ecfdf5,#eff6ff);border:2px solid #86efac;border-radius:14px;padding:10px 12px;animation:ftPop .45s ease-out;transform-origin:left center}
+.ft-big{font:900 30px system-ui;color:#0f172a;letter-spacing:.3px}
+.ft-big sup,.ft-eqs sup{font-size:.6em;color:#1d4ed8}
+.ft-big .pb{color:#c2410c}
+.ft-sub{font:600 13px/1.5 system-ui;color:#475569;margin-top:2px}
+.ft-sub b{color:#0f172a}
+.ft-dv{margin-top:6px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:6px 9px;font:600 12.5px/1.6 system-ui;color:#334155}
+.ft-dv b{color:#0f172a}
+.ft-tips{margin-top:8px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:6px 9px;font:500 12.5px/1.5 system-ui;color:#713f12}
+.ft-tips b{color:#92400e}.ft-tips ul{margin:0;padding-left:17px}
+.ft-cust{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:#fdf2f8;border:1.5px solid #f9a8d4;border-radius:10px;padding:6px 9px;margin-bottom:8px;font:700 13px system-ui;color:#831843}
+.ft-lab{font:600 12px system-ui;color:#64748b}
+/* bölme yöntemi */
+.ft-ld{display:inline-grid;grid-template-columns:auto auto;margin:6px auto 4px;font:800 22px system-ui}
+.ft-lr{display:contents}
+.ft-lc{height:44px;display:flex;align-items:center;padding:0 14px}
+.ft-lc.l{justify-content:flex-end;border-right:3px solid #0f172a;min-width:90px}
+.ft-lc.r{justify-content:flex-start;min-width:70px}
+.ft-lr:not(:last-child) .ft-lc.r{border-bottom:2px solid #cbd5e1}
+.ft-lnum{color:#0f172a}.ft-lnum.root{font-size:25px;font-weight:900;background:#cffafe;border:2px solid #0f172a;border-radius:20px;padding:1px 12px}
+.ft-lnum.one{color:#16a34a}
+.ft-ldiv{color:#c2410c;display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;border:3px solid #f97316;border-radius:50%;background:#fff7ed;padding:0 4px;box-sizing:border-box;font-size:19px}
+.ft-cell{display:inline-flex;align-items:center;justify-content:center;min-width:54px;height:38px;padding:0 8px;border:2px dashed #94a3b8;border-radius:10px;background:#fff;color:#1d4ed8;cursor:pointer;box-sizing:border-box;font:800 20px system-ui}
+.ft-cell.foc{border-style:solid;border-color:#2563eb;background:#eff6ff;box-shadow:0 0 0 3px #dbeafe}
+.ft-cell.bad{border-style:solid;border-color:#ef4444;background:#fef2f2;color:#b91c1c;animation:ftShake .35s}
+.ft-cell .q{color:#cbd5e1}
+.ft-prod{font:800 15px system-ui;color:#334155;margin-top:6px;text-align:center}
+.ft-prod b{color:#c2410c}
+</style>
+<script id="ft-js">
+(function(){
+const NS='http://www.w3.org/2000/svg';
+const E=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.append(e);return e};
+const TX=(p,x,y,t,o={})=>{const e=E('text',Object.assign({x,y,'text-anchor':'middle','dominant-baseline':'central','font-family':'system-ui,"Segoe UI",sans-serif','font-weight':800,'font-size':18,fill:'#0f172a'},o),p);e.textContent=t;return e};
+const isP=n=>{if(!Number.isInteger(n)||n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true};
+const spf=n=>{for(let i=2;i*i<=n;i++)if(n%i===0)return i;return n};
+const fac=n=>{const m=new Map();while(n>1){const p=spf(n);m.set(p,(m.get(p)||0)+1);n/=p}return m};
+const omega=n=>[...fac(n).values()].reduce((a,b)=>a+b,0);
+const powHTML=(m,cls)=>[...m].map(([p,e])=>`<span class="${cls||''}">${p}</span>`+(e>1?`<sup>${e}</sup>`:'')).join(' · ');
+const trJoin=a=>a.length<2?String(a[0]??''):a.slice(0,-1).join(', ')+' ve '+a[a.length-1];
+const LV={1:[12,100,3,4],2:[100,500,4,6],3:[500,3000,5,8]};
+const rndN=(lv,not)=>{const [a,b,o1,o2]=LV[lv]||LV[1];for(let k=0;k<800;k++){const n=a+Math.floor(Math.random()*(b-a+1)),o=omega(n);if(n!==not&&o>=o1&&o<=o2&&fac(n).size>=2)return n}return 120};
+const EN=()=>({v:null,t:''});
+const newTree=N=>({v:N,k:'s',c:[EN(),EN()]});
+const newLd=N=>[{n:N,d:null,dt:''}];
+const newSt=()=>({pf:'',pfOk:false,ex:[],exOk:false,dv:false});
+const get=(r,p)=>{let n=r;for(const ch of p){if(!n||!n.c)return null;n=n.c[+ch]}return n};
+const done=n=>n.k==='p'||(n.k==='s'&&!!n.c&&n.c.every(done));
+const leaves=(n,a=[])=>{if(n.k==='p')a.push(n.v);else if(n.k==='s'&&n.c)n.c.forEach(c=>leaves(c,a));return a};
+const walk=(n,p,f)=>{if(f(n,p))return p;if(n.k==='s'&&n.c){for(let i=0;i<2;i++){const r=walk(n.c[i],p+i,f);if(r!=null)return r}}return null};
+const nextEmpty=r=>walk(r,'',n=>n.v==null);
+const firstPending=r=>walk(r,'',(n,p)=>p!==''&&n.v!=null&&!n.k);
+function divHint(v){const ds=String(v).split('').reduce((a,b)=>a+ +b,0),last=v%10;
+ if(v%2===0)return `<b>${v}</b> çift sayı (son rakamı ${last}) → 2’ye bölünür. ${v} = 2 × ?`;
+ if(ds%3===0)return `<b>${v}</b> sayısının rakamları toplamı ${ds}, bu da 3’ün katı → 3’e bölünür. ${v} = 3 × ?`;
+ if(last===5)return `<b>${v}</b> sayısının son rakamı 5 → 5’e bölünür. ${v} = 5 × ?`;
+ const p=spf(v);return `<b>${v}</b> sayısı 2, 3 ve 5 ile bölünmüyor. 7, 11, 13… ile bölmeyi dene (ipucu: ${p} ile tam bölünür).`}
+const TIPS={tree:['<b>Asal sayı</b>: 1’den büyük, yalnızca 1’e ve kendisine bölünen sayıdır. <b>1 asal değildir.</b> 2 tek çift asal sayıdır.','Sayıyı <b>iki çarpanın çarpımı</b> olarak yaz. Asal olan çarpanlar daireye alınır (dal biter), asal olmayanlar yeniden ikiye ayrılır.','Bölünebilme kuralları: Son rakamı çiftse <b>2’ye</b>; rakamları toplamı 3’ün katıysa <b>3’e</b>; son rakamı 0 ya da 5 ise <b>5’e</b> bölünür.','Hangi çarpanlarla başlarsan başla, sonunda <b>hep aynı asal çarpanlara</b> ulaşırsın.','Üslü yazılışta tekrar eden asal çarpan <b>taban</b>, kaç kez tekrar ettiği <b>üs</b> olur: 2 · 2 · 2 = 2³. Üs 1 ise yazılmaz.'],
+ ld:['Sayıyı bölen <b>en küçük asal sayıyı</b> sağ tarafa yaz, bölümü alta yaz.','Bölüm <b>1</b> olunca dur.','Sağ sütundaki sayılar asal çarpanlardır. Aynı asal birden çok kez çıkabilir: kaç kez çıktığı üssü verir.','Bölme yönteminde yalnızca <b>asal sayılarla</b> bölünür: 4 ya da 6 ile bölemezsin.']};
+
+function setupFT(w){const s=w.state;
+ if(!['tree','ld'].includes(s.mode))s.mode='tree';s.lv=[1,2,3].includes(s.lv)?s.lv:1;s.auto=!!s.auto;
+ if(!(Number.isInteger(s.N)&&s.N>=4&&!isP(s.N))){s.N=120;s.tree=null}
+ if(!s.tree||s.tree.v!==s.N)s.tree=newTree(s.N);if(!Array.isArray(s.ld)||!s.ld.length||s.ld[0].n!==s.N)s.ld=newLd(s.N);
+ if(!s.st||!s.st.tree||!s.st.ld)s.st={tree:newSt(),ld:newSt()};
+ const art=w.querySelector('.art'),BASE=860;
+ art.innerHTML=`<div class="ft-card" data-act="ft" tabindex="0" style="width:${BASE}px">
+ <div class="ft-top"><span class="ft-ttl">🌳 Çarpan Ağacı</span><span class="ft-seg ft-mode"><button data-m="tree">Çarpan ağacı</button><button data-m="ld">Bölme yöntemi</button></span><span class="ft-sp"></span>
+ <button class="ft-btn grn" data-a="new">🎲 Yeni</button><button class="ft-btn pink" data-a="cust">✎ Kendi sayın</button><button class="ft-btn cy" data-a="reset">↺ Baştan</button><button class="ft-btn yel" data-a="check">✓ Kontrol</button><button class="ft-ib ft-tipb" data-a="tips" title="Bilgi notları">ℹ</button></div>
+ <div class="ft-main"><div class="ft-left"><div class="ft-custw"></div><div class="ft-stage"></div><div class="ft-msg"></div></div>
+ <div class="ft-side"><div class="ft-pad">${['1','2','3','4','5','6','7','8','9','0'].map(d=>`<button type="button" data-key="${d}">${d}</button>`).join('')}<button type="button" class="w2" data-key="bs" title="Sil">⌫</button><button type="button" data-key="," title="Virgül (asal çarpanları ayırmak için)">,</button><button type="button" class="w2 okk" data-key="ok" title="Tamam / kontrol et">✓</button></div>
+ <span class="ft-seg ft-lv" title="🎲 Yeni ile gelecek sayının zorluğu" style="display:flex"><button data-l="1" style="flex:1">Kolay</button><button data-l="2" style="flex:1">Orta</button><button data-l="3" style="flex:1">Zor</button></span><button class="ft-btn" data-a="hint">💡 İpucu</button><button class="ft-btn" data-a="step">👣 Bir adım göster</button><button class="ft-btn" data-a="solve">⏩ Hepsini çöz</button><button class="ft-btn" data-a="undo">↶ Geri al</button><button class="ft-btn ft-auto" data-a="auto" title="Açıkken asal sayılar otomatik daire içine alınır; kapalıyken öğrenci karar verir"></button></div></div>
+ <div class="ft-steps"></div><div class="ft-tips" hidden></div></div>`;
+ const card=art.firstElementChild,q=x=>card.querySelector(x);lock(w);
+ s.sc=Math.max(.5,Math.min(2,+s.sc||1));const fit=()=>{card.style.transform=s.sc===1?'':`scale(${s.sc})`;w.style.width=BASE*s.sc+'px';art.style.height=card.offsetHeight*s.sc+'px'};
+ w.querySelector(':scope>.mb-grip')?.remove();const grip=document.createElement('div');grip.className='mb-grip';grip.title='Büyüt / küçült';grip.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#334155" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l8 8"/><path d="M8 8h4M8 8v4"/><path d="M16 16h-4M16 16v-4"/></svg>';w.append(grip);
+ grip.addEventListener('pointerdown',e=>{if(e.button!==0&&e.pointerType==='mouse')return;e.preventDefault();e.stopPropagation();select(w);const W0=w.getBoundingClientRect().width,sc0=s.sc,x0=e.clientX,y0=e.clientY,pid=e.pointerId;
+  const mv=ev=>{if(ev.pointerId!==pid)return;ev.preventDefault();s.sc=Math.round(Math.max(.5,Math.min(2,sc0*(W0+(ev.clientX-x0+(ev.clientY-y0)*1.4)*.85)/W0))*100)/100;fit()};
+  const up=ev=>{if(ev.pointerId!==pid)return;window.removeEventListener('pointermove',mv,true);window.removeEventListener('pointerup',up,true)};window.addEventListener('pointermove',mv,true);window.addEventListener('pointerup',up,true)});
+ if(window.ResizeObserver)new ResizeObserver(fit).observe(card);
+
+ let F=null,MSG=null,tok=0,tips=false,exTried=false;const hist=[],bad=new Set(),fresh=new Set(),shk=new Set();
+ const st=()=>s.st[s.mode];
+ const say=(t,c='info')=>{MSG={t,c}};
+ const snap=()=>{hist.push(JSON.stringify({tree:s.tree,ld:s.ld,st:s.st}));if(hist.length>80)hist.shift()};
+ const complete=()=>s.mode==='tree'?done(s.tree):s.ld[s.ld.length-1].n===1;
+ const srcList=()=>s.mode==='tree'?leaves(s.tree).sort((a,b)=>a-b):s.ld.filter(r=>r.d!=null).map(r=>r.d);
+ function stepsFocus(){const S=st();if(!S.pfOk)return{k:'pf'};if(!S.exOk){const i=S.ex.findIndex(x=>x==='');return{k:'e',i:i<0?0:i}}return null}
+ function autoFocus(){if(s.mode==='tree'){const ep=nextEmpty(s.tree);if(ep!=null)return{k:'n',p:ep};return done(s.tree)?stepsFocus():null}
+  const L=s.ld,i=L.length-1,r=L[i];if(r.n==null)return{k:'q',i};if(r.n===1)return stepsFocus();return{k:'d',i}}
+ function introMsg(){say(s.mode==='tree'?`<b>${s.N}</b> sayısını, çarpımı ${s.N} olan iki sayıya ayır. Daireye dokun, tuş takımıyla yaz ve ✓’ye bas.`:`<b>${s.N}</b> sayısını bölen bir asal sayıyı (tercihen en küçüğünü) sağ tarafa yaz.`,'info')}
+ function start(N){tok++;s.N=N;s.tree=newTree(N);s.ld=newLd(N);s.st={tree:newSt(),ld:newSt()};hist.length=0;bad.clear();F=autoFocus();introMsg();render()}
+ function restart(m){tok++;snap();if(s.mode==='tree')s.tree=newTree(s.N);else s.ld=newLd(s.N);s.st[s.mode]=newSt();bad.clear();F=autoFocus();if(m)say(m,'info');else introMsg();render()}
+
+ /* ---------- giriş hedefi ---------- */
+ function target(){if(!F)return null;const S=st();
+  if(F.k==='n'){const n=get(s.tree,F.p);if(!n||n.v!=null)return null;return{g:()=>n.t,s:v=>{n.t=v;n.bad=false;const sb=get(s.tree,F.p.slice(0,-1)+(F.p.slice(-1)==='0'?'1':'0'));if(sb)sb.bad=false},max:5}}
+  if(F.k==='N')return{g:()=>s.nt||'',s:v=>s.nt=v,max:4};
+  if(F.k==='pf'&&!S.pfOk)return{g:()=>S.pf,s:v=>{S.pf=v;bad.delete('pf')},max:40,comma:true};
+  if(F.k==='e'&&S.pfOk&&!S.exOk)return{g:()=>S.ex[F.i]||'',s:v=>{S.ex[F.i]=v;bad.delete('e'+F.i)},max:2};
+  if(F.k==='d'){const r=s.ld[F.i];if(!r||r.d!=null)return null;return{g:()=>r.dt,s:v=>{r.dt=v;bad.delete('d'+F.i)},max:4}}
+  if(F.k==='q'){const r=s.ld[F.i];if(!r||r.n!=null)return null;return{g:()=>r.nt,s:v=>{r.nt=v;bad.delete('q'+F.i)},max:5}}
+  return null}
+ function key(k){if(k==='ok'){enter();render();return}const t=target();if(!t)return;let b=t.g();
+  if(k==='bs')b=b.replace(/, $/,',').slice(0,-1);
+  else if(k===','){if(!t.comma||!b||/[, ]$/.test(b))return;b+=', '}
+  else{const digs=t.comma?(b.split(',').pop().trim().length):b.length;if(digs>=(t.comma?4:t.max)||b.length>=t.max)return;if(!t.comma&&b===''&&k==='0')return;b+=k}
+  t.s(b);render()}
+ function enter(){if(!F){say(complete()&&st().exOk?'Bu sayı bitti! 🎲 Yeni ile başka bir sayı seç.':'Önce yazmak istediğin yere dokun.','info');return}
+  if(F.k==='n'){const n=get(s.tree,F.p);if(!n||n.v!=null)return;const sp=F.p.slice(0,-1)+(F.p.slice(-1)==='0'?'1':'0'),sb=get(s.tree,sp);
+   if(n.t&&sb&&sb.v==null&&!sb.t){F={k:'n',p:sp};return}if(!n.t&&sb&&sb.t){say('Bu daireyi de doldur.','info');return}checkPair(F.p.slice(0,-1));return}
+  if(F.k==='N')return custOk();
+  if(F.k==='pf')return checkPF();
+  if(F.k==='e'){const S=st(),j=S.ex.findIndex((x,i)=>i>F.i&&x==='');if(!exTried&&S.ex[F.i]!==''&&j>=0){F={k:'e',i:j};return}return checkEx()}
+  if(F.k==='d')return checkD(F.i);if(F.k==='q')return checkQ(F.i)}
+
+ /* ---------- ağaç doğrulama ---------- */
+ function afterTree(m){if(done(s.tree)){m+=` 🎉 Ağaç tamamlandı! Turuncu dairelerdeki sayılar <b>${s.N}</b> sayısının asal çarpanlarıdır. Şimdi 2. adım.`}F=autoFocus();say(m,'ok')}
+ function checkPair(pp){const par=get(s.tree,pp);if(!par||!par.c)return false;const [A,B]=par.c;if(A.v!=null)return false;
+  if(!A.t||!B.t){say(`İki daireyi de doldur: çarpımları <b>${par.v}</b> olmalı.`,'no');return false}
+  const a=+A.t,b=+B.t;
+  if(a===1||b===1){A.bad=B.bad=true;shk.add(pp+'0');shk.add(pp+'1');say('1 ile ayırmak sayıyı değiştirmez. <b>1’den büyük</b> iki çarpan bul.','no');return false}
+  if(a*b!==par.v){A.bad=B.bad=true;shk.add(pp+'0');shk.add(pp+'1');say(`${a} × ${b} = ${a*b}, ama <b>${par.v}</b> olmalı. Tekrar dene.`,'no');return false}
+  snap();A.v=a;B.v=b;A.t=B.t='';A.bad=B.bad=false;fresh.add(pp+'0');fresh.add(pp+'1');
+  if(s.auto)[A,B].forEach((n,i)=>{if(isP(n.v))n.k='p';else{n.k='s';n.c=[EN(),EN()];fresh.add(pp+i+'0');fresh.add(pp+i+'1')}});
+  afterTree(`✓ ${a} × ${b} = ${par.v}.`+(s.auto?'':' Şimdi her sayının altındaki düğmeyle karar ver: <b>asal</b> mı, yoksa <b>ayrılır</b> mı?'));return true}
+ function decide(p,ch){const n=get(s.tree,p);if(!n||n.v==null||n.k)return;const pr=isP(n.v);
+  if(ch==='p'&&!pr){shk.add(p);say(`<b>${n.v}</b> asal değil: ${spf(n.v)} ile de tam bölünür. “ayır”ı seç.`,'no');return}
+  if(ch==='s'&&pr){shk.add(p);say(`<b>${n.v}</b> asal sayı: yalnızca 1’e ve kendisine bölünür. “asal”ı seç.`,'no');return}
+  snap();n.k=ch;if(ch==='s'){n.c=[EN(),EN()];fresh.add(p+'0');fresh.add(p+'1')}else fresh.add(p);
+  afterTree(ch==='p'?`✓ <b>${n.v}</b> asal sayı, bu dal burada biter.`:`✓ <b>${n.v}</b> asal değil, onu da iki çarpana ayır.`)}
+ function checkAll(){if(s.mode==='ld'){enter();return}
+  if(F&&F.k!=='n'){enter();return}
+  const pairs=[];walk(s.tree,'',(n,p)=>{if(n.k==='s'&&n.c&&n.c[0].v==null&&(n.c[0].t||n.c[1].t))pairs.push(p);return false});
+  if(!pairs.length){const pd=firstPending(s.tree);say(pd!=null?`<b>${get(s.tree,pd).v}</b> için karar ver: asal mı, ayrılır mı?`:'Önce daireleri doldur.','info');return}
+  for(const p of pairs)if(!checkPair(p))return}
+
+ /* ---------- bölme yöntemi doğrulama ---------- */
+ function checkD(i){const r=s.ld[i];if(!r||r.d!=null)return;if(!r.dt){say('Sağ tarafa bir asal bölen yaz.','info');return}const d=+r.dt;
+  if(d===1){bad.add('d'+i);say('1 ile bölmek sayıyı değiştirmez. En küçük asal sayı <b>2</b>’dir.','no');return}
+  if(!isP(d)){bad.add('d'+i);say(`<b>${d}</b> asal değil. Bölme yönteminde yalnızca asal sayılarla bölünür.`,'no');return}
+  if(r.n%d){bad.add('d'+i);say(`<b>${r.n}</b> sayısı ${d} ile tam bölünmez. Başka bir asal dene.`,'no');return}
+  snap();r.d=d;r.dt='';s.ld.push({n:null,nt:'',d:null,dt:''});F={k:'q',i:i+1};const sm=spf(r.n);
+  say(`✓ ${r.n}, ${d} ile tam bölünür. Şimdi bölümü alta yaz: ${r.n} ÷ ${d} = ?`+(d!==sm?` <span style="font-weight:600">(Not: en küçük asal bölen ${sm} idi; sorun değil, sonuç yine aynı çıkacak.)</span>`:''),'ok')}
+ function checkQ(i){const r=s.ld[i],pr=s.ld[i-1];if(!r||!pr||r.n!=null)return;if(!r.nt){say('Bölümü yaz.','info');return}const v=+r.nt,ans=pr.n/pr.d;
+  if(v!==ans){bad.add('q'+i);say(`${pr.n} ÷ ${pr.d} işlemini tekrar yap.`+(v*pr.d!==pr.n?` (Kontrol: ${v} × ${pr.d} = ${v*pr.d})`:''),'no');return}
+  snap();r.n=v;r.nt='';F=autoFocus();
+  say(v===1?`✓ Bölüm 1 oldu, bölme bitti! 🎉 Sağ sütundaki sayılar <b>${s.N}</b> sayısının asal çarpanlarıdır. Şimdi 2. adım.`:`✓ ${pr.n} ÷ ${pr.d} = ${v}. Şimdi <b>${v}</b> sayısını bölen bir asal yaz.`,'ok')}
+
+ /* ---------- 2. ve 3. adım ---------- */
+ function checkPF(){const S=st();if(S.pfOk||!complete())return;const want=[...fac(s.N).keys()],got=(S.pf.match(/\d+/g)||[]).map(Number);
+  const no=m=>{bad.add('pf');say(m,'no')};
+  if(!got.length)return no('Asal çarpanları virgülle ayırarak yaz. Örnek: 2, 3, 5');
+  const np=got.find(x=>!isP(x));if(np!=null)return no(`<b>${np}</b> asal sayı değil.`+(np===1?' 1 asal değildir.':''));
+  const nd=got.find(x=>s.N%x);if(nd!=null)return no(`<b>${nd}</b> asal ama ${s.N} sayısının çarpanı değil.`);
+  if(new Set(got).size!==got.length)return no('Her asal çarpanı <b>bir kez</b> yaz. Kaç kez tekrar ettiğini 3. adımda üs gösterecek.');
+  const miss=want.filter(p=>!got.includes(p));if(miss.length)return no(`${miss.length} asal çarpan eksik. ${s.mode==='tree'?'Ağaçtaki turuncu dairelere':'Sağ sütundaki sayılara'} bak.`);
+  snap();const sorted=got.every((x,i)=>!i||got[i-1]<x);S.pfOk=true;S.pf=want.join(', ');S.ex=want.map(()=>'');F={k:'e',i:0};
+  say(`✓ <b>${s.N}</b> sayısının asal çarpanları: <b>${trJoin(want)}</b>.`+(sorted?'':' (Küçükten büyüğe sıraladık.)')+' Şimdi üslü yazılışı tamamla.','ok')}
+ function checkEx(){const S=st();if(!S.pfOk||S.exOk)return;const m=[...fac(s.N)],wr=[];
+  m.forEach(([p,e],i)=>{const v=S.ex[i]===''?1:+S.ex[i];if(v!==e)wr.push(i)});
+  if(wr.length){exTried=true;wr.forEach(i=>bad.add('e'+i));const [p,e]=m[wr[0]];F={k:'e',i:wr[0]};
+   say(S.ex[wr[0]]===''?`<b>${p}</b> tabanının üssünü yaz.`:`<b>${p}</b> tabanının üssü yanlış. ${p} çarpanı kaç kez tekrar ediyor? Say.`+(S.ex[wr[0]]==='0'?' (Üs 0 olamaz; çünkü bu asal çarpan var.)':''),'no');return}
+  snap();const had1=S.ex.some((x,i)=>x==='1');S.exOk=true;S.ex=m.map(([,e])=>String(e));F=null;
+  say(`🎉 Harika! <b>${s.N}</b> = ${powHTML(fac(s.N))}`+(had1?' · Not: Üs 1 olduğunda genellikle yazılmaz.':''),'ok')}
+
+ /* ---------- ipucu & göster ---------- */
+ function hint(){const S=st();
+  if(F&&F.k==='N')return say('4 ile 9999 arasında, asal olmayan bir sayı yaz.','info');
+  if(!complete()){
+   if(s.mode==='tree'){const pd=firstPending(s.tree);if(pd!=null){const v=get(s.tree,pd).v;return say(`<b>${v}</b> asal mı? 2, 3, 5, 7… ile bölmeyi dene. Hiçbirine tam bölünmüyorsa asaldır.`,'info')}
+    const ep=F&&F.k==='n'?F.p:nextEmpty(s.tree);if(ep!=null)return say('💡 '+divHint(get(s.tree,ep.slice(0,-1)).v),'info')}
+   else{const L=s.ld,r=L[L.length-1];if(r.n==null){const pr=L[L.length-2];return say(`💡 ${pr.n} ÷ ${pr.d} işlemini yap. Bölüm alta yazılır.`,'info')}return say('💡 '+divHint(r.n),'info')}}
+  if(!S.pfOk)return say(`💡 ${s.mode==='tree'?'Turuncu dairelerdeki':'Sağ sütundaki'} farklı sayıları, her birini <b>bir kez</b> ve küçükten büyüğe yaz: örneğin 2, 3, 5`,'info');
+  if(!S.exOk){const L=srcList(),m=[...fac(s.N)],i=F&&F.k==='e'?F.i:0,p=m[i][0];return say(`💡 Sırala: ${L.join(' · ')}. Bu çarpımda <b>${p}</b> kaç kez var? O sayı ${p} tabanının üssüdür.`,'info')}
+  say('Hepsi tamam! 🎲 Yeni ile başka bir sayı dene ya da “Başka bir ağaçla dene”.','info')}
+ function stepSteps(){const S=st();if(!S.pfOk){S.pf=[...fac(s.N).keys()].join(', ');checkPF();return true}if(!S.exOk){S.ex=[...fac(s.N).values()].map(e=>e>1?String(e):'');checkEx();return true}return false}
+ function step(){if(F&&F.k==='N')F=autoFocus();
+  if(s.mode==='tree'){const pd=firstPending(s.tree);if(pd!=null){decide(pd,isP(get(s.tree,pd).v)?'p':'s');return true}
+   const ep=nextEmpty(s.tree);if(ep!=null){const pp=ep.slice(0,-1),par=get(s.tree,pp);let a=1;for(let d=2;d*d<=par.v;d++)if(par.v%d===0)a=d;par.c[0].t=String(a);par.c[1].t=String(par.v/a);par.c.forEach(c=>c.bad=false);checkPair(pp);return true}
+   return stepSteps()}
+  const L=s.ld,i=L.length-1,r=L[i];if(r.n==null){r.nt=String(L[i-1].n/L[i-1].d);checkQ(i);return true}
+  if(r.n!==1){r.dt=String(spf(r.n));checkD(i);return true}return stepSteps()}
+ function solve(){const t=++tok;const go=()=>{if(t!==tok||!w.isConnected)return;const more=step();render();if(more&&!st().exOk)setTimeout(go,380)};go()}
+
+ /* ---------- kendi sayın ---------- */
+ function custOk(){const v=+(s.nt||'');
+  if(!s.nt){say('Bir sayı yaz.','info');return}
+  if(v<4||v>9999){bad.add('N');say('4 ile 9999 arasında bir sayı yaz.','no');return}
+  if(isP(v)){bad.add('N');say(`<b>${v}</b> asal sayı! Asal sayı zaten kendisinin tek asal çarpanıdır; ağaç yapılamaz. Başka bir sayı dene.`,'no');return}
+  s.nt='';start(v)}
+
+ /* ---------- çizim: ağaç ---------- */
+ function drawTree(stg){const U=74,LH=84;let maxD=0;const pos=[];
+  const wOf=n=>n.k==='s'&&n.c?wOf(n.c[0])+wOf(n.c[1]):1;
+  const place=(n,p,x0,d)=>{maxD=Math.max(maxD,d);const y=36+d*LH;
+   if(n.k==='s'&&n.c){const k0=place(n.c[0],p+'0',x0,d+1),k1=place(n.c[1],p+'1',x0+wOf(n.c[0])*U,d+1);const me={n,p,x:(k0.x+k1.x)/2,y,kids:[k0,k1]};pos.push(me);return me}
+   const me={n,p,x:x0+U/2,y};pos.push(me);return me};
+  place(s.tree,'',0,0);const W=Math.max(2,wOf(s.tree))*U,VW=Math.max(W,470)+16,VH=36+maxD*LH+(firstPending(s.tree)!=null||maxD<2?62:40),ox=(VW-W)/2;
+  const DW=600,sc=Math.min(1.2,DW/VW);
+  const svg=E('svg',{width:VW*sc,height:VH*sc,viewBox:`${-ox} 0 ${VW} ${VH}`},null);stg.append(svg);
+  const gE=E('g',{},svg),gN=E('g',{},svg);
+  pos.forEach(o=>{if(!o.kids)return;o.kids.forEach(k=>{const foc=F&&F.k==='n'&&F.p===k.p,v=k.n.v!=null;
+    E('line',{x1:o.x,y1:o.y,x2:k.x,y2:k.y,stroke:foc?'#2563eb':v?'#334155':'#94a3b8','stroke-width':foc?3.2:v?2.6:2,'stroke-dasharray':v||foc?'':'6 5','stroke-linecap':'round'},gE)});
+   const [a,b]=o.kids;if(b.x-a.x>58)TX(gE,(a.x+b.x)/2,a.y,'×',{'font-size':17,fill:'#94a3b8','font-weight':700})});
+  pos.forEach(o=>drawNode(gN,o))}
+ function drawNode(g,o){const n=o.n,root=o.p==='',foc=F&&F.k==='n'&&F.p===o.p&&n.v==null;
+  const txt=n.v!=null?String(n.v):(n.t||'');const len=Math.max(1,txt.length),r=Math.max(24,len*5.4+9);
+  const outer=E('g',{transform:`translate(${o.x},${o.y})`,class:'ft-node','data-p':o.p},g);
+  const inner=E('g',{class:'ft-in'+(shk.has(o.p)?' ft-shk':fresh.has(o.p)?' ft-pop':'')},outer);
+  if(root){const wd=Math.max(66,len*13.5+32);E('rect',{x:-wd/2,y:-21,width:wd,height:42,rx:21,fill:'#cffafe',stroke:'#0f172a','stroke-width':2.5},inner);TX(inner,0,1,txt,{'font-size':23,'font-weight':900});return}
+  let fill='#fff',stc='#334155',sw=2.4,tc='#0f172a',dash='';
+  if(n.v==null){fill=n.bad?'#fef2f2':foc?'#eff6ff':'#fff';stc=n.bad?'#ef4444':foc?'#2563eb':'#94a3b8';sw=foc||n.bad?3.2:2;dash=foc||n.t||n.bad?'':'5 4';tc=n.bad?'#b91c1c':'#1d4ed8'}
+  else if(n.k==='p'){fill='#fff7ed';stc='#f97316';sw=3.6;tc='#c2410c'}
+  else if(!n.k){fill='#faf5ff';stc='#8b5cf6';sw=2.6}
+  if(n.k==='p')E('circle',{r:r+4.5,fill:'none',stroke:'#fdba74','stroke-width':1.6},inner);
+  E('circle',{r,fill,stroke:stc,'stroke-width':sw,'stroke-dasharray':dash},inner);
+  const fs=len>=4?15:len===3?17:20;
+  if(!txt){if(foc)E('rect',{x:-1.2,y:-11,width:2.4,height:22,fill:'#2563eb',class:'ft-caret'},inner);else TX(inner,0,1,'?',{fill:'#cbd5e1','font-size':18})}
+  else{TX(inner,foc?-2:0,1,txt,{'font-size':fs,fill:tc});if(foc){const tw=txt.length*fs*.6;E('rect',{x:tw/2,y:-10,width:2.2,height:20,fill:'#2563eb',class:'ft-caret'},inner)}}
+  if(n.v!=null&&!n.k){const pg=E('g',{transform:`translate(0,${r+17})`},outer);
+   [[-19,'asal','p','#f97316','#fff7ed','#c2410c'],[19,'ayır','s','#2563eb','#eff6ff','#1d4ed8']].forEach(([x,t,c,sc,fc,tc2])=>{const b=E('g',{class:'ft-pill','data-dec':c,'data-p':o.p},pg);E('rect',{x:x-18,y:-11,width:36,height:22,rx:11,fill:fc,stroke:sc,'stroke-width':1.8},b);TX(b,x,0.5,t,{'font-size':11.5,fill:tc2,'font-weight':800})})}}
+
+ /* ---------- çizim: bölme yöntemi ---------- */
+ function drawLd(stg){const L=s.ld;
+  const cell=(k,i,v)=>{const foc=F&&F.k===k&&F.i===i,b=bad.has(k+i);return `<span class="ft-cell${foc?' foc':''}${b?' bad':''}" data-k="${k}" data-i="${i}">${v||(foc?'':'<span class="q">?</span>')}${foc?'<i class="ft-cr"></i>':''}</span>`};
+  let h='<div class="ft-ld">';
+  L.forEach((r,i)=>{const nC=r.n!=null?`<span class="ft-lnum${i===0?' root':''}${r.n===1?' one':''}">${r.n}</span>`:cell('q',i,r.nt);
+   const dC=r.n==null||r.n===1?'':r.d!=null?`<span class="ft-ldiv">${r.d}</span>`:cell('d',i,r.dt);
+   h+=`<div class="ft-lr"><div class="ft-lc l">${nC}</div><div class="ft-lc r">${dC}</div></div>`});
+  h+='</div>';if(complete())h+=`<div class="ft-prod">${s.N} = ${srcList().map(x=>`<b>${x}</b>`).join(' · ')}</div>`;stg.innerHTML=h}
+
+ /* ---------- adımlar paneli ---------- */
+ function box(k,val,ph,i,cls=''){const foc=F&&F.k===k&&(i==null||F.i===i),b=bad.has(k+(i??''));
+  return `<span class="ft-box ${cls}${foc?' foc':''}${b?' bad':''}" data-k="${k}"${i!=null?` data-i="${i}"`:''}>${val||(foc?'':`<em>${ph}</em>`)}${foc?'<i class="ft-cr"></i>':''}</span>`}
+ function stepsHTML(){const C=complete(),S=st(),m=[...fac(s.N)],L=C?srcList():[];
+  const cls=(ok,lk)=>ok?'done':lk?'lock':'cur';
+  let h=`<div class="ft-st ${cls(C,false)}"><span class="ft-no">${C?'✓':1}</span><div class="ft-sb">${s.mode==='tree'?'Çarpan ağacını tamamla':'Asal sayılarla bölmeye devam et (bölüm 1 olana kadar)'}`+
+   (C?`<small>Asal çarpanlar (tekrarlarıyla): ${s.N} = <b>${L.join(' · ')}</b></small>`:`<small>${s.mode==='tree'?'Her ayırmada iki çarpanın çarpımı üstteki sayıyı vermeli. Asal sayılar daireye alınır, diğerleri yeniden ayrılır.':'Her satırda sayıyı bir asala böl; bölüm bir alt satıra yazılır.'}</small>`)+'</div></div>';
+  h+=`<div class="ft-st ${cls(S.pfOk,!C)}"><span class="ft-no">${S.pfOk?'✓':2}</span><div class="ft-sb">${s.N} sayısının asal çarpanlarını yaz <small>Her asalı bir kez yaz, virgülle ayır (tuş takımındaki “,” tuşu).</small><div class="ft-line">`+
+   (S.pfOk?`<span class="ft-box good ft-pf">${trJoin(m.map(x=>x[0]))}</span>`:`${box('pf',S.pf,'ör. 2, 3, 5',null,'ft-pf')}<button class="ft-btn ok" data-a="pf">✓ Kontrol</button>`)+'</div></div></div>';
+  h+=`<div class="ft-st ${cls(S.exOk,!S.pfOk)}"><span class="ft-no">${S.exOk?'✓':3}</span><div class="ft-sb">Üslü ifade şeklinde yaz <small>Taban asal çarpan, üs onun kaç kez tekrar ettiği. Üs 1 ise boş bırakabilirsin.</small><div class="ft-line"><span class="ft-eq">${s.N} = `+
+   (S.pfOk?m.map(([p,e],i)=>`<span class="ft-pw"><span class="ft-base">${p}</span>${S.exOk?(e>1?`<span class="ft-box good ft-e">${e}</span>`:''):box('e',S.ex[i],'',i,'ft-e')}</span>`).join('<span class="ft-dot">·</span>'):'<span class="ft-lab">…</span>')+'</span>'+
+   (S.pfOk&&!S.exOk?'<button class="ft-btn ok" data-a="ex">✓ Kontrol</button>':'')+'</div></div></div>';
+  if(S.exOk){const fm=fac(s.N),dc=[...fm.values()].reduce((a,e)=>a*(e+1),1),dv=[];for(let d=1;d<=s.N;d++)if(s.N%d===0)dv.push(d);
+   h+=`<div class="ft-res"><div class="ft-big">${s.N} = ${powHTML(fm,'pb')}</div><div class="ft-sub">Asal çarpanları: <b>${trJoin([...fm.keys()])}</b> · Çarpım şeklinde: <b>${L.join(' · ')}</b></div>
+   <div class="ft-line" style="margin-top:8px"><button class="ft-btn pri" data-a="again">🔁 ${s.mode==='tree'?'Başka bir ağaçla dene':'Yeniden böl'}</button><button class="ft-btn" data-a="other">${s.mode==='tree'?'➗ Bölme yöntemiyle yap':'🌳 Çarpan ağacıyla yap'}</button><button class="ft-btn grn" data-a="new">🎲 Yeni sayı</button><button class="ft-btn ${S.dv?'on':''}" data-a="dv">➕ Bölenler</button></div>
+   ${S.dv?`<div class="ft-dv">Pozitif bölen sayısı: ${[...fm.values()].map(e=>`(${e} + 1)`).join(' · ')} = <b>${dc}</b><br>Bölenleri: ${dv.join(', ')}</div>`:''}</div>`}
+  return h}
+
+ /* ---------- ana çizim ---------- */
+ function render(){const M=s.mode;
+  card.querySelectorAll('.ft-mode button').forEach(b=>b.classList.toggle('on',b.dataset.m===M));
+  card.querySelectorAll('.ft-lv button').forEach(b=>b.classList.toggle('on',+b.dataset.l===s.lv));
+  const au=q('.ft-auto');au.hidden=M!=='tree';au.textContent=s.auto?'⚙ Asallar: otomatik':'⚙ Asallar: öğrenci seçer';au.classList.toggle('on',s.auto);
+  const cw=q('.ft-custw');cw.innerHTML=F&&F.k==='N'?`<div class="ft-cust">Ayrılacak sayı: ${box('N',s.nt||'','sayı',null)}<span class="ft-lab">(4 – 9999)</span><button class="ft-btn ok" data-a="custok">Başlat</button><button class="ft-btn" data-a="custx">Vazgeç</button></div>`:'';
+  const stg=q('.ft-stage');stg.innerHTML='';M==='tree'?drawTree(stg):drawLd(stg);
+  const mg=q('.ft-msg');mg.className='ft-msg'+(MSG?' '+MSG.c:'');mg.innerHTML=MSG?MSG.t:'';
+  q('.ft-steps').innerHTML=stepsHTML();
+  q('.ft-pad [data-key=","]').classList.toggle('dis',!(F&&F.k==='pf'));
+  q('.ft-tips').hidden=!tips;q('.ft-tipb').classList.toggle('on',tips);q('.ft-tips').innerHTML='<ul>'+TIPS[M].map(t=>'<li>'+t+'</li>').join('')+'</ul>';
+  q('[data-a=undo]').disabled=!hist.length;
+  fresh.clear();shk.clear();requestAnimationFrame(fit)}
+
+ /* ---------- olaylar ---------- */
+ card.addEventListener('pointerdown',e=>{if(!e.target.closest('input,textarea,select'))card.focus({preventScroll:true})});
+ card.addEventListener('click',e=>{
+  const kb=e.target.closest('[data-key]');if(kb){if(!kb.classList.contains('dis'))key(kb.dataset.key);return}
+  const dc=e.target.closest('[data-dec]');if(dc){decide(dc.dataset.p,dc.dataset.dec);render();return}
+  const nd=e.target.closest('.ft-node');if(nd){const p=nd.dataset.p,n=get(s.tree,p);if(n&&n.v==null){F={k:'n',p};render()}else if(n&&n.k==='p'&&p!==''){say(`<b>${n.v}</b> asal sayı (yalnızca 1’e ve kendisine bölünür).`,'info');render()}return}
+  const tg=e.target.closest('[data-k]');if(tg){const k=tg.dataset.k,i=tg.dataset.i!=null?+tg.dataset.i:undefined;if(!tg.classList.contains('good')){F=i==null?{k}:{k,i};render()}return}
+  const mb=e.target.closest('.ft-mode button');if(mb){if(s.mode!==mb.dataset.m){tok++;s.mode=mb.dataset.m;bad.clear();F=autoFocus();if(complete()&&st().exOk)say('Bu yöntemle de çözmüştün. ↺ Baştan ile yeniden dene.','info');else introMsg();render()}return}
+  const lb=e.target.closest('.ft-lv button');if(lb){s.lv=+lb.dataset.l;start(rndN(s.lv,s.N));return}
+  const ab=e.target.closest('[data-a]');if(!ab)return;const a=ab.dataset.a;
+  if(a==='new')return start(rndN(s.lv,s.N));
+  if(a==='cust'){tok++;s.nt='';F={k:'N'};say('Tuş takımıyla bir sayı yaz ve ✓’ye bas.','info');return render()}
+  if(a==='custok'){custOk();return render()}
+  if(a==='custx'){F=autoFocus();introMsg();return render()}
+  if(a==='reset')return restart();
+  if(a==='again')return restart(s.mode==='tree'?'Bu kez <b>farklı çarpanlarla</b> başla (ör. ilk adımda başka bir ikili seç). Sonuç yine aynı çıkacak mı?':'Bu kez farklı bir sırayla böl (ör. büyük bir asalla başla). Sonuç değişecek mi?');
+  if(a==='other'){tok++;s.mode=s.mode==='tree'?'ld':'tree';bad.clear();F=autoFocus();introMsg();return render()}
+  if(a==='check'){checkAll();return render()}
+  if(a==='pf'){checkPF();return render()}
+  if(a==='ex'){checkEx();return render()}
+  if(a==='hint'){hint();return render()}
+  if(a==='step'){tok++;if(!step())say('Hepsi tamam! 🎉','ok');return render()}
+  if(a==='solve')return solve();
+  if(a==='undo'){tok++;if(!hist.length)return;const o=JSON.parse(hist.pop());s.tree=o.tree;s.ld=o.ld;s.st=o.st;bad.clear();F=autoFocus();say('↶ Bir adım geri alındı.','info');return render()}
+  if(a==='auto'){s.auto=!s.auto;say(s.auto?'Asal sayılar artık otomatik daire içine alınacak.':'Artık her sayı için öğrenci karar verecek: asal mı, ayrılır mı?','info');return render()}
+  if(a==='tips'){tips=!tips;return render()}
+  if(a==='dv'){st().dv=!st().dv;return render()}});
+ card.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;let k=null;
+  if(/^[0-9]$/.test(e.key))k=e.key;else if(e.key==='Backspace'||e.key==='Delete')k='bs';else if(e.key==='Enter')k='ok';else if(e.key===','||e.key===' '||e.key===';')k=',';
+  if(k){e.preventDefault();e.stopPropagation();if(k===','&&!(F&&F.k==='pf'))return;key(k)}});
+
+ F=autoFocus();introMsg();render()}
+
+names.ft_tree='Çarpan Ağacı';
+const _sFT=window.setup;window.setup=function(w,type){if(type==='ft_tree'){setupFT(w);return}return _sFT.apply(this,arguments)};
+window.addFT=function(st){const w=add('ft_tree',st);w.style.left=Math.max(10,(stage.clientWidth-w.offsetWidth)/2)+stage.scrollLeft+'px';w.style.top=20+stage.scrollTop+'px';return w};
+function lock(w){w.classList.add('mus-lock');const h=w.querySelector(':scope>.handle');if(h&&!h.dataset.ml){h.dataset.ml=1;h.title='Taşımak için buradan tutup sürükle';const sp=h.querySelector('span');if(sp)sp.textContent='⠿  '+sp.textContent}
+ if(!document.getElementById('musLockCss')){const c=document.createElement('style');c.id='musLockCss';c.textContent='.widget.mus-lock>.handle{display:flex!important;background:#1e293b;border:0;color:#fff;font:700 13px/1.2 system-ui,sans-serif;padding:6px 8px 6px 12px;border-radius:12px 12px 0 0;margin:0 14px -2px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}.widget.mus-lock>.handle:active{cursor:grabbing}.widget.mus-lock>.handle button{background:#334155;color:#fff;border:0;border-radius:7px;font-size:15px;line-height:1;padding:3px 9px;cursor:pointer}';document.head.append(c)}}
+})();
+</script>
+
 
