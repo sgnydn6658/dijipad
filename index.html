@@ -8979,13 +8979,196 @@ function setupFT(w){const s=w.state;
   if(/^[0-9]$/.test(e.key))k=e.key;else if(e.key==='Backspace'||e.key==='Delete')k='bs';else if(e.key==='Enter')k='ok';else if(e.key===','||e.key===' '||e.key===';')k=',';
   if(k){e.preventDefault();e.stopPropagation();if(k===','&&!(F&&F.k==='pf'))return;key(k)}});
 
- F=autoFocus();introMsg();render()}
+ F=autoFocus();const prog=s.mode==='tree'?s.tree.c[0].v!=null:s.ld.length>1;if(prog&&!(complete()&&st().exOk))say('📂 Kaldığın yerden devam et.','info');else introMsg();render()}
 
 names.ft_tree='Çarpan Ağacı';
 const _sFT=window.setup;window.setup=function(w,type){if(type==='ft_tree'){setupFT(w);return}return _sFT.apply(this,arguments)};
 window.addFT=function(st){const w=add('ft_tree',st);w.style.left=Math.max(10,(stage.clientWidth-w.offsetWidth)/2)+stage.scrollLeft+'px';w.style.top=20+stage.scrollTop+'px';return w};
 function lock(w){w.classList.add('mus-lock');const h=w.querySelector(':scope>.handle');if(h&&!h.dataset.ml){h.dataset.ml=1;h.title='Taşımak için buradan tutup sürükle';const sp=h.querySelector('span');if(sp)sp.textContent='⠿  '+sp.textContent}
  if(!document.getElementById('musLockCss')){const c=document.createElement('style');c.id='musLockCss';c.textContent='.widget.mus-lock>.handle{display:flex!important;background:#1e293b;border:0;color:#fff;font:700 13px/1.2 system-ui,sans-serif;padding:6px 8px 6px 12px;border-radius:12px 12px 0 0;margin:0 14px -2px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}.widget.mus-lock>.handle:active{cursor:grabbing}.widget.mus-lock>.handle button{background:#334155;color:#fff;border:0;border-radius:7px;font-size:15px;line-height:1;padding:3px 9px;cursor:pointer}';document.head.append(c)}}
+})();
+</script>
+
+<style id="dpio-css">
+#dpExport{display:inline-flex!important;align-items:center;gap:6px}
+#dpExport .dp-chev{width:10px;height:6px;flex:none;transition:transform .2s}
+#dpExport.open .dp-chev{transform:rotate(180deg)}
+#dpExport.open{background:linear-gradient(180deg,#5BC0DE33,#5BC0DE12)!important;color:#fff!important;box-shadow:inset 0 1px 0 #ffffff33,0 0 14px #5BC0DE44}
+#dpMenu{position:fixed;z-index:2147483000;width:184px;box-sizing:border-box;padding:4px;border-radius:11px;background:linear-gradient(180deg,#0B132B,#1C2541);border:1px solid #3A506B;box-shadow:0 10px 26px #0B132Baa,inset 0 1px 0 #ffffff10;font-family:inherit;opacity:0;transform:translateY(-6px);transition:opacity .16s ease,transform .16s ease;pointer-events:none}
+#dpMenu.on{opacity:1;transform:none;pointer-events:auto}
+#dpMenu::before{content:"";position:absolute;top:-4px;left:var(--ar,85px);width:7px;height:7px;background:#0B132B;border-left:1px solid #3A506B;border-top:1px solid #3A506B;transform:rotate(45deg)}
+#dpMenu button{position:relative;display:flex;align-items:center;gap:8px;width:100%;height:29px;padding:0 9px;border:0;border-radius:7px;background:transparent;color:#F4D6B0;font:500 12.5px/1 inherit;font-family:inherit;text-align:left;cursor:pointer;transition:background .15s,color .15s}
+#dpMenu button svg{width:14px;height:14px;flex:none;stroke:#5BC0DE;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#dpMenu button span{flex:1;white-space:nowrap}
+#dpMenu button kbd,#dpMenu button em{font:600 11px/1 inherit;font-family:inherit;font-style:normal;color:#8FA3BF;background:#ffffff0d;border:1px solid #3A506B99;border-radius:6px;padding:3px 6px}
+#dpMenu button em{border:0;background:transparent;padding:0;color:#6F86A6}
+#dpMenu button:hover,#dpMenu button:focus-visible{outline:none;background:linear-gradient(180deg,#5BC0DE30,#5BC0DE10);color:#fff;box-shadow:inset 0 1px 0 #ffffff1f}
+#dpMenu button:hover svg{stroke:#9BE3F5}
+#dpMenu .dp-sep{height:1px;margin:3px 8px;background:linear-gradient(90deg,transparent,#3A506B,transparent)}
+#dpMenu .dp-ttl{padding:6px 10px 4px;font:700 10.5px/1 inherit;font-family:inherit;letter-spacing:.08em;text-transform:uppercase;color:#6F86A6}
+#dpToast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(12px);display:flex;align-items:center;gap:8px;background:linear-gradient(180deg,#0B132B,#1C2541);color:#F4D6B0;font:500 12.5px/1.4 system-ui,"Segoe UI",sans-serif;padding:7px 13px 7px 11px;border:1px solid #3A506B;border-radius:10px;box-shadow:0 12px 30px #0B132B99;z-index:2147483001;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:min(560px,90vw)}
+#dpToast::before{content:"";width:6px;height:6px;border-radius:50%;flex:none;background:#34D1B2;box-shadow:0 0 10px #34D1B2}
+#dpToast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+#dpToast.err::before{background:#F08C0C;box-shadow:0 0 10px #F08C0C}
+#dpBusy{position:fixed;inset:0;z-index:2147483002;background:#0B132B55;display:none;align-items:center;justify-content:center}
+#dpBusy.on{display:flex}
+#dpBusy div{display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,#0B132B,#1C2541);border:1px solid #3A506B;border-radius:14px;padding:10px 16px;font:500 13px system-ui;color:#F4D6B0;box-shadow:0 14px 34px #0B132Bcc}
+#dpBusy div::before{content:"";width:16px;height:16px;border-radius:50%;border:2px solid #3A506B;border-top-color:#5BC0DE;animation:dpSpin .8s linear infinite}
+@keyframes dpSpin{to{transform:rotate(360deg)}}
+#dpDropHint{position:fixed;inset:12px;z-index:2147483000;border-radius:18px;background:#0B132B66;border:2px dashed #5BC0DE;display:none;align-items:center;justify-content:center;font:600 20px system-ui;color:#F4D6B0;pointer-events:none;backdrop-filter:blur(2px)}
+#dpDropHint.on{display:flex}
+@media (max-width:1500px){header .actions button,header .actions select{padding-left:10px!important;padding-right:10px!important}}
+</style>
+<script id="dpio-js">
+(function(){
+const $=id=>document.getElementById(id);
+const actions=document.querySelector('header .actions');if(!actions)return;
+/* ---- butonlar ---- */
+const full=$('full');
+const bEx=document.createElement('button');bEx.id='dpExport';bEx.type='button';bEx.innerHTML='Dışa Aktar<svg class="dp-chev" viewBox="0 0 10 6"><path d="M0 0l5 6 5-6" fill="#5BC0DE"/></svg>';bEx.title='Çalışmayı dosya, resim ya da PDF olarak indir; kayıtlı çalışmayı aç';
+const inp=document.createElement('input');inp.type='file';inp.hidden=true;inp.id='dpImportInput';inp.accept='.dijipad,.json,application/json';
+actions.insertBefore(bEx,full||null);actions.append(inp);
+const menu=document.createElement('div');menu.id='dpMenu';menu.innerHTML= '<button data-x="file" title="Başka bilgisayarda açıp düzenlemeye devam etmek için (Ctrl+S)"><svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3"/><path d="M8 14h8v7H8z"/></svg><span>Çalışma dosyası</span></button>'+
+ '<button data-x="png" title="Tahtadaki çalışmanın görüntüsü"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 9"/></svg><span>Resim (PNG)</span></button>'+
+ '<button data-x="pdf" title="Yazdırmak ya da göndermek için A4 sayfa"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 13h6M9 17h4"/></svg><span>PDF</span></button>'+
+ '<div class="dp-sep"></div><button data-x="open" title="Kaydedilmiş .dijipad dosyasını aç (Ctrl+O)"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v1"/><path d="M3 7v11a2 2 0 0 0 2 2h13l3-8H7l-3 8"/></svg><span>Çalışma aç</span></button>';
+document.body.append(menu);
+/* ---- yardımcılar ---- */
+let tT=0;function toast(t,err){let el=$('dpToast');if(!el){el=document.createElement('div');el.id='dpToast';document.body.append(el)}el.textContent=t;el.classList.toggle('err',!!err);el.classList.add('on');clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('on'),err?6000:3500)}
+const toData=blob=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(blob)});
+async function urlToData(u){if(!u)return null;if(u.startsWith('data:'))return u;try{return await toData(await (await fetch(u)).blob())}catch(e){return null}}
+function imgCanvas(img){try{const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;c.getContext('2d').drawImage(img,0,0);return c.toDataURL('image/png')}catch(e){return null}}
+function dataToBlob(d){const i=d.indexOf(','),h=d.slice(0,i),b=d.slice(i+1),mime=(h.match(/data:([^;,]+)/)||[])[1]||'application/octet-stream';const bin=atob(b),u=new Uint8Array(bin.length);for(let k=0;k<bin.length;k++)u[k]=bin.charCodeAt(k);return new Blob([u],{type:mime})}
+const pad=n=>String(n).padStart(2,'0');
+function defName(){const d=new Date();return `dijipad-${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}`}
+const boardWidgets=()=>[...stage.querySelectorAll('.widget')].filter(w=>w.id!=='selectionRect'&&!w.closest('#foldLayer'));
+const inkLayer=()=>stage.querySelector('#drawLayer');
+const hasContent=()=>boardWidgets().length>0||!!(inkLayer()&&inkLayer().innerHTML.trim())||!!$('pdfSurface');
+let busy=false;
+
+/* ---- DIŞA AKTAR ---- */
+async function exportBoard(){if(busy)return;busy=true;try{
+ const items=[];let skipped=0;
+ for(const w of boardWidgets()){const type=w.dataset.type||'',css=w.style.cssText;
+  if(type==='uploaded-image'){const img=w.querySelector('img');let d=await urlToData(img&&img.src);if(!d&&img)d=imgCanvas(img);if(d)items.push({k:'img',css,name:(img&&img.alt)||'resim',data:d});else skipped++;continue}
+  if(!type){skipped++;continue}
+  let st;try{st=JSON.parse(JSON.stringify(w.state||{}))}catch(e){skipped++;continue}
+  items.push({k:'w',type,css,state:st})}
+ let ink=null;const L=inkLayer();if(L){const cl=L.cloneNode(true);cl.querySelectorAll('.compass-guide').forEach(n=>n.remove());cl.querySelectorAll('.ink-picked').forEach(n=>n.classList.remove('ink-picked'));if(cl.innerHTML.trim())ink={w:+L.getAttribute('width')||0,h:+L.getAttribute('height')||0,html:cl.innerHTML}}
+ let pdf=null;const pf=$('pdfSurface');if(pf){const u=(typeof fileUrls!=='undefined'&&fileUrls.get(pf))||String(pf.src).split('#')[0];const d=await urlToData(u);if(d)pdf={name:pf.title||'belge.pdf',data:d};else skipped++}
+ if(!items.length&&!ink&&!pdf){toast('Tahta boş, dışa aktarılacak bir şey yok.',true);return}
+ let name=prompt('Dosya adı (sonuna .dijipad eklenecek):',defName());if(name===null)return;
+ name=(name.trim()||defName()).replace(/\.dijipad$/i,'').replace(/[\\/:*?"<>|]+/g,'-');
+ const doc={app:'Dijipad',format:1,saved:new Date().toISOString(),bg:stage.dataset.bg||'white',scroll:[stage.scrollLeft,stage.scrollTop],items,ink,pdf};
+ const blob=new Blob([JSON.stringify(doc)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name+'.dijipad';document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);
+ const n=items.length+(ink?1:0)+(pdf?1:0),kb=blob.size/1024;
+ toast(`“${name}.dijipad” indirildi · ${n} öğe · ${kb<1024?Math.max(1,Math.round(kb))+' KB':(kb/1024).toFixed(1)+' MB'}`+(skipped?` · ${skipped} öğe aktarılamadı`:''));
+}finally{busy=false}}
+
+
+/* ---- RESİM / PDF ---- */
+function busyOn(t){let b=$('dpBusy');if(!b){b=document.createElement('div');b.id='dpBusy';b.innerHTML='<div></div>';document.body.append(b)}b.firstChild.textContent=t;b.classList.add('on')}
+function busyOff(){$('dpBusy')?.classList.remove('on')}
+function contentBox(){const sr=stage.getBoundingClientRect(),ox=stage.scrollLeft-sr.left-stage.clientLeft,oy=stage.scrollTop-sr.top-stage.clientTop;let x1=1e9,y1=1e9,x2=-1e9,y2=-1e9;
+ const addR=r=>{if(!r||r.width<=0&&r.height<=0)return;x1=Math.min(x1,r.left+ox);y1=Math.min(y1,r.top+oy);x2=Math.max(x2,r.right+ox);y2=Math.max(y2,r.bottom+oy)};
+ for(const w of boardWidgets())if(!w.parentElement.closest('.widget'))addR(w.getBoundingClientRect());
+ const L=inkLayer();if(L)for(const n of L.children)if(!n.classList.contains('compass-guide'))addR(n.getBoundingClientRect());
+ const SW=Math.max(stage.scrollWidth,stage.clientWidth),SH=Math.max(stage.scrollHeight,stage.clientHeight);
+ if(x1>x2)return{x:stage.scrollLeft,y:stage.scrollTop,w:stage.clientWidth,h:stage.clientHeight,SW,SH};
+ const P=24;x1=Math.max(0,x1-P);y1=Math.max(0,y1-P);x2=Math.min(SW,x2+P);y2=Math.min(SH,y2+P);return{x:x1,y:y1,w:Math.ceil(x2-x1),h:Math.ceil(y2-y1),SW,SH}}
+async function renderBoard(maxScale){
+ const box=contentBox(),clone=stage.cloneNode(true);
+ const oImgs=[...stage.querySelectorAll('img')],cImgs=[...clone.querySelectorAll('img')];
+ for(let i=0;i<oImgs.length;i++){const o=oImgs[i],c=cImgs[i];if(!c)continue;if(!/^data:/.test(o.src)){let d=await urlToData(o.src);if(!d)d=imgCanvas(o);if(d)c.setAttribute('src',d);else c.remove()}}
+ const oF=[...stage.querySelectorAll('input,textarea,select')],cF=[...clone.querySelectorAll('input,textarea,select')];
+ oF.forEach((o,i)=>{const c=cF[i];if(!c)return;if(o.tagName==='TEXTAREA')c.textContent=o.value;else if(o.tagName==='SELECT'){[...c.options].forEach((op,j)=>{if(j===o.selectedIndex)op.setAttribute('selected','');else op.removeAttribute('selected')})}else if(o.type==='checkbox'||o.type==='radio'){if(o.checked)c.setAttribute('checked','');else c.removeAttribute('checked')}else c.setAttribute('value',o.value)});
+ const oC=[...stage.querySelectorAll('canvas')],cC=[...clone.querySelectorAll('canvas')];
+ oC.forEach((o,i)=>{const c=cC[i];if(!c)return;try{const im=document.createElement('img');im.src=o.toDataURL();im.style.cssText=o.style.cssText;im.width=o.offsetWidth;im.height=o.offsetHeight;im.className=o.className;c.replaceWith(im)}catch(e){}});
+ const hadPdf=!!clone.querySelector('#pdfSurface');
+ clone.querySelectorAll('#pdfSurface,iframe,#selectionRect,.compass-guide,script').forEach(n=>n.remove());
+ clone.querySelectorAll('.selected,.multi-picked,.ink-picked').forEach(n=>n.classList.remove('selected','multi-picked','ink-picked'));
+ const cs=getComputedStyle(stage);
+ clone.style.cssText+=`;position:absolute!important;left:${-box.x}px!important;top:${-box.y}px!important;width:${box.SW}px!important;height:${box.SH}px!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;overflow:visible!important;margin:0!important;transform:none!important;inset:auto!important;right:auto!important;bottom:auto!important`;
+ const wrap=document.createElement('div');let vars='';const rs=getComputedStyle(document.documentElement);for(let i=0;i<rs.length;i++){const k=rs[i];if(k.startsWith('--'))vars+=k+':'+rs.getPropertyValue(k)+';'}
+ wrap.setAttribute('style',vars+`position:relative;overflow:hidden;width:${box.w}px;height:${box.h}px;background:${cs.backgroundColor||'#fff'};font-family:${getComputedStyle(document.body).fontFamily};color:${getComputedStyle(document.body).color}`);
+ const st=document.createElement('style');st.textContent=[...document.querySelectorAll('style')].map(x=>x.textContent).join('\n')+'\n.handle,.mb-grip,.image-grip,.resize-grip,.ruler-handle{visibility:hidden!important}*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}.ft-caret,.ft-cr{display:none!important}';
+ wrap.append(st,clone);
+ const xml=new XMLSerializer().serializeToString(wrap);
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${box.w}" height="${box.h}"><foreignObject x="0" y="0" width="100%" height="100%">${xml}</foreignObject></svg>`;
+ const img=new Image();img.decoding='sync';
+ await new Promise((res,rej)=>{img.onload=res;img.onerror=()=>rej(new Error('svg'));img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)});
+ const sc=Math.max(1,Math.min(maxScale,Math.sqrt(16e6/(box.w*box.h))));
+ const cv=document.createElement('canvas');cv.width=Math.round(box.w*sc);cv.height=Math.round(box.h*sc);const x=cv.getContext('2d');
+ x.fillStyle=(cs.backgroundColor&&cs.backgroundColor!=='rgba(0, 0, 0, 0)')?cs.backgroundColor:'#ffffff';x.fillRect(0,0,cv.width,cv.height);x.scale(sc,sc);x.drawImage(img,0,0);
+ return{cv,hadPdf}}
+function jpegPdf(jpg,iw,ih){const land=iw>=ih,PW=land?842:595,PH=land?595:842,m=28,k=Math.min((PW-2*m)/iw,(PH-2*m)/ih),dw=iw*k,dh=ih*k,dx=(PW-dw)/2,dy=(PH-dh)/2;
+ const enc=t=>{const u=new Uint8Array(t.length);for(let i=0;i<t.length;i++)u[i]=t.charCodeAt(i)&255;return u};
+ const content=`q ${dw.toFixed(2)} 0 0 ${dh.toFixed(2)} ${dx.toFixed(2)} ${dy.toFixed(2)} cm /Im0 Do Q`;
+ const parts=[],offs=[];let len=0;const push=u=>{parts.push(u);len+=u.length};
+ push(enc('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n'));
+ const obj=(n,body,bin)=>{offs[n]=len;push(enc(n+' 0 obj\n'+body));if(bin){push(bin);push(enc('\nendstream'))}push(enc('\nendobj\n'))};
+ obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+ obj(2,'<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+ obj(3,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>`);
+ obj(4,`<< /Type /XObject /Subtype /Image /Width ${iw} /Height ${ih} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpg.length} >>\nstream\n`,jpg);
+ obj(5,`<< /Length ${content.length} >>\nstream\n`,enc(content));
+ obj(6,`<< /Producer (Dijipad) /CreationDate (D:${new Date().toISOString().replace(/[-:T]/g,'').slice(0,14)}) >>`);
+ const xref=len;let t='xref\n0 7\n0000000000 65535 f \n';for(let n=1;n<=6;n++)t+=String(offs[n]).padStart(10,'0')+' 00000 n \n';
+ t+=`trailer\n<< /Size 7 /Root 1 0 R /Info 6 0 R >>\nstartxref\n${xref}\n%%EOF\n`;push(enc(t));return new Blob(parts,{type:'application/pdf'})}
+function download(blob,fname){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fname;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000)}
+async function exportImage(kind){if(busy)return;if(!hasContent()){toast('Tahta boş, dışa aktarılacak bir şey yok.',true);return}
+ let name=prompt('Dosya adı (sonuna .'+kind+' eklenecek):',defName());if(name===null)return;name=(name.trim()||defName()).replace(/\.(png|pdf)$/i,'').replace(/[\\/:*?"<>|]+/g,'-');
+ busy=true;busyOn(kind==='pdf'?'PDF hazırlanıyor…':'Resim hazırlanıyor…');await new Promise(r=>setTimeout(r,30));
+ try{const{cv,hadPdf}=await renderBoard(kind==='pdf'?2:2);let blob;
+  if(kind==='png')blob=await new Promise(r=>cv.toBlob(r,'image/png'));
+  else{const d=cv.toDataURL('image/jpeg',0.92),bin=atob(d.split(',')[1]),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);blob=jpegPdf(u,cv.width,cv.height)}
+  if(!blob)throw new Error('blob');download(blob,name+'.'+kind);
+  toast(`“${name}.${kind}” indirildi`+(hadPdf?' · Not: Arkadaki PDF sayfası görüntüye dahil edilemedi.':''),hadPdf);
+ }catch(e){console.warn('Dijipad dışa aktarma',e);toast('Görüntü oluşturulamadı. Tarayıcı bu işlemi engelledi; “Çalışma dosyası” seçeneğini ya da ekran görüntüsünü kullanabilirsiniz.',true)}
+ finally{busy=false;busyOff()}}
+
+/* ---- İÇE AKTAR ---- */
+function putImageAsync(blob,name,css){return new Promise(res=>{let t=0;const mo=new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes){if(n.dataset&&n.dataset.type==='uploaded-image'){mo.disconnect();clearTimeout(t);if(css)n.style.cssText=css;n.classList.remove('selected');res(true);return}}});
+ mo.observe(stage,{childList:true});t=setTimeout(()=>{mo.disconnect();res(false)},10000);try{putImage(new File([blob],name||'resim.png',{type:blob.type||'image/png'}))}catch(e){mo.disconnect();clearTimeout(t);res(false)}})}
+function clearBoard(){try{closeSettings()}catch(e){}try{resetBlockSelection()}catch(e){}
+ try{if(typeof fileUrls!=='undefined'){for(const u of fileUrls.values())URL.revokeObjectURL(u);fileUrls.clear()}}catch(e){}
+ stage.innerHTML='';try{selected=null}catch(e){}}
+async function importBoard(file){if(busy||!file)return;let doc;
+ try{doc=JSON.parse(await file.text())}catch(e){doc=null}
+ if(!doc||doc.app!=='Dijipad'||!Array.isArray(doc.items)){toast('Bu dosya açılamadı. Dijipad’den “Dışa Aktar” ile indirilmiş bir .dijipad dosyası seçin.',true);return}
+ if(hasContent()&&!confirm('Tahtadaki mevcut çalışma silinecek ve “'+file.name+'” açılacak. Devam edilsin mi?\n\n(İsterseniz önce “Dışa Aktar” ile mevcut çalışmayı kaydedin.)'))return;
+ busy=true;let fail=0;
+ try{clearBoard();
+  const bg=doc.bg||'white';stage.dataset.bg=bg;const sel=$('backgroundSelect');if(sel&&[...sel.options].some(o=>o.value===bg))sel.value=bg;
+  if(doc.pdf&&doc.pdf.data){try{const url=URL.createObjectURL(dataToBlob(doc.pdf.data)),el=document.createElement('iframe');el.id='pdfSurface';el.title=doc.pdf.name||'belge.pdf';el.src=url+'#view=FitH';stage.prepend(el);if(typeof fileUrls!=='undefined')fileUrls.set(el,url)}catch(e){fail++}}
+  for(const it of doc.items){
+   if(it.k==='img'){try{const ok=await putImageAsync(dataToBlob(it.data),it.name,it.css);if(!ok)fail++}catch(e){fail++}continue}
+   try{const w=add(it.type,it.state||{});if(it.css)w.style.cssText=it.css;w.classList.remove('selected','multi-picked')}catch(e){console.warn('Dijipad içe aktarma:',it.type,e);fail++}}
+  if(doc.ink&&doc.ink.html){const ns='http://www.w3.org/2000/svg';const L=document.createElementNS(ns,'svg');L.id='drawLayer';L.setAttribute('xmlns',ns);stage.append(L);
+   const W=Math.max(1,stage.scrollWidth,stage.clientWidth,doc.ink.w||0),H=Math.max(1,stage.scrollHeight,stage.clientHeight,doc.ink.h||0);L.setAttribute('width',W);L.setAttribute('height',H);L.setAttribute('viewBox','0 0 '+W+' '+H);L.innerHTML=doc.ink.html}
+  document.querySelectorAll('.widget.selected').forEach(w=>w.classList.remove('selected'));try{selected=null}catch(e){}
+  if(Array.isArray(doc.scroll))requestAnimationFrame(()=>stage.scrollTo(doc.scroll[0]||0,doc.scroll[1]||0));
+  toast(`“${file.name}” açıldı`+(fail?` · ${fail} öğe yüklenemedi`:''),!!fail);
+ }finally{busy=false}}
+
+/* ---- olaylar ---- */
+const isOpen=()=>menu.classList.contains('on');
+const closeMenu=()=>{menu.classList.remove('on');bEx.classList.remove('open')};
+bEx.onclick=e=>{e.stopPropagation();try{closeSettings()}catch(_){}if(isOpen())return closeMenu();const r=bEx.getBoundingClientRect(),mw=184,left=Math.max(8,Math.min(window.innerWidth-mw-8,r.left+r.width/2-mw/2));menu.style.top=(r.bottom+7)+'px';menu.style.left=left+'px';menu.style.setProperty('--ar',Math.max(12,Math.min(mw-18,r.left+r.width/2-left-5))+'px');menu.style.right='auto';menu.style.setProperty('right','auto');menu.classList.add('on');bEx.classList.add('open')};
+menu.onclick=e=>{const b=e.target.closest('[data-x]');if(!b)return;closeMenu();const x=b.dataset.x;if(x==='file')exportBoard();else if(x==='png')exportImage('png');else if(x==='pdf')exportImage('pdf');else{inp.value='';inp.click()}};
+document.addEventListener('pointerdown',e=>{if(isOpen()&&!menu.contains(e.target)&&!bEx.contains(e.target))closeMenu()},true);
+window.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+inp.onchange=()=>{const f=inp.files[0];if(f)importBoard(f)};
+window.addEventListener('keydown',e=>{if(!(e.ctrlKey||e.metaKey)||e.altKey||e.shiftKey)return;const k=e.key.toLowerCase();
+ if(k==='s'){e.preventDefault();exportBoard()}else if(k==='o'){e.preventDefault();inp.value='';inp.click()}},true);
+/* .dijipad dosyasını tahtaya sürükle-bırak */
+const isDp=e=>{const it=e.dataTransfer&&e.dataTransfer.items;if(!it||!it.length)return false;for(const x of it)if(x.kind==='file')return true;return false};
+let dragN=0;const hint=()=>{let h=$('dpDropHint');if(!h){h=document.createElement('div');h.id='dpDropHint';h.textContent='Çalışmayı açmak için dosyayı bırakın';document.body.append(h)}return h};
+window.addEventListener('dragenter',e=>{if(isDp(e)){dragN++;hint().classList.add('on')}});
+window.addEventListener('dragleave',()=>{dragN=Math.max(0,dragN-1);if(!dragN)hint().classList.remove('on')});
+window.addEventListener('dragover',e=>{if(isDp(e))e.preventDefault()});
+window.addEventListener('drop',e=>{dragN=0;hint().classList.remove('on');const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(!f)return;e.preventDefault();
+ if(/\.(dijipad|json)$/i.test(f.name))importBoard(f);else if(/^image\//.test(f.type)){try{putImage(f)}catch(_){}}else toast('Yalnızca .dijipad dosyaları (ya da resimler) bırakılabilir.',true)});
 })();
 </script>
 
