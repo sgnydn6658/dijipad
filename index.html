@@ -9464,6 +9464,27 @@ this.workerSrc)).WorkerMessageHandler})())}}class WorkerTransport{downloadInfoCa
   c.pages.forEach(p=>c.io.observe(p.el));
   (async()=>{for(let i=1;i<doc.numPages&&c===cur;i++){try{const pg=await doc.getPage(i+1),v=pg.getViewport({scale:1});c.pages[i].el.style.height=Math.round(W*v.height/v.width)+'px'}catch(_){}}if(c===cur)updBar()})();
   queue(c,0);updBar();return box}
+ /* Taşı modunda PDF sayfasının üstünde sürükleme = sayfayı kaydırma (tarama seçimi başlamaz), bırakınca yavaşlayarak durur */
+ let pan=null,mom=0;
+ const moveOn=()=>{const pt=$('penToggle');return !pt||pt.classList.contains('active')};
+ const onPage=(x,y)=>cur&&cur.pages.some(p=>{const r=p.el.getBoundingClientRect();return x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom});
+ window.addEventListener('pointerdown',e=>{
+  cancelAnimationFrame(mom);
+  if(!cur||!cur.box.isConnected||!e.isPrimary||(e.pointerType==='mouse'&&e.button!==0)||!moveOn())return;
+  if(!stage.contains(e.target)||(e.target.closest&&e.target.closest('.widget,#foldLayer,#toolSettings,#selectionRect')))return;
+  if(!onPage(e.clientX,e.clientY))return;
+  cancelAnimationFrame(mom);e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+  const t=performance.now();pan={id:e.pointerId,x:e.clientX,y:e.clientY,sl:stage.scrollLeft,st:stage.scrollTop,lx:e.clientX,ly:e.clientY,lt:t,vx:0,vy:0,moved:false}},true);
+ window.addEventListener('pointermove',e=>{if(!pan||e.pointerId!==pan.id)return;e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+  const dx=e.clientX-pan.x,dy=e.clientY-pan.y;if(Math.abs(dx)+Math.abs(dy)>5)pan.moved=true;
+  stage.scrollLeft=pan.sl-dx;stage.scrollTop=pan.st-dy;const now=performance.now(),dt=Math.max(8,now-pan.lt);
+  pan.vx=.8*((e.clientX-pan.lx)/dt)+.2*pan.vx;pan.vy=.8*((e.clientY-pan.ly)/dt)+.2*pan.vy;pan.lx=e.clientX;pan.ly=e.clientY;pan.lt=now},true);
+ const panEnd=e=>{if(!pan||e.pointerId!==pan.id)return;e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();const p=pan;pan=null;
+  if(!p.moved){try{if(typeof blockSelection!=='undefined'&&blockSelection.size&&typeof clearBlockSelection==='function')clearBlockSelection()}catch(_){}try{select(null)}catch(_){}return}
+  if(performance.now()-p.lt>90)return;let vx=p.vx*16,vy=p.vy*16;
+  const step=()=>{if(Math.abs(vx)<.4&&Math.abs(vy)<.4)return;stage.scrollLeft-=vx;stage.scrollTop-=vy;vx*=.94;vy*=.94;mom=requestAnimationFrame(step)};mom=requestAnimationFrame(step)};
+ window.addEventListener('pointerup',panEnd,true);window.addEventListener('pointercancel',panEnd,true);
+ stage.addEventListener('wheel',()=>cancelAnimationFrame(mom),{passive:true});
  /* PDF Yükle düğmesi artık bu yolu kullanır */
  inp.onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;note('PDF açılıyor…');openPdf(f,f.name).then(b=>{if(b&&b.classList&&b.classList.contains('dp-pdf'))note('“'+f.name+'” açıldı · '+cur.pages.length+' sayfa')})};
  window.dpOpenPdf=openPdf;
