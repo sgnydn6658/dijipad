@@ -4366,7 +4366,7 @@ function manual(P,o){
 }
 function palette(id,hint,withScale){
   const P=el('div','numtab-pal');P.id=id;if(hint)P.append(el('div','nt-hint',hint));
-  if(withScale){const b=el('button','nt-btn nt-scale','⚖ Terazi ekle');b.type='button';b.onclick=addScale;P.append(b)}wire(P);return P;
+  if(withScale){const b=source(el('button','nt-btn nt-scale','⚖ Terazi ekle'),()=>({wd:'scale',src:'data:image/svg+xml;charset=utf-8,'+encodeURIComponent("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"92\" height=\"34\" viewBox=\"0 0 92 34\"><svg viewBox=\"0 0 60 44\" width=\"46\" height=\"33.73\"><path d=\"M18 42h24M30 42V14\" stroke=\"#475569\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M8 12L52 8\" stroke=\"#334155\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"30\" cy=\"10\" r=\"3.5\" fill=\"#f59e0b\"/><path d=\"M8 12l-5 14h14zM52 8l-5 14h14z\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M2 26h16q-1 6-8 6t-8-6zM46 22h16q-1 6-8 6t-8-6z\" fill=\"#94a3b8\" stroke=\"#475569\"/></svg><text x=\"46\" y=\"22\" font-family=\"system-ui,Segoe UI,Arial,sans-serif\" font-size=\"14.5\" fill=\"#172233\">Terazi</text></svg>"),dw:92,dh:34}),'Tahtaya sürükle ya da dokun');b.type='button';P.append(b)}wire(P);return P;
 }
 
 /* ---- Sayı çubukları paleti ---- */
@@ -4972,7 +4972,7 @@ function setupFO(w){
   art.addEventListener('keydown',e=>{if(e.target.matches&&e.target.matches('input'))e.stopPropagation()},true);
   art.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.fo-tab');if(!t)return;s.op=t.dataset.op;foNorm(s);fill();draw()});
   let d=null;
-  art.onpointerdown=e=>{if(e.button!==0||!e.isPrimary||!gMoveOK())return;if(e.target.closest&&e.target.closest('input,button'))return;e.preventDefault();d=gGrab(w,e);try{art.setPointerCapture(e.pointerId)}catch(_){}};
+  art.onpointerdown=e=>{if(e.button!==0||!e.isPrimary||!gMoveOK())return;if(e.target.closest&&e.target.closest('input,button'))return;if(w.classList.contains('mus-lock'))return;e.preventDefault();d=gGrab(w,e);try{art.setPointerCapture(e.pointerId)}catch(_){}};
   art.onpointermove=e=>{if(!d||d.id!==e.pointerId)return;e.preventDefault();if(!d.mv&&Math.hypot(e.clientX-d.x,e.clientY-d.y)>6)d.mv=true;if(d.mv)gDrag(d,e)};
   art.onpointerup=e=>{if(!d||d.id!==e.pointerId)return;const t=d;d=null;try{art.releasePointerCapture(e.pointerId)}catch(_){}if(t.mv)for(const i of t.items)if(typeof avoidDock==='function')avoidDock(i.w)};
   art.onpointercancel=()=>{d=null};
@@ -5897,7 +5897,7 @@ function setupFA(w){
     if(c&&faCan(s)){const g=c.dataset.g,i=+(c.dataset.i||0);
       if(s.op==='*'){if(g==='B'&&!s.ov){e.preventDefault();select(w);const[x,y]=svgPt(e);drag={g,i:0,v:2,x,y,sx:x,sy:y,id:e.pointerId};try{art.setPointerCapture(e.pointerId)}catch(_){}draw();return}}
       else{const arr=g==='A'?s.A:g==='B'?s.B:s.R,v=arr[i];if((v===1||v===2)&&!(s.op==='/'&&g!=='B')){e.preventDefault();select(w);const[x,y]=svgPt(e);drag={g,i,v,x,y,id:e.pointerId};try{art.setPointerCapture(e.pointerId)}catch(_){}draw();return}}}
-    e.preventDefault();wd=gGrab(w,e);try{art.setPointerCapture(e.pointerId)}catch(_){}};
+    if(w.classList.contains('mus-lock'))return;e.preventDefault();wd=gGrab(w,e);try{art.setPointerCapture(e.pointerId)}catch(_){}};
   art.onpointermove=e=>{
     if(drag&&drag.id===e.pointerId){e.preventDefault();[drag.x,drag.y]=svgPt(e);const th=document.elementsFromPoint(e.clientX,e.clientY).find(n=>n.dataset&&n.dataset.g&&dr.contains(n));drag.hov=th&&th.dataset.g!=='B'&&s.op!=='*'||th&&th.dataset.g==='B'&&s.op!=='*'?{g:th.dataset.g,k:+(th.dataset.i||0)}:null;dr.innerHTML=faSvg(s,drag).svg;return}
     if(!wd||wd.id!==e.pointerId)return;e.preventDefault();if(!wd.mv&&Math.hypot(e.clientX-wd.x,e.clientY-wd.y)>6)wd.mv=true;if(wd.mv)gDrag(wd,e)};
@@ -9443,7 +9443,12 @@ this.workerSrc)).WorkerMessageHandler})())}}class WorkerTransport{downloadInfoCa
  function queue(c,i){c.want.add(i);pump(c)}
  async function renderAll(){const c=cur;if(!c)return;while(c.running)await new Promise(r=>setTimeout(r,50));for(let i=0;i<c.pages.length&&c===cur;i++)await renderPage(c,i)}
  async function openPdf(blob,name,lay){
-  let L;try{L=await getLib()}catch(e){return iframeFallback(blob,name)}
+  let L;try{L=await getLib()}catch(e){
+   /* Telefon/tablette eski yöntem (iframe) PDF göstermediği için: nedenini söyle, PDF'i yeni sekmede açmayı öner */
+   if(window.matchMedia('(max-width:1279px)').matches){const u=URL.createObjectURL(blob);
+    note('Bu tarayıcı PDF’i Dijipad’de gösteremiyor (tarayıcı sürümü eski). Tarayıcıyı güncelleyin.',true);
+    if(confirm('Bu cihazın tarayıcısı PDF’i Dijipad içinde gösteremiyor (tarayıcı sürümü eski).\n\nPDF yeni sekmede açılsın mı?'))window.open(u,'_blank');return null}
+   return iframeFallback(blob,name)}
   let doc;try{const wk=await getWorker(L),opt={data:new Uint8Array(await blob.arrayBuffer()),isEvalSupported:false};if(wk)opt.worker=wk;doc=await L.getDocument(opt).promise}
   catch(e){note(e&&e.name==='PasswordException'?'Bu PDF şifreli olduğu için açılamadı.':'Bu PDF açılamadı. Dosya bozuk olabilir.',true);return null}
   const old=$('pdfSurface');if(old)old.remove();cleanup();
@@ -9755,6 +9760,42 @@ const _sEK=window.setup;window.setup=function(w,type){if(type==='ek_tool'){setup
 window.addEK=function(st){const w=add('ek_tool',st);w.style.left=Math.max(10,(stage.clientWidth-w.offsetWidth)/2)+stage.scrollLeft+'px';w.style.top=20+stage.scrollTop+'px';return w};
 function lock(w){w.classList.add('mus-lock');const h=w.querySelector(':scope>.handle');if(h&&!h.dataset.ml){h.dataset.ml=1;h.title='Taşımak için buradan tutup sürükle';const sp=h.querySelector('span');if(sp)sp.textContent='⠿  '+sp.textContent}
  if(!document.getElementById('musLockCss')){const c=document.createElement('style');c.id='musLockCss';c.textContent='.widget.mus-lock>.handle{display:flex!important;background:#1e293b;border:0;color:#fff;font:700 13px/1.2 system-ui,sans-serif;padding:6px 8px 6px 12px;border-radius:12px 12px 0 0;margin:0 14px -2px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}.widget.mus-lock>.handle:active{cursor:grabbing}.widget.mus-lock>.handle button{background:#334155;color:#fff;border:0;border-radius:7px;font-size:15px;line-height:1;padding:3px 9px;cursor:pointer}';document.head.append(c)}}
+})();
+</script>
+
+<style id="dp-lockgrip-css">.widget.mus-lock>.handle,.widget.mus-lock>.handle *,.widget.mus-lock>.mb-grip{pointer-events:auto!important}.loose-fop.mus-lock .fo-card{cursor:default!important}</style>
+<script id="dp-lockgrip-js">
+/* Etkileşimli büyük araçlar: yalnızca üst çubuktan taşınır + sağ altta büyüt/küçült köşesi.
+   Küçük parçalar (birim blok, pul, tangram parçası…) ve kendi tutamağı olan araçlar (cetvel, gönye…) her yerinden taşınmaya devam eder. */
+(function(){
+ if(typeof window.setup!=='function'||typeof names==='undefined')return;
+ const LOCK=new Set(['placeval','abacus','percent','clock','timer','countdown','geo','tangram','coordinate','shapes','cubes','angles','geolab','spinner','graph','piegraph','linegraph','areagraph','tallytable','frequencytable','algtiles','funcmachine','coordtable','sliders','fracop','fadd']);
+ const BOX=new Set(['percent','clock','graph','linegraph','areagraph']);   /* içerik kutuya göre çiziliyor: genişlik+yükseklik birlikte */
+ const TF=new Set(['piegraph','tallytable','frequencytable','timer','spinner','fracop']);         /* sabit düzen: içi bütün olarak ölçeklenir */
+ const ZOOM={abacus:'.ab-size'};                                                           /* aracın kendi boyut ayarı */
+ const GRIP_SVG='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#334155" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l8 8"/><path d="M8 8h4M8 8v4"/><path d="M16 16h-4M16 16v-4"/></svg>';
+ function lockCss(){if(document.getElementById('musLockCss'))return;const c=document.createElement('style');c.id='musLockCss';c.textContent='.widget.mus-lock>.handle{display:flex!important;background:#1e293b;border:0;color:#fff;font:700 13px/1.2 system-ui,sans-serif;padding:6px 8px 6px 12px;border-radius:12px 12px 0 0;margin:0 14px -2px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}.widget.mus-lock>.handle:active{cursor:grabbing}.widget.mus-lock>.handle button{background:#334155;color:#fff;border:0;border-radius:7px;font-size:15px;line-height:1;padding:3px 9px;cursor:pointer}';document.head.append(c)}
+ function lock(w){lockCss();w.classList.add('mus-lock');const h=w.querySelector(':scope>.handle');if(h&&!h.dataset.ml){h.dataset.ml=1;h.title='Taşımak için buradan tutup sürükle';const sp=h.querySelector('span');if(sp&&sp.textContent.indexOf('⠿')<0)sp.textContent='⠿  '+sp.textContent}}
+ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+ /* içi ölçeklenen araçlar */
+ function applyTF(w){const s=w.state||{},b=w.querySelector(':scope>.body');if(!b||!s.gb)return;const k=s.gk||1;
+  b.style.transformOrigin='0 0';b.style.transform=k===1?'':`scale(${k})`;b.style.width=s.gb.w+'px';b.style.boxSizing='border-box';
+  w.style.width=Math.round(s.gb.w*k)+'px';w.style.height=s.gb.h?Math.round(s.gb.h*k)+'px':Math.round(b.offsetHeight*k)+'px'}
+ function addGrip(w,type){if(w.querySelector(':scope>.mb-grip'))return;const g=document.createElement('div');g.className='mb-grip';g.title='Büyüt / küçült';g.innerHTML=GRIP_SVG;w.append(g);
+  g.addEventListener('pointerdown',e=>{if(e.button!==0&&e.pointerType==='mouse')return;e.preventDefault();e.stopPropagation();try{select(w)}catch(_){}
+   const s=w.state||(w.state={}),x0=e.clientX,y0=e.clientY,pid=e.pointerId,W0=w.offsetWidth,H0=w.offsetHeight;let st={};
+   if(ZOOM[type]){const r=w.querySelector(ZOOM[type])||document.querySelector('#toolSettings '+ZOOM[type]);st={r,z0:r?+r.value:100}}
+   else if(TF.has(type)){const b=w.querySelector(':scope>.body');if(!s.gb){s.gb={w:b.offsetWidth,h:parseFloat(w.style.height)||0}}st={k0:s.gk||1}}
+   const mv=ev=>{if(ev.pointerId!==pid)return;ev.preventDefault();const f=clamp((W0+(ev.clientX-x0+(ev.clientY-y0)*1.2))/W0,.3,4);
+    if(ZOOM[type]){if(st.r){st.r.value=Math.round(st.z0*f);st.r.dispatchEvent(new Event('input',{bubbles:true}))}}
+    else if(TF.has(type)){s.gk=Math.round(clamp(st.k0*f,.5,2.5)*100)/100;applyTF(w)}
+    else{const k=clamp(f,.4,3);w.style.width=Math.round(W0*k)+'px';if(H0&&w.style.height&&w.style.height!=='auto')w.style.height=Math.round(H0*k)+'px'}};
+   const up=ev=>{if(ev.pointerId!==pid)return;window.removeEventListener('pointermove',mv,true);window.removeEventListener('pointerup',up,true);window.removeEventListener('pointercancel',up,true);try{if(typeof avoidDock==='function')avoidDock(w)}catch(_){}};
+   window.addEventListener('pointermove',mv,true);window.addEventListener('pointerup',up,true);window.addEventListener('pointercancel',up,true)})}
+ const _setup=window.setup;
+ window.setup=function(w,type){const r=_setup.apply(this,arguments);
+  try{if(LOCK.has(type)){lock(w);if(BOX.has(type)||TF.has(type)||ZOOM[type])addGrip(w,type);if(TF.has(type)&&w.state&&w.state.gb)requestAnimationFrame(()=>applyTF(w))}}catch(e){console.warn('Dijipad kilit/köşe',type,e)}
+  return r};
 })();
 </script>
 
