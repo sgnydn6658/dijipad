@@ -1111,21 +1111,21 @@ document.querySelector('#backgroundSelect').onchange=e=>stage.dataset.bg=e.targe
  function finish(e){if(!drawing|| (e&&e.pointerId!==pointerId))return;drawing=false;pointerId=null;start=null;last=null;preview=null;}
  stage.addEventListener('pointerdown',e=>{
    if(!['pen','erase','line','compass','text'].includes(mode))return;
-   if(!e.isPrimary||e.button!==0||e.target.closest('#penDock,button,input,select,textarea,#toolSettings'))return;
+   if((e.pointerType==='mouse'&&e.button!==0)||e.target.closest('#penDock,button,input,select,textarea,#toolSettings'))return;
    e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();const p=point(e);
    if(mode==='compass'&&cg&&e.target.closest&&e.target.closest('.compass-handle')){drawing=true;pointerId=e.pointerId;start={x:cg.cx,y:cg.cy};preview=cg.circle;try{stage.setPointerCapture(e.pointerId)}catch(_){}return}
    if(mode==='text'){textAt(p);return}
    drawing=true;pointerId=e.pointerId;start=p;last=p;
    try{stage.setPointerCapture(e.pointerId)}catch(_){}
-   if(mode==='pen'){preview=addPath(`M${p.x} ${p.y}`,color.value,size.value)}
+   if(mode==='pen'){preview=addPath(`M${p.x} ${p.y} L${p.x+0.01} ${p.y}`,color.value,size.value)}
    else if(mode==='line'){if(lineKind==='point'){addPoint(p);drawing=false;pointerId=null;preview=null}else if(lineKind==='angle'){angClick(p);drawing=false;pointerId=null;preview=null}else{preview=addPath(shapePath(p,p),color.value,size.value)}}
    else if(mode==='compass'){clearGuide();const g=document.createElementNS(ns,'g');g.classList.add('board-ink');const c=document.createElementNS(ns,'circle');c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',1);c.setAttribute('fill','none');c.setAttribute('stroke',color.value);c.setAttribute('stroke-width',size.value);const dot=document.createElementNS(ns,'circle');dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y);dot.setAttribute('r',Math.max(3.5,+size.value*1.3));dot.setAttribute('fill',color.value);g.append(c,dot);layer().append(g);preview=c;makeGuide(p,c)}
    else if(mode==='erase')eraseAt(p);
  },true);
- window.addEventListener('pointermove',e=>{if(!drawing||e.pointerId!==pointerId)return;const p=point(e);if(mode==='pen'&&preview){preview.setAttribute('d',preview.getAttribute('d')+` L${p.x} ${p.y}`)}else if(mode==='line'&&preview){preview.setAttribute('d',shapePath(start,p))}else if(mode==='compass'&&preview){updateCompass(p)}else if(mode==='erase')eraseAt(p);last=p;},true);
+ window.addEventListener('pointermove',e=>{if(!drawing||e.pointerId!==pointerId)return;const p=point(e);if(mode==='pen'&&preview){let dd='';const ces=(e.getCoalescedEvents&&e.getCoalescedEvents().length)?e.getCoalescedEvents():[e];for(const ce of ces){const q=point(ce);dd+=` L${q.x} ${q.y}`}preview.setAttribute('d',preview.getAttribute('d')+dd)}else if(mode==='line'&&preview){preview.setAttribute('d',shapePath(start,p))}else if(mode==='compass'&&preview){updateCompass(p)}else if(mode==='erase')eraseAt(p);last=p;},true);
  window.addEventListener('pointerup',e=>{if(!drawing||e.pointerId!==pointerId)return;finish(e);},true);
  window.addEventListener('pointercancel',e=>finish(e),true);
- stage.addEventListener('lostpointercapture',()=>finish());
+ stage.addEventListener('lostpointercapture',e=>finish(e));
  // Tahta boşluğunda çizim araçları açıkken alan seçimi/nesne taşıma olaylarını engelle.
  stage.addEventListener('click',e=>{if(['pen','erase','line','compass','text'].includes(mode)&&!e.target.closest('#penDock')){e.preventDefault();e.stopImmediatePropagation()}},true);
  setMode('select');
@@ -9282,11 +9282,23 @@ if(MQ.addEventListener)MQ.addEventListener('change',e=>e.matches?enable():disabl
  function upd(){const c=/^#[0-9a-f]{3,8}$/i.test(col.value)?col.value:'#1e293b',w=Math.max(1,Math.min(16,+sz.value||3)),k=c+'|'+w;if(k===key)return;key=k;
   const d=Math.max(5,w+1),S=Math.ceil(d+6),h=S/2,r=d/2;
   const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${S}" height="${S}" viewBox="0 0 ${S} ${S}"><circle cx="${h}" cy="${h}" r="${r+1.6}" fill="none" stroke="#ffffff" stroke-width="2" stroke-opacity=".9"/><circle cx="${h}" cy="${h}" r="${r}" fill="${c}"/><circle cx="${h}" cy="${h}" r="${r+2.6}" fill="none" stroke="#0f172a" stroke-width="1" stroke-opacity=".35"/></svg>`;
-  st.textContent=`#stage.pen-mode{cursor:url("data:image/svg+xml,${encodeURIComponent(svg)}") ${Math.round(h)} ${Math.round(h)},crosshair!important}`}
+  const er=Math.max(10,w+8),ES=Math.ceil(er*2+4),ecx=ES/2,ecy=ES/2;
+  const esvg=`<svg xmlns="http://www.w3.org/2000/svg" width="${ES}" height="${ES}" viewBox="0 0 ${ES} ${ES}"><circle cx="${ecx}" cy="${ecy}" r="${er}" fill="rgba(255,255,255,.35)" stroke="#ffffff" stroke-width="3"/><circle cx="${ecx}" cy="${ecy}" r="${er}" fill="none" stroke="#334155" stroke-width="1.4"/></svg>`;
+  st.textContent=`#stage.pen-mode{cursor:url("data:image/svg+xml,${encodeURIComponent(svg)}") ${Math.round(h)} ${Math.round(h)},crosshair!important}#stage.erase-mode{cursor:url("data:image/svg+xml,${encodeURIComponent(esvg)}") ${Math.round(ecx)} ${Math.round(ecy)},crosshair!important}`}
  upd();
  stage.addEventListener('pointerover',upd,{passive:true});
  col.addEventListener('input',upd);sz.addEventListener('input',upd);
  const dock=document.getElementById('penDock');if(dock)dock.addEventListener('click',()=>requestAnimationFrame(upd));
+ /* Kalem/silgi ile yazarken tahta alanı (ve PDF) kaymasın: hangi yoldan gelirse gelsin kaydırmayı kilitle */
+ const act=new Set();let lk=null,lt=0;
+ const skip=t=>t.closest&&t.closest('#penDock,button,input,select,textarea,#toolSettings,#dpPdfBar,#dpPdfPages');
+ window.addEventListener('pointerdown',e=>{if(!stage.classList.contains('draw-any')||!stage.contains(e.target)||skip(e.target))return;act.add(e.pointerId);lt=performance.now();if(!lk)lk=[stage.scrollLeft,stage.scrollTop]},true);
+ window.addEventListener('pointermove',e=>{if(act.has(e.pointerId))lt=performance.now()},true);
+ const off=e=>{act.delete(e.pointerId);if(!act.size)lk=null};
+ window.addEventListener('pointerup',off,true);window.addEventListener('pointercancel',off,true);
+ const live=()=>lk&&act.size&&stage.classList.contains('draw-any')&&performance.now()-lt<2000;
+ stage.addEventListener('scroll',()=>{if(!live()){if(lk&&performance.now()-lt>=2000){act.clear();lk=null}return}if(stage.scrollTop!==lk[1])stage.scrollTop=lk[1];if(stage.scrollLeft!==lk[0])stage.scrollLeft=lk[0]},{passive:true});
+ stage.addEventListener('wheel',e=>{if(live())e.preventDefault()},{passive:false});
 })();
 </script>
 
@@ -9423,12 +9435,20 @@ this.workerSrc)).WorkerMessageHandler})())}}class WorkerTransport{downloadInfoCa
   if(b.dataset.p==='prev')goPage(k-1);else if(b.dataset.p==='next')goPage(k+1);else if(b.dataset.p==='close'){if(confirm('PDF kapatılsın mı? (Kalemle yaptığınız çizimler ve araçlar tahtada kalır.)'))closePdf()}});
  stage.addEventListener('scroll',()=>{if(cur)requestAnimationFrame(updBar)},{passive:true});
  window.addEventListener('resize',()=>{if(cur)updBar()});
+ /* Ekran genişliği değişirse (tam ekran, pencere boyutu) PDF yeniden ekrana sığsın — üstüne henüz kalemle yazılmadıysa */
+ function relayout(){const c=cur;if(!c||c.fixed||!c.box.isConnected)return;const L=stage.querySelector('#drawLayer');if(L&&L.querySelector('.board-ink'))return;
+  const W=Math.round(Math.max(320,stage.clientWidth-32));if(Math.abs(W-c.W)<24)return;
+  const k=curPage(),rel=(stage.scrollTop-(c.box.offsetTop+c.pages[k].el.offsetTop))/Math.max(1,c.pages[k].el.offsetHeight);
+  c.W=W;const Lx=Math.round(Math.max(16,(stage.clientWidth-W)/2));c.box.style.setProperty('left',Lx+'px','important');c.box.style.setProperty('width',W+'px','important');c.box.dataset.w=W;c.box.dataset.l=Lx;
+  c.pages.forEach(p=>{p.el.style.height=Math.round(W*(p.r||1.414))+'px';p.ok=false});
+  stage.scrollTop=c.box.offsetTop+c.pages[k].el.offsetTop+rel*c.pages[k].el.offsetHeight;pump(c);updBar()}
+ let rlT=0;if(window.ResizeObserver)new ResizeObserver(()=>{clearTimeout(rlT);rlT=setTimeout(relayout,250)}).observe(stage);
  function closePdf(){const b=$('pdfSurface');if(b)b.remove();cleanup()}
  function cleanup(){closePop();if(!cur)return;const c=cur;cur=null;try{c.io&&c.io.disconnect()}catch(_){}c.urls.forEach(u=>URL.revokeObjectURL(u));try{c.doc&&c.doc.destroy()}catch(_){}bar.classList.remove('on')}
  new MutationObserver(()=>{if(cur&&!cur.box.isConnected)cleanup();else if(cur)updBar()}).observe(stage,{childList:true});
  /* ---- sayfa çizimi ---- */
  async function renderPage(c,i){const p=c.pages[i];if(p.ok||p.busy||c!==cur)return;p.busy=true;
-  try{const page=await c.doc.getPage(i+1),v1=page.getViewport({scale:1}),dpr=Math.min(2,Math.max(1,window.devicePixelRatio||1)),tw=Math.min(2600,Math.round(c.W*dpr)),vp=page.getViewport({scale:tw/v1.width});
+  try{const page=await c.doc.getPage(i+1),v1=page.getViewport({scale:1}),dpr=Math.min(2,Math.max(1,window.devicePixelRatio||1)),tw=Math.min(3000,Math.round(c.W*dpr)),vp=page.getViewport({scale:tw/v1.width});
    const cv=document.createElement('canvas');cv.width=Math.ceil(vp.width);cv.height=Math.ceil(vp.height);const ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height);
    await page.render({canvasContext:ctx,canvas:cv,viewport:vp}).promise;
    const blob=await new Promise(r=>cv.toBlob(r,'image/jpeg',.92));cv.width=cv.height=0;try{page.cleanup()}catch(_){}
@@ -9453,16 +9473,16 @@ this.workerSrc)).WorkerMessageHandler})())}}class WorkerTransport{downloadInfoCa
   catch(e){note(e&&e.name==='PasswordException'?'Bu PDF şifreli olduğu için açılamadı.':'Bu PDF açılamadı. Dosya bozuk olabilir.',true);return null}
   const old=$('pdfSurface');if(old)old.remove();cleanup();
   stage.dataset.bg='white';const sel=$('backgroundSelect');if(sel)sel.value='white';
-  const avail=Math.max(320,stage.clientWidth-40),W=Math.round(lay&&lay.w>0?lay.w:Math.min(avail,1400)),Lx=Math.round(lay&&lay.l>=0?lay.l:Math.max(16,(stage.clientWidth-W)/2));
+  const avail=Math.max(320,stage.clientWidth-32),W=Math.round(lay&&lay.w>0?lay.w:avail),Lx=Math.round(lay&&lay.l>=0?lay.l:Math.max(16,(stage.clientWidth-W)/2));
   const box=document.createElement('div');box.id='pdfSurface';box.className='dp-pdf';box.title=name||'belge.pdf';box.style.setProperty('left',Lx+'px','important');box.style.setProperty('width',W+'px','important');box.dataset.w=W;box.dataset.l=Lx;
   const url=URL.createObjectURL(blob);if(typeof fileUrls!=='undefined')fileUrls.set(box,url);
-  const c={doc,box,W,pages:[],urls:[],want:new Set(),running:false,io:null};
+  const c={doc,box,W,pages:[],urls:[],want:new Set(),running:false,io:null,fixed:!!(lay&&lay.w>0)};
   const first=await doc.getPage(1),r0=first.getViewport({scale:1}),ratio0=r0.height/r0.width;
-  for(let i=0;i<doc.numPages;i++){const el=document.createElement('div');el.className='dp-pg';el.dataset.n=i+1;el.style.height=Math.round(W*ratio0)+'px';box.append(el);c.pages.push({el,ok:false,busy:false})}
+  for(let i=0;i<doc.numPages;i++){const el=document.createElement('div');el.className='dp-pg';el.dataset.n=i+1;el.style.height=Math.round(W*ratio0)+'px';box.append(el);c.pages.push({el,ok:false,busy:false,r:ratio0})}
   stage.prepend(box);cur=c;stage.scrollTop=0;
   c.io=new IntersectionObserver(es=>{for(const e of es){const i=+e.target.dataset.n-1;if(!c.pages[i])continue;if(e.isIntersecting)c.want.add(i);else c.want.delete(i)}pump(c)},{root:stage,rootMargin:'1200px 0px'});
   c.pages.forEach(p=>c.io.observe(p.el));
-  (async()=>{for(let i=1;i<doc.numPages&&c===cur;i++){try{const pg=await doc.getPage(i+1),v=pg.getViewport({scale:1});c.pages[i].el.style.height=Math.round(W*v.height/v.width)+'px'}catch(_){}}if(c===cur)updBar()})();
+  (async()=>{for(let i=1;i<doc.numPages&&c===cur;i++){try{const pg=await doc.getPage(i+1),v=pg.getViewport({scale:1});c.pages[i].r=v.height/v.width;c.pages[i].el.style.height=Math.round(c.W*c.pages[i].r)+'px'}catch(_){}}if(c===cur)updBar()})();
   queue(c,0);updBar();return box}
  /* Taşı modunda PDF sayfasının üstünde sürükleme = sayfayı kaydırma (tarama seçimi başlamaz), bırakınca yavaşlayarak durur */
  let pan=null,mom=0;
@@ -9470,7 +9490,7 @@ this.workerSrc)).WorkerMessageHandler})())}}class WorkerTransport{downloadInfoCa
  const onPage=(x,y)=>cur&&cur.pages.some(p=>{const r=p.el.getBoundingClientRect();return x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom});
  window.addEventListener('pointerdown',e=>{
   cancelAnimationFrame(mom);
-  if(!cur||!cur.box.isConnected||!e.isPrimary||(e.pointerType==='mouse'&&e.button!==0)||!moveOn())return;
+  if(!cur||!cur.box.isConnected||!e.isPrimary||(e.pointerType==='mouse'&&e.button!==0)||!moveOn()||stage.classList.contains('draw-any'))return;
   if(!stage.contains(e.target)||(e.target.closest&&e.target.closest('.widget,#foldLayer,#toolSettings,#selectionRect')))return;
   if(!onPage(e.clientX,e.clientY))return;
   cancelAnimationFrame(mom);e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
